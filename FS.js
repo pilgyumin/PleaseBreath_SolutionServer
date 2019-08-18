@@ -9,7 +9,7 @@ const BLUETOOTH_ADDRESS = '98:D3:11:FD:25:0F';
 
 
 btSerial.on('found', function(address, name) {
-        if(!CHECK && name == BLUETOOTH_ADDRESS){
+        if(!CHECK && address == BLUETOOTH_ADDRESS){
         CHECK = true;
             btSerial.findSerialPortChannel(address, function(channel) {
                 btSerial.connect(address, channel, function() {
