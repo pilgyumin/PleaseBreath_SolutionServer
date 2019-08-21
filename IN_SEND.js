@@ -1,11 +1,12 @@
 const BLUE = require('bluetooth-serial-port');
 const btSerial = new BLUE.BluetoothSerialPort();
 const BLUETOOTH_NAME = 'KILJH'
+const BLUETOOTH_ADDRESS = '98:D3:31:F5:34:DE'
 const fs = require('fs')
 let CHECK = false;
 
 btSerial.on('found', function(address, name) {
-        if(CHECK == false && name == BLUETOOTH_NAME){
+        if(CHECK == false && name == BLUETOOTH_ADDRESS){
         CHECK = true;
             console.log('Found : In Measurement...');
                 btSerial.connect(address, 1, function() {
