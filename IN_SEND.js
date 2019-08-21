@@ -27,5 +27,5 @@ btSerial.on('found', function(address, name) {
         } 
 });
 
-console.log('IN Measure...');
+console.log('IN Measure....');
 btSerial.inquireSync();
