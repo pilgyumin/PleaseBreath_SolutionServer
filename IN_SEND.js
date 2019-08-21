@@ -5,16 +5,13 @@ const fs = require('fs')
 let CHECK = false;
 
 btSerial.on('found', function(address, name) {
-    
         if(CHECK == false && name == BLUETOOTH_NAME){
         CHECK = true;
             console.log('Found : In Measurement...');
-            btSerial.findSerialPortChannel(address, function(channel) {
-                btSerial.connect(address, channel, function() {
+                btSerial.connect(address, 1, function() {
                     console.log('Connect : In Measurement.. ');
                     btSerial.on('data', function(buffer) {
                         if(buffer.toString('utf-8') !=' '){
-                            console.log('Data : ' +  buffer.toString('utf-8'));
                             let Temperate = buffer.slice(0,2).toString('utf-8');
                             let Humid = buffer.slice(2,4).toString('utf-8');
                             console.log('Temparte : '+Temperate);
@@ -26,7 +23,6 @@ btSerial.on('found', function(address, name) {
                 },function(){
                     console.log('cannot connect');
                 });
-            });
     
         } 
 });
