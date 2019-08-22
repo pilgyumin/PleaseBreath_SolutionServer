@@ -8,14 +8,13 @@ btSerial.on('found', function(address, name) {
         if(!CHECK && address == BLUETOOTH_ADDRESS){
         	CHECK = true;
                 btSerial.connect(address, 1, function() {
-					console.log('connect !');
-                    btSerial.write(Buffer.from('48B7C837', 'utf-8'), function(err, bytesWritten) {
+					console.log('connect : Transmit...');
+                    btSerial.write(Buffer.from('1', 'utf-8'), function(err, bytesWritten) {
 						if (err) console.log(err);
-						console.log('48B7C837');
+						console.log('Tran Data!');
                         btSerial.close();
                     });
-                    btSerial.on('data', function(buffer) {
-                    });                    
+                    btSerial.close();
                 },function(){
                     console.log('cannot connect');
                 });
