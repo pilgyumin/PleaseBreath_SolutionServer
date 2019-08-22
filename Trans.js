@@ -3,11 +3,11 @@ const fs = require('fs');
 var text = fs.readFileSync('./Measured_data.txt','utf-8');
 var Temp1 = text.slice(0,2);
 var Humid1 = text.slice(2,4);
-var Temp2 = text.slicde(4,6);
-var Mumid2 = text.slicde(6,8);
+var Temp2 = text.slice(4,6);
+var Humid2 = text.slice(6,8);
 let path = '/main?tempOuter='+Temp1+'&humidOuter='+Humid1;
-let path2 = '/main?tempInnter='+Temp2+'&humidInner='+Humid2
-
+let path2 = '/main?tempInner='+Temp2+'&humidInner='+Humid2
+console.log('Tranmit Data to Server');
     const options = {
         hostname : '192.168.0.2',
         port : '80',
