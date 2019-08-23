@@ -7,7 +7,6 @@ var Temp2 = text.slice(4,6);
 var Humid2 = text.slice(6,8);
 let path = '/main?tempOuter='+Temp1+'&humidOuter='+Humid1;
 let path2 = '/main?tempInner='+Temp2+'&humidInner='+Humid2
-console.log('Tranmit Data to Server');
     const options = {
         hostname : '192.168.0.2',
         port : '80',

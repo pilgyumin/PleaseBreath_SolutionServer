@@ -6,12 +6,13 @@ let CHECK = false;
 
 btSerial.on('found', function(address, name) {
         if(!CHECK && address == BLUETOOTH_ADDRESS){
-        	CHECK = true;
+            CHECK = true;
+            console.log('Found : Solution...')
                 btSerial.connect(address, 1, function() {
-					console.log('connect : Transmit...');
+					console.log('connect : Solution...');
                     btSerial.write(Buffer.from('1', 'utf-8'), function(err, bytesWritten) {
-						if (err) console.log(err);
-						console.log('Tran Data!');
+                        if (err) console.log(err);
+                        console.log('Data Transfer Completed...');
                         btSerial.close();
                     });
                     btSerial.close();
@@ -21,5 +22,5 @@ btSerial.on('found', function(address, name) {
             
         } 
 });
-console.log('Measured data transmit...');
+console.log('Solution...');
 btSerial.inquireSync();

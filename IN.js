@@ -8,9 +8,9 @@ let CHECK = false;
 btSerial.on('found', function(address, name) {
         if(CHECK == false && name == BLUETOOTH_ADDRESS){
         CHECK = true;
-            console.log('Found : In Measurement...');
+            console.log('Found : Indoor Air meter...');
                 btSerial.connect(address, 1, function() {
-                    console.log('Connect : In Measurement.. ');
+                    console.log('Connect : Indoor Air meter.. ');
                     btSerial.on('data', function(buffer) {
                         if(buffer.toString('utf-8') !=' '){
                             let Temperate = buffer.slice(0,2).toString('utf-8');
@@ -24,9 +24,8 @@ btSerial.on('found', function(address, name) {
                 },function(){
                     console.log('cannot connect');
                 });
-    
         } 
 });
 
-console.log('IN Measure....');
+console.log('Indoor Air meter....');
 btSerial.inquireSync();
