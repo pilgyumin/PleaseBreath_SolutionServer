@@ -31,7 +31,7 @@ node IN && node OUT && node Trans && node ROSE
 
 [https://git.swmgit.org/zhh1020](https://git.swmgit.org/zhh1020/)
 
-안유진 - auj97@naver.com
+안유진 - ujahnn@gmail.com
 
 [https://github.com/ahnyujin](https://github.com/ahnyujin/)
 
