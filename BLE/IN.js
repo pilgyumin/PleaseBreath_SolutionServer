@@ -6,7 +6,7 @@ const fs = require('fs')
 let CHECK = false;
 
 btSerial.on('found', function(address, name) {
-        if(CHECK == false && name == BLUETOOTH_ADDRESS){
+        if(CHECK == false && address == BLUETOOTH_ADDRESS){
         CHECK = true;
             console.log('Found : Indoor Air meter...');
                 btSerial.connect(address, 1, function() {
