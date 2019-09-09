@@ -1,9 +1,10 @@
 const express = require('express');
 const http = require('http');
 const router = express.Router();
-const aircleaner = require('../model/aircleaner');
+
 const statusInner = require('../model/statusInner');
 const statusOuter = require('../model/statusOuter');
+let aircleanercontrol = require('../machinecontrol/aircleanercontrol');
 
 let aircleanerUrl = {
     hostname: '192.168.0.7',
@@ -51,12 +52,14 @@ router.get('', (req, res, next) => {
 
     //humid
     if(req.query.humidOuter){
+        isOuter = true;
         let hOut = req.query.humidOuter.split(".");
         console.log("humidOuter : " + hOut[0]);
         statusOuter.humidOuter = hOut[0];
     }
 
     if(req.query.humidInner){
+        isOuter = false;
         let hIn = req.query.humidInner.split(".");
         console.log("humidInner : " + hIn[0]);
         statusInner.humidInner = hIn[0];
@@ -64,12 +67,14 @@ router.get('', (req, res, next) => {
 
     //pm10
     if(req.query.pm10Outer){
+        isOuter = true;
         let p10Out = req.query.pm10Outer.split(".");
         console.log("pm10Outer : " + p10Out[0]);
         statusOuter.pm10Outer = p10Out[0];
     }
 
     if(req.query.pm10Inner){
+        isOuter = false;
         let p10In = req.query.pm10Inner.split(".");
         console.log("pm10Inner : " + p10In[0]);
         statusInner.pm10Inner = p10In[0];
@@ -77,12 +82,14 @@ router.get('', (req, res, next) => {
 
     //pm2.5
     if(req.query.pm25Outer){
+        isOuter = true;
         let p25Out = req.query.pm25Outer.split(".");
         console.log("pm25Outer : " + p25Out[0]);
         statusOuter.pm25Outer = p25Out[0];
     }
 
     if(req.query.pm25Inner){
+        isOuter = false;
         let p25In = req.query.pm25Inner.split(".");
         console.log("pm25Inner : " + p25In[0]);
         statusInner.pm25Inner = p25In[0];
@@ -90,12 +97,14 @@ router.get('', (req, res, next) => {
 
     //voc
     if(req.query.vocOuter){
+        isOuter = true;
         let vOut = req.query.vocOuter.split(".");
         console.log("vocOuter : " + vOut[0]);
         statusOuter.vocOuter = vOut[0];
     }
 
     if(req.query.vocInner){
+        isOuter = false;
         let vIn = req.query.vocInner.split(".");
         console.log("vocInner : " + vIn[0]);
         statusInner.vocInner = vIn[0];
@@ -103,12 +112,15 @@ router.get('', (req, res, next) => {
 
     if(isOuter){
         webserverUrl.path += statusOuter.getUrl();
+
     }
     else{
         webserverUrl.path += statusInner.getUrl();
     }
 
-    http.request(webserverUrl).end();
+    aircleanercontrol(statusInner.pm10Inner,statusInner.pm25Inner);
+
+    //http.request(webserverUrl).end();
     webserverUrl.path = '/insertdb?';
 
     airconditionerUrl.path = '?';
