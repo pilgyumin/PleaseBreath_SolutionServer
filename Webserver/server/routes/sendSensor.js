@@ -6,17 +6,7 @@ const statusInner = require('../model/statusInner');
 const statusOuter = require('../model/statusOuter');
 let aircleanercontrol = require('../machinecontrol/aircleanercontrol');
 
-let aircleanerUrl = {
-    hostname: '192.168.0.7',
-    port: '3000',
-    path : '?'
-};
 
-let humidifierUrl = {
-    hostname: 'localhost',
-    port: '3000',
-    path : '?'
-};
 
 let airconditionerUrl = {
     hostname: '192.168.0.7',
