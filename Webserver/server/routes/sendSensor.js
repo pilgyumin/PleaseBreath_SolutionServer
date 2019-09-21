@@ -4,9 +4,9 @@ const router = express.Router();
 
 const statusInner = require('../model/statusInner');
 const statusOuter = require('../model/statusOuter');
+
 let aircleanercontrol = require('../machinecontrol/aircleanercontrol');
-
-
+let humidifiercontrol = require('../machinecontrol/humidifiercontrol');
 
 let airconditionerUrl = {
     hostname: '192.168.0.7',
@@ -15,7 +15,7 @@ let airconditionerUrl = {
 };
 
 let webserverUrl = {
-    hostname: 'localhost',
+    hostname: '192.168.0.5',
     port: '80',
     path : '/insertdb?'
 };
@@ -35,7 +35,6 @@ router.get('', (req, res, next) => {
     if(req.query.tempInner){
         isOuter = false;
         let tIn = req.query.tempInner.split(".");
-        webserverUrl.path += 'tempInner='+tIn[0];
         console.log("tempInner : " + tIn[0]);
         statusInner.tempInner = tIn[0];
     }
@@ -102,22 +101,29 @@ router.get('', (req, res, next) => {
 
     if(isOuter){
         webserverUrl.path += statusOuter.getUrl();
-
+        console.log(webserverUrl.path);
     }
+
     else{
         webserverUrl.path += statusInner.getUrl();
+        console.log(webserverUrl.path);
+    }
+    if(statusInner.pm10Inner && statusInner.pm25Inner){
+        aircleanercontrol(statusInner.pm10Inner,statusInner.pm25Inner);
     }
 
-    aircleanercontrol(statusInner.pm10Inner,statusInner.pm25Inner);
+    if(statusInner.tempInner){
+        humidifiercontrol(statusInner.tempInner);
+    }
 
-    //http.request(webserverUrl).end();
+    // http.request(webserverUrl).end();
     webserverUrl.path = '/insertdb?';
 
     airconditionerUrl.path = '?';
-    humidifierUrl.path = '?';
-    aircleanerUrl.path = '?';
 
     res.json(JSON.stringify(webserverUrl));
+
+    console.log(webserverUrl);
 });
 
 module.exports = router;

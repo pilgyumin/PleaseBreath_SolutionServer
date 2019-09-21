@@ -1,6 +1,4 @@
-const express = require('express');
 const http = require('http');
-const router = express.Router();
 const aircleaner = require('../model/aircleaner');
 
 /*

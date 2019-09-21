@@ -1,7 +1,8 @@
 const humidifier = require('../model/humidifier');
+const http = require('http');
 
 let humidifierUrl = {
-    hostname: 'localhost',
+    hostname: '192.168.0.8',
     port: '3000',
     path : '?'
 };
@@ -10,6 +11,7 @@ const temp1517Humid = 70;
 const temp1820Humid = 60;
 const temp2123Humid = 50;
 const temp24Humid = 40;
+
 /*
 *  온도별 적정 습도
 *  15도 ~ 17도 - 70%
@@ -18,55 +20,89 @@ const temp24Humid = 40;
 *  24도 이상 = 40%
 * */
 
-
 /*
 * 기기 default
 *  시작 습도 : 40rh
 *  시작 세기 : 1
 * */
-function ctrlHumidifier(temp,humidity){
-    if(humidity < 40){
+
+function ctrlHumidifier(temp){
+    console.log('humidifier');
+
+    if(humidifier.humid <= 70){
+
         if(humidifier.power == 0){
-            humidifierUrl.path += humidifier.control.ctrlpower + '&';
+            humidifierUrl.path += humidifier.control.ctrlpower + '&' + humidifier.control.ctrlhumid + '&';
             humidifier.power = 1;
         }
 
         let goalHumid = 0;
 
-        if(temp >= 24){
+        if (temp >= 24) {
             goalHumid = temp24Humid;
         }
-        else if(temp >= 21){
+
+        else if (temp >= 21) {
             goalHumid = temp2123Humid;
         }
-        else if(temp >= 18){
+
+        else if (temp >= 18) {
             goalHumid = temp1820Humid;
         }
+
         else {
             goalHumid = temp1517Humid;
         }
 
-        for(let i = 0; i < goalHumid - humidity; i += 5){
-            humidifierUrl.path += humidifier.control.ctrlhumid + '&';
-        }
+        if(goalHumid >= humidifier.humid){
+            console.log(goalHumid - humidifier.humid);
+            for(let i = 0; i < goalHumid - humidifier.humid; i += 5){
 
-        if(goalHumid - humidity >= 30){
-            let speed = humidifier.speed;
-            for(let command = 0; command < 2-speed; command++) {
-                humidifierUrl.path += humidifier.control.ctrlspeed + '&';
+                humidifierUrl.path += humidifier.control.ctrlhumid + '&';
             }
-            humidifier.speed = 3;
         }
-
-        else if(goalHumid - humidity >= 20){
-            let speed = humidifier.speed;
-            for(let command = 0; command < 1-speed; command++) {
-                humidifierUrl.path += humidifier.control.ctrlspeed + '&';
+        else{
+            console.log(90 - humidifier.humid + (goalHumid - 30));
+            for(let i = 0; i < 90 - humidifier.humid + (goalHumid - 30); i += 5){
+                humidifierUrl.path += humidifier.control.ctrlhumid + '&';
             }
-            humidifier.speed = 2;
         }
 
+
+        let speed = humidifier.speed;
+
+
+        if(goalHumid - humidifier.humid >= 30){
+            while(speed != 2){
+                humidifierUrl.path += humidifier.control.ctrlspeed + '&';
+                speed = (speed + 1) % 3 ;
+            }
+        }
+
+        else if(goalHumid - humidifier.humid >= 20){
+            while(speed != 1){
+                humidifierUrl.path += humidifier.control.ctrlspeed + '&';
+                speed = (speed + 1) % 3 ;
+            }
+        }
+
+        else {
+            while(speed != 0){
+                humidifierUrl.path += humidifier.control.ctrlspeed + '&';
+                speed = (speed + 1) % 3 ;
+            }
+        }
+
+        humidifier.speed = speed;
         humidifier.humid = goalHumid;
+
+        console.log(humidifierUrl.path);
+        console.log(JSON.stringify(humidifier));
+
+        if(humidifierUrl.path != '?'){
+            http.request(humidifierUrl).end();
+            humidifierUrl.path = '?';
+        }
     }
 
 }
