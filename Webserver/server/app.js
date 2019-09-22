@@ -6,6 +6,7 @@ const logger = require('morgan');
 
 
 const sendSensorRouter = require('./routes/sendSensor');
+const receiveCommandRouter = require('./routes/receiveCommand');
 
 var app = express();
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', sendSensorRouter);
+app.use('/command', receiveCommandRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
