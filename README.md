@@ -26,6 +26,8 @@ node IN && node OUT && node Trans && node ROSE
     * 채널을 찾지 않고 고정적으로 주면서 IN, OUT, IR_PI_TO_AR의 블루투스 값 전송.
 * 0.1.0
     * 공기청정기 제어 알고리즘 개발
+* 0.2.0
+    * 가습기 제어 알고리즘 개발
 
 ## 개발자
 
