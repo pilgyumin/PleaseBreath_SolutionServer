@@ -21,7 +21,7 @@ const aircleaner = require('../model/aircleaner');
 function ctrlaircleaner(pm10,pm25) {
 
     let aircleanerUrl = {
-        hostname: '192.168.0.8',
+        hostname: '192.168.0.12',
         port: '3000',
         path : '?'
     };

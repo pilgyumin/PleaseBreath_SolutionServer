@@ -6,7 +6,7 @@ const logger = require('morgan');
 
 
 const sendSensorRouter = require('./routes/sendSensor');
-const receiveCommandRouter = require('./routes/receiveCommand');
+const receiveCommandRouter = require('./routes/Aircleaner_Control');
 
 var app = express();
 
