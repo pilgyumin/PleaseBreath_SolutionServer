@@ -1,11 +1,7 @@
 const humidifier = require('../model/humidifier');
 const http = require('http');
 
-let humidifierUrl = {
-    hostname: '192.168.0.8',
-    port: '3000',
-    path : '?'
-};
+const humidifierUrl = require('../urlModel/humidifierUrl');
 
 const temp1517Humid = 70;
 const temp1820Humid = 60;

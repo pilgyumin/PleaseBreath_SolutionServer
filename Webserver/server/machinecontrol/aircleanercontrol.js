@@ -1,6 +1,6 @@
 const http = require('http');
 const aircleaner = require('../model/aircleaner');
-
+const aircleanerUrl = require('../urlModel/aircleanerUrl');
 /*
 * 매우 나쁨 = pm10 : 150 ~        세기 4
 *            pm2.5 : 75 ~
@@ -20,11 +20,6 @@ const aircleaner = require('../model/aircleaner');
 
 function ctrlaircleaner(pm10,pm25) {
 
-    let aircleanerUrl = {
-        hostname: '192.168.0.12',
-        port: '3000',
-        path : '?'
-    };
 
     if(pm25 > 5 || pm10 > 10){
         if(aircleaner.power == 0){

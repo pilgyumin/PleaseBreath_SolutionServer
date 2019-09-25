@@ -5,11 +5,7 @@ const router = express.Router();
 let Status = require('../model/humidifier.js');
 
 
-let Humid_Control_Url = {
-	    hostname: '192.168.0.8',
-	    port: '3000',
-	    path : '?'
-};
+const Humid_Control_Url = require('../urlModel/humidifierUrl');
 
 const aa = {};
 

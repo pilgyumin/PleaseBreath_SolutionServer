@@ -4,11 +4,7 @@ const router = express.Router();
 
 let aircleaner = require('../model/aircleaner');
 
-let aircleanerUrl = {
-    hostname: '192.168.0.12',
-    port: '3000',
-    path : '?'
-};
+const aircleanerUrl = require('../urlModel/aircleanerUrl');
 
 const aa = {};
 
