@@ -19,8 +19,7 @@ const aircleanerUrl = require('../urlModel/aircleanerUrl');
 * */
 
 function ctrlaircleaner(pm10,pm25) {
-
-
+    
     if(pm25 > 5 || pm10 > 10){
         if(aircleaner.power == 0){
             aircleanerUrl.path += aircleaner.control.ctrlpower + '&';

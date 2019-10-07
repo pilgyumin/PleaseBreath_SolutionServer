@@ -2,9 +2,8 @@ const express = require('express');
 const http = require('http');
 const router = express.Router();
 
-let aircleaner = require('../model/aircleaner');
-
 const aircleanerUrl = require('../urlModel/aircleanerUrl');
+const aircleaner = require('../model/aircleaner');
 
 const aa = {};
 
