@@ -11,21 +11,21 @@ const aa = {};
 
 router.get('/power', (req, res, next) => {
 
-	    console.log('Humid_PowerOn');
-	    Humid_Control_Url.path += Status.control.ctrlpower;
-	    console.log(Status.control.ctrlpower);
+	console.log('Humid_PowerOn');
+	Humid_Control_Url.path += Status.control.ctrlpower;
+	console.log(Status.control.ctrlpower);
 
-	    http.request(Humid_Control_Url).end();
-	    Humid_Control_Url.path = '?';
-		res.json(JSON.stringify(aa));
+	http.request(Humid_Control_Url).end();
+	Humid_Control_Url.path = '?';
+	res.json(JSON.stringify(aa));
 });
 
 router.get('/mist', (req, res, next) =>{
-	    console.log('mist On');
-	    Humid_Control_Url.path += Status.control.ctrlhumid;
-	    http.request(Humid_Control_Url).end();
-	    Humid_Control_Url.path = '?';
-		res.json(JSON.stringify(aa));
+	console.log('mist On');
+	Humid_Control_Url.path += Status.control.ctrlhumid;
+	http.request(Humid_Control_Url).end();
+	Humid_Control_Url.path = '?';
+	res.json(JSON.stringify(aa));
 });
 
 router.get('/humidity', (req, res, next) =>{

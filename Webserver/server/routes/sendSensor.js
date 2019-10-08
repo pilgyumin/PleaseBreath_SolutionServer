@@ -2,6 +2,9 @@ const express = require('express');
 const http = require('http');
 const router = express.Router();
 
+
+const aiSolution = require('../model/aiSolution');
+
 const statusInner = require('../model/statusInner');
 const statusOuter = require('../model/statusOuter');
 
@@ -108,15 +111,18 @@ router.get('', (req, res, next) => {
         webserverUrl.path += statusInner.getUrl();
         console.log(webserverUrl.path);
     }
-    if(statusInner.pm10Inner && statusInner.pm25Inner){
-        aircleanercontrol(statusInner.pm10Inner,statusInner.pm25Inner);
+
+    if(aiSolution.power==1){
+        if(statusInner.pm10Inner && statusInner.pm25Inner){
+            aircleanercontrol(statusInner.pm10Inner,statusInner.pm25Inner);
+        }
+
+        if(statusInner.tempInner){
+            humidifiercontrol(statusInner.tempInner);
+        }
     }
 
-    if(statusInner.tempInner){
-        humidifiercontrol(statusInner.tempInner);
-    }
-
-    // http.request(webserverUrl).end();
+    http.request(webserverUrl).end();
     webserverUrl.path = '/insertdb?';
 
     airconditionerUrl.path = '?';
