@@ -4,12 +4,23 @@ const router = express.Router();
 
 
 const aiSolution = require('../model/aiSolution');
-
 const statusInner = require('../model/statusInner');
 const statusOuter = require('../model/statusOuter');
 
 let aircleanercontrol = require('../machinecontrol/aircleanercontrol');
 let humidifiercontrol = require('../machinecontrol/humidifiercontrol');
+
+//Time Setting
+var moment = require('moment');
+require('moment-timezone');
+moment.tz.setDefault("Asia/Seoul");
+let year = moment().year();
+let month = moment().month() + 1;
+let date = moment().date();
+let hours = moment().hours();
+let minute = moment().minute();
+let second = moment().seconds();
+
 
 let airconditionerUrl = {
     hostname: '192.168.0.7',
@@ -137,7 +148,8 @@ router.get('', (req, res, next) => {
         }
     }
 
-
+    webserverUrl.path +='&year'+year+'&month'+month+'&date'+date+'&hours'+hours+'&minute'+minute+'&second'+second; 
+    
     http.request(webserverUrl).end();
     webserverUrl.path = '/insertdb?';
 
