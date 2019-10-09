@@ -54,7 +54,10 @@ function control_aircleaner(pm10,pm25,voc,co2) {
         let speed = aircleaner.speed;
 
         // 민필규 - 미세먼지 단계 여부 파악
-        if(pm25 <= 15 || pm10 <= 30){
+        if(pm25 < 5 || pm10 < 10){
+            pm10_pm25_stage_max = 0;
+        }
+        else if(pm25 <= 15 || pm10 <= 30){
             pm10_pm25_stage_max = 1;
         }
         else if(pm25 <= 25 || pm10 <= 50){
@@ -68,18 +71,18 @@ function control_aircleaner(pm10,pm25,voc,co2) {
         }
 
         // 민필규 - voc,co2 단계 여부 파악
-        if(voc <= 0.220 || co2 <= 700){
+        if(voc < 0.111 || co2 < 400){
             voc_co2_stage_max = 1;
         }
-
+        else if(voc <= 0.220 || co2 <= 700){
+            voc_co2_stage_max = 1;
+        }
         else if(voc <= 0.660 || co2 <= 1000){
             voc_co2_stage_max = 2;
         }
-
         else if(voc <= 2.200 || co2 <= 2000){
             voc_co2_stage_max = 3;
         }
-
         else{
             voc_co2_stage_max = 4;
         }
