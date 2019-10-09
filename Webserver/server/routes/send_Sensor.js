@@ -124,8 +124,8 @@ router.get('', (req, res, next) => {
     }
 
 
-    // http.request(webserver_Url).end();
-    // webserver_Url.path = '/insertdb?';
+    http.request(webserver_Url).end();
+    webserver_Url.path = '/insertdb?';
 
     airconditioner_Url.path = '?';
 
