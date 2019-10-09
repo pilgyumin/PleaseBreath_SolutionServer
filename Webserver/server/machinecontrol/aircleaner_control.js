@@ -54,37 +54,49 @@ function control_aircleaner(pm10,pm25,voc,co2) {
         let speed = aircleaner.speed;
 
         // 민필규 - 미세먼지 단계 여부 파악
-        if(pm25 < 5 || pm10 < 10){
-            pm10_pm25_stage_max = 0;
+        if(pm25 > 35 || pm10 > 70){
+            pm10_pm25_stage_max = 4;
         }
-        else if(pm25 <= 15 || pm10 <= 30){
-            pm10_pm25_stage_max = 1;
-        }
-        else if(pm25 <= 25 || pm10 <= 50){
-            pm10_pm25_stage_max = 2;
-        }
-        else if(pm25 <= 35 || pm10 <= 70){
+        else if(pm25 > 25 || pm10 > 50){
             pm10_pm25_stage_max = 3;
         }
+        else if(pm25 > 15 || pm10 > 30){
+            pm10_pm25_stage_max = 2;
+        }
+        else if(pm25 > 5 || pm10 > 10){
+            pm10_pm25_stage_max = 1;
+        }
         else{
-            pm10_pm25_stage_max = 4;
+            pm10_pm25_stage_max = 0;
         }
 
         // 민필규 - voc,co2 단계 여부 파악
-        if(voc < 0.111 || co2 < 400){
-            voc_co2_stage_max = 1;
+        if(voc > 2.200 || co2 > 2000){
+            voc_co2_stage_max = 4;
         }
-        else if(voc <= 0.220 || co2 <= 700){
-            voc_co2_stage_max = 1;
-        }
-        else if(voc <= 0.660 || co2 <= 1000){
-            voc_co2_stage_max = 2;
-        }
-        else if(voc <= 2.200 || co2 <= 2000){
+        else if(voc > 0.660 || co2 > 1000){
             voc_co2_stage_max = 3;
         }
+        else if(voc > 0.220 || co2 > 700){
+            voc_co2_stage_max = 2;
+        }
+        else if(voc > 0.111 || co2 > 400){
+            voc_co2_stage_max = 1;
+        }
         else{
-            voc_co2_stage_max = 4;
+            voc_co2_stage_max = 0;
+        }
+
+        //민필규 - mode가 0일 때는 실내 공기 흡입모드, mode가 1일 때는 실외 공기 흡입모드 defalut = 0;
+        let aircleaner_control_mode = 0;
+        if(pm10_pm25_stage_max < voc_co2_stage_max){
+            aircleaner_control_mode = 1;
+        }
+
+        if(aircleaner_control_mode != aircleaner.mode){
+            aircleaner.mode = aircleaner_control_mode;
+            // 밑에는 라즈베리파이가 http 통신으로 모드 변경 구현
+
         }
 
         let max = (pm10_pm25_stage_max > voc_co2_stage_max) ? pm10_pm25_stage_max : voc_co2_stage_max;
@@ -94,12 +106,14 @@ function control_aircleaner(pm10,pm25,voc,co2) {
         if(max > speed){
             for (let i = 0; i < max - speed; i++) {
                 command += aircleaner.control.speed_up + '&';
+                aircleaner.speed++;
             }
         }
 
         else{
             for (let i = 0; i < speed - max; i++) {
                 command += aircleaner.control.speed_down + '&';
+                aircleaner.speed--;
             }
         }
 
@@ -112,7 +126,7 @@ function control_aircleaner(pm10,pm25,voc,co2) {
         }
 
         aircleaner.power = 0;
-        aircleaner.speed = 2;
+        aircleaner.speed = 1;
         console.log(JSON.stringify(aircleaner));
     }
 

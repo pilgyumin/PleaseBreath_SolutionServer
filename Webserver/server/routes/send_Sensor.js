@@ -101,6 +101,20 @@ router.get('', (req, res, next) => {
         status_Inner.voc_Inner = req.query.vocInner;
     }
 
+    if(req.query.co2Outer){
+        isOuter = true;
+        let cOut = req.query.co2Outer.split(".");
+        console.log("vocOuter : " + cOut[0]);
+        status_Outer.co2_Outer = cOut[0];
+    }
+
+    if(req.query.co2Inner){
+        isOuter = false;
+        let cIn = req.query.co2Inner.split(".");
+        console.log("vocInner : " + cIn[0]);
+        status_Inner.co2_Inner = cIn[0];
+    }
+
     if(isOuter){
         webserver_Url.path += status_Outer.getUrl();
         console.log(webserver_Url.path);
