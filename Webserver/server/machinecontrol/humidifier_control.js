@@ -1,7 +1,7 @@
 const humidifier = require('../model/humidifier');
 const http = require('http');
 
-const humidifierUrl = require('../urlModel/humidifierUrl');
+const humidifierUrl = require('../urlModel/humidifier_Url');
 
 const temp1517Humid = 70;
 const temp1820Humid = 60;

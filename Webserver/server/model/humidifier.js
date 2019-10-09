@@ -3,9 +3,9 @@ const humidifier = {
     humid : 40,
     speed : 0,
     control : {
-        ctrlpower : '0x416ED707',
-        ctrlhumid : '0x83821F1C',
-        ctrlspeed : '0xD0955537'
+        power : '0x416ED707',
+        humid : '0x83821F1C',
+        speed : '0xD0955537'
     }
 }
 

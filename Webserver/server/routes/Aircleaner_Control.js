@@ -2,38 +2,34 @@ const express = require('express');
 const http = require('http');
 const router = express.Router();
 
-let aircleaner = require('../model/aircleaner');
-
-const aircleanerUrl = require('../urlModel/aircleanerUrl');
+const aircleaner_Url = require('../urlModel/aircleaner_Url');
 const aircleaner = require('../model/aircleaner');
-
-const aa = {};
 
 router.get('/power', (req, res, next) => {
     console.log('Aircleaner Power');
-    aircleanerUrl.path += aircleaner.control.ctrlpower;
-    console.log(aircleaner.control.ctrlpower);
-    http.request(aircleanerUrl).end();
-    aircleanerUrl.path = '?';
-    res.json(JSON.stringify(aa));
+    aircleaner_Url.path += aircleaner.control.power;
+    console.log(aircleaner.control.power);
+    http.request(aircleaner_Url).end();
+    aircleaner_Url.path = '?';
+    res.json(JSON.stringify({}));
 });
 
 router.get('/speedup', (req, res, next) => {
     console.log('Aircleaner speedup');
-    aircleanerUrl.path += aircleaner.control.ctrlspeedup;
-    console.log(aircleaner.control.ctrlspeedup);
-    http.request(aircleanerUrl).end();
-    aircleanerUrl.path = '?';
-    res.json(JSON.stringify(aa));
+    aircleaner_Url.path += aircleaner.control.speed_up;
+    console.log(aircleaner.control.speed_up);
+    http.request(aircleaner_Url).end();
+    aircleaner_Url.path = '?';
+    res.json(JSON.stringify({}));
 });
 
 router.get('/speeddown', (req, res, next) => {
     console.log('Aircleaner speeddown');
-    aircleanerUrl.path += aircleaner.control.ctrlspeeddown;
-    console.log(aircleaner.control.ctrlspeeddown);
-    http.request(aircleanerUrl).end();
-    aircleanerUrl.path = '?';
-    res.json(JSON.stringify(aa));
+    aircleaner_Url.path += aircleaner.control.speed_down;
+    console.log(aircleaner.control.speed_down);
+    http.request(aircleaner_Url).end();
+    aircleaner_Url.path = '?';
+    res.json(JSON.stringify({}));
 });
 
 module.exports = router;
