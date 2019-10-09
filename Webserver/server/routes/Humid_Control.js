@@ -4,7 +4,7 @@ const router = express.Router();
 
 let Status = require('../model/humidifier.js');
 
-const Humid_Control_Url = require('../urlModel/humidifier_Url');
+const Humid_Control_Url = require('../url_Model/humidifier_Url');
 
 router.get('/power', (req, res, next) => {
 

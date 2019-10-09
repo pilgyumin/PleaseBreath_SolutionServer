@@ -10,8 +10,8 @@ const status_Inner = require('../model/status_Inner');
 const status_Outer = require('../model/status_Outer');
 
 
-let aircleaner_control = require('../machinecontrol/aircleaner_control');
-let humidifier_control = require('../machinecontrol/humidifier_control');
+let aircleaner_control = require('../machine_control/aircleaner_control');
+let humidifier_control = require('../machine_control/humidifier_control');
 
 
 //Time Setting

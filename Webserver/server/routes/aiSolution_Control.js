@@ -6,7 +6,7 @@ const router = express.Router();
 let aiSolution_Status = require('../model/aiSolution.js');
 
 const humidifier = require('../model/humidifier');
-const Humid_Control_Url = require('../urlModel/humidifier_Url');
+const Humid_Control_Url = require('../url_Model/humidifier_Url');
 
 router.get('/ON', (req, res, next) => {
 

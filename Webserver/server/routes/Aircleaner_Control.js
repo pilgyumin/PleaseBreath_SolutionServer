@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const router = express.Router();
 
-const aircleaner_Url = require('../urlModel/aircleaner_Url');
+const aircleaner_Url = require('../url_Model/aircleaner_Url');
 const aircleaner = require('../model/aircleaner');
 
 router.get('/power', (req, res, next) => {
