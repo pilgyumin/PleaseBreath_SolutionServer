@@ -1,6 +1,6 @@
 const aircleaner = {
     power : 0,
-    speed : 2,
+    speed : 1,
     control : {
         power : '0x48B7C837',
         speed_up : '0x48B78877',

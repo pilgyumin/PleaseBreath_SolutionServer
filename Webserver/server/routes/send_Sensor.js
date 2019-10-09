@@ -104,16 +104,29 @@ router.get('', (req, res, next) => {
     //voc
     if(req.query.vocOuter){
         isOuter = true;
-        let vOut = req.query.vocOuter.split(".");
-        console.log("vocOuter : " + vOut[0]);
-        status_Outer.voc_Outer = vOut[0];
+        console.log("vocOuter : " + req.query.vocOuter);
+        status_Outer.voc_Outer = req.query.vocOuter;
     }
 
     if(req.query.vocInner){
         isOuter = false;
         let vIn = req.query.vocInner.split(".");
-        console.log("vocInner : " + vIn[0]);
-        status_Inner.voc_Inner = vIn[0];
+        console.log("vocInner : " + req.query.vocInner);
+        status_Inner.voc_Inner = req.query.vocInner;
+    }
+
+    if(req.query.co2Outer){
+        isOuter = true;
+        let cOut = req.query.co2Outer.split(".");
+        console.log("vocOuter : " + cOut[0]);
+        status_Outer.co2_Outer = cOut[0];
+    }
+
+    if(req.query.co2Inner){
+        isOuter = false;
+        let cIn = req.query.co2Inner.split(".");
+        console.log("vocInner : " + cIn[0]);
+        status_Inner.co2_Inner = cIn[0];
     }
 
     if(req.query.co2Outer){
@@ -156,10 +169,9 @@ router.get('', (req, res, next) => {
     http.request(webserver_Url).end();
     webserver_Url.path = '/insertdb?';
 
-    
-
     airconditioner_Url.path = '?';
 
+    webserver_Url.path = '/insertdb?';
     res.json(JSON.stringify(webserver_Url));
 
     console.log(webserver_Url);
