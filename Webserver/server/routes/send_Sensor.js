@@ -120,14 +120,14 @@ router.get('', (req, res, next) => {
         isOuter = true;
         let cOut = req.query.co2Outer.split(".");
         console.log("vocOuter : " + cOut[0]);
-        statusOuter.co2Outer = cOut[0];
+        status_Outer.co2_Outer = cOut[0];
     }
 
     if(req.query.co2Inner){
         isOuter = false;
         let cIn = req.query.co2Inner.split(".");
         console.log("vocInner : " + cIn[0]);
-        statusInner.co2Inner = cIn[0];
+        status_Inner.co2_Inner = cIn[0];
     }
 
 
