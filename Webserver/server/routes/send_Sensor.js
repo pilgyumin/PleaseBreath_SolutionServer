@@ -5,11 +5,25 @@ const router = express.Router();
 
 const aiSolution = require('../model/aiSolution');
 
+
 const status_Inner = require('../model/status_Inner');
 const status_Outer = require('../model/status_Outer');
 
+
 let aircleaner_control = require('../machinecontrol/aircleaner_control');
 let humidifier_control = require('../machinecontrol/humidifier_control');
+
+
+//Time Setting
+var moment = require('moment');
+require('moment-timezone');
+moment.tz.setDefault("Asia/Seoul");
+let year = moment().year();
+let month = moment().month() + 1;
+let date = moment().date();
+let hours = moment().hours();
+let minute = moment().minute();
+let second = moment().seconds();
 
 let airconditioner_Url = {
     hostname: '192.168.0.7',
@@ -102,6 +116,21 @@ router.get('', (req, res, next) => {
         status_Inner.voc_Inner = vIn[0];
     }
 
+    if(req.query.co2Outer){
+        isOuter = true;
+        let cOut = req.query.co2Outer.split(".");
+        console.log("vocOuter : " + cOut[0]);
+        statusOuter.co2Outer = cOut[0];
+    }
+
+    if(req.query.co2Inner){
+        isOuter = false;
+        let cIn = req.query.co2Inner.split(".");
+        console.log("vocInner : " + cIn[0]);
+        statusInner.co2Inner = cIn[0];
+    }
+
+
     if(isOuter){
         webserver_Url.path += status_Outer.getUrl();
         console.log(webserver_Url.path);
@@ -123,9 +152,11 @@ router.get('', (req, res, next) => {
         }
     }
 
-
+    webserverUrl.path +='&year'+year+'&month'+month+'&date'+date+'&hours'+hours+'&minute'+minute+'&second'+second; 
     http.request(webserver_Url).end();
     webserver_Url.path = '/insertdb?';
+
+    
 
     airconditioner_Url.path = '?';
 
