@@ -1,7 +1,7 @@
 const humidifier = {
     power : 0,
     humid : 40,
-    speed : 0,
+    speed : 1,
     control : {
         power : '0x416ED707',
         humid : '0x83821F1C',
