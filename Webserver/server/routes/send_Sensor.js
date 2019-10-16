@@ -11,6 +11,7 @@ const status_Outer = require('../model/status_Outer');
 
 
 let aircleaner_control = require('../machine_control/aircleaner_control');
+let airconditioner_control = require('../machine_control/airconditioner_control');
 let humidifier_control = require('../machine_control/humidifier_control');
 
 
@@ -24,12 +25,6 @@ let date = moment().date();
 let hours = moment().hours();
 let minute = moment().minute();
 let second = moment().seconds();
-
-let airconditioner_Url = {
-    hostname: '192.168.0.7',
-    port: '3000',
-    path : '?'
-};
 
 let webserver_Url = {
     hostname: '192.168.0.5',
@@ -163,9 +158,13 @@ router.get('', (req, res, next) => {
         if(status_Inner.temp_Inner){
             humidifier_control(status_Inner.temp_Inner);
         }
+        /*
+        if(status_Outer.temp_Outer){
+                 airconditioner_control(status_Outer.temp_Outer);
+        }*/
     }
 
-    webserver_Url.path +='&year'+year+'&month'+month+'&date'+date+'&hours'+hours+'&minute'+minute+'&second'+second; 
+    webserver_Url.path +='&year'+year+'&month'+month+'&date'+date+'&hours'+hours+'&minute'+minute+'&second'+second;
     http.request(webserver_Url).end();
     webserver_Url.path = '/insertdb?';
 
