@@ -165,7 +165,7 @@ router.get('', (req, res, next) => {
         }
     }
 
-    webserverUrl.path +='&year'+year+'&month'+month+'&date'+date+'&hours'+hours+'&minute'+minute+'&second'+second; 
+    webserver_Url.path +='&year'+year+'&month'+month+'&date'+date+'&hours'+hours+'&minute'+minute+'&second'+second; 
     http.request(webserver_Url).end();
     webserver_Url.path = '/insertdb?';
 
