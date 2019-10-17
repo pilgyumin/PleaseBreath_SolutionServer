@@ -28,7 +28,7 @@ function ctrlHumidifier(temp){
     if(humidifier.humid <= 70){
 
         if(humidifier.power == 0){
-            humidifierUrl.path += humidifier.control.ctrlpower + '&' + humidifier.control.ctrlhumid + '&';
+            humidifierUrl.path += humidifier.control.power + '&' + humidifier.control.humid + '&';
             humidifier.power = 1;
         }
 
@@ -54,37 +54,37 @@ function ctrlHumidifier(temp){
             console.log(goalHumid - humidifier.humid);
             for(let i = 0; i < goalHumid - humidifier.humid; i += 5){
 
-                humidifierUrl.path += humidifier.control.ctrlhumid + '&';
-            }
-        }
-        else{
-            console.log(90 - humidifier.humid + (goalHumid - 30));
-            for(let i = 0; i < 90 - humidifier.humid + (goalHumid - 30); i += 5){
-                humidifierUrl.path += humidifier.control.ctrlhumid + '&';
+                humidifierUrl.path += humidifier.control.humid + '&';
             }
         }
 
+        else{
+            console.log(90 - humidifier.humid + (goalHumid - 30));
+            for(let i = 0; i < 90 - humidifier.humid + (goalHumid - 30); i += 5){
+                humidifierUrl.path += humidifier.control.humid + '&';
+            }
+        }
 
         let speed = humidifier.speed;
 
 
         if(goalHumid - humidifier.humid >= 30){
             while(speed != 2){
-                humidifierUrl.path += humidifier.control.ctrlspeed + '&';
+                humidifierUrl.path += humidifier.control.speed + '&';
                 speed = (speed + 1) % 3 ;
             }
         }
 
         else if(goalHumid - humidifier.humid >= 20){
             while(speed != 1){
-                humidifierUrl.path += humidifier.control.ctrlspeed + '&';
+                humidifierUrl.path += humidifier.control.speed + '&';
                 speed = (speed + 1) % 3 ;
             }
         }
 
         else {
             while(speed != 0){
-                humidifierUrl.path += humidifier.control.ctrlspeed + '&';
+                humidifierUrl.path += humidifier.control.speed + '&';
                 speed = (speed + 1) % 3 ;
             }
         }
