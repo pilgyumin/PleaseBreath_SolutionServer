@@ -13,9 +13,11 @@ router.get('/ON', (req, res, next) => {
 	console.log('aiSolutionOn');
 	aiSolution_Status.power=1;
 	if(humidifier.power==0)
-	{	    
+	{
 	    console.log('Humid_PowerOn');
 	    humidifier.power=1;
+			humidifier.humid=40;
+			humidifier.speed=1;
 	    Humid_Control_Url.path += humidifier.control.power;
 	    console.log(humidifier.control.power);
 
@@ -31,7 +33,7 @@ router.get('/OFF', (req, res, next) =>{
 	    console.log('aiSolutionOFF');
 	aiSolution_Status.power=0;
 	if(humidifier.power==1)
-	{	    
+	{
 	    console.log('Humid_PowerOFF');
 	    humidifier.power=0;
 	    Humid_Control_Url.path += humidifier.control.power;

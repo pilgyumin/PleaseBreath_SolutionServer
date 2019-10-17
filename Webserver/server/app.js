@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const Aircleaner_Router = require('./routes/Aircleaner_Control');
+const Airconditioner_Router = require('./routes/Airconditioner_Control');
 const send_Sensor_Router = require('./routes/send_Sensor');
 const Humid_Router = require('./routes/Humid_Control');
 const aiSolution_Control_Router = require('./routes/aiSolution_Control');
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use('/', send_Sensor_Router);
 app.use('/Humid_Control',Humid_Router);
 app.use('/AircleanerControl',Aircleaner_Router);
+app.use('/AirconditionerControl',Airconditioner_Router);
 app.use('/aiSolutionControl',aiSolution_Control_Router);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
