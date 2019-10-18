@@ -18,6 +18,10 @@ router.get('/',(req,res,next)=>{
 
 
 });
+//영유아 모드
+router.get('/Infants',(req,res,next)=>{
+
+})
 
 //노인 모드
 router.get('/Senior', (req, res, next) => {
