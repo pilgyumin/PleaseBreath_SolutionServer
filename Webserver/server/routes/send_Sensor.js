@@ -19,12 +19,14 @@ let humidifier_control = require('../machine_control/humidifier_control');
 var moment = require('moment');
 require('moment-timezone');
 moment.tz.setDefault("Asia/Seoul");
-let year = moment().year();
-let month = moment().month() + 1;
-let date = moment().date();
-let hours = moment().hours();
-let minute = moment().minute();
-let second = moment().seconds();
+
+let year;
+let month;
+let date;
+let hours;
+let minute;
+let second;
+
 
 let webserver_Url = {
     hostname: '192.168.0.5',
@@ -163,6 +165,13 @@ router.get('', (req, res, next) => {
                  airconditioner_control(status_Outer.temp_Outer);
         }*/
     }
+
+    year = moment().year();
+    month = moment().month() + 1;
+    date = moment().date();
+    hours = moment().hours();
+    minute = moment().minute();
+    second = moment().seconds();
 
     webserver_Url.path +='&year'+year+'&month'+month+'&date'+date+'&hours'+hours+'&minute'+minute+'&second'+second;
     http.request(webserver_Url).end();

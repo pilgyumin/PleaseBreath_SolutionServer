@@ -32,8 +32,8 @@ router.get('', (req, res, next) => {
         }
         else{
             //켜져있고 습도가 낮으므로 강도를 임의 값으로 올린다.(추후 변경)
-            Humidifier.humid = 45;
-            Humidifier.speed = 2;
+            Humidifier.humid = 50;
+            Humidifier.speed = 3;
             Humid_Control_Url.path += Humidifier.control.humid;
 	        http.request(Humid_Control_Url).end();
 	        Humid_Control_Url.path = '?';
@@ -41,13 +41,13 @@ router.get('', (req, res, next) => {
     }
     //실내 습기가 50% 이상이면 가습기를 끈다. -> 알아서 하므로 else 로 하면 될 듯
     else if(Humid > 50){
-        if(Humidifier.power == 1){
+        /*if(Humidifier.power == 1){
             Humidifier.power = 0;
             Humid_Control_Url.path += Humidifier.control.power;
             console.log(Humidifier.control.power);
             http.request(Humid_Control_Url).end();
             Humid_Control_Url.path = '?';
-        }
+        }*/
     }
     //실내 습기가 적정이면
     else{
