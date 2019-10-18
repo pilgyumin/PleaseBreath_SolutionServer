@@ -13,7 +13,14 @@ const Humid_Control_Url = require('../url_Model/humidifier_Url');
 
 let Status_Inner = require('../model/status_Inner');
 
-router.get('', (req, res, next) => {
+//일반 모드
+router.get('/',(req,res,next)=>{
+
+
+});
+
+//노인 모드
+router.get('/Senior', (req, res, next) => {
     //airconditioner.power=1-airconditioner.power;
     console.log('Senior Mode Start');
     //airconditioner_Url.path += airconditioner.control.power;
