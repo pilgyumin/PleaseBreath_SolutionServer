@@ -71,8 +71,8 @@ router.get('/Senior', (req, res, next) => {
         }
     }
 
-    let pm10_Inner = status.pm10_Inner;
-    let pm25_Inner = status.pm25_Inner;
+    let pm10_Inner = Status_Inner.pm10_Inner;
+    let pm25_Inner = Status_Inner.pm25_Inner;
 
 
     //공기상태가 최적이면 일단 끈다. -> 추후 변경
@@ -114,8 +114,47 @@ router.get('/Senior', (req, res, next) => {
         http.request(Aircleaner_Url).end();
         Aircleaner_Url.path = '?';
     }
-    
 
+    let Temp = Status_Inner.temp_Inner;
+
+    if(Temp < 25){
+        if(Airconditioner.power == 0){
+            Airconditioner.power = 1;
+            Airconditioner_Url.path += airconditioner.control.power;
+        }
+        console.log('Airconditioner Power');
+        console.log(Airconditioner.control.power);
+        Airconditioner_Url.path += Airconditioner.control.coldtemp27;
+        http.request(Airconditioner_Url).end();
+        Airconditioner_Url.path = '?';
+        res.json(JSON.stringify({}));
+    }
+    else if(Temp > 29){
+
+        if(Airconditioner.power == 0){
+            Airconditioner.power = 1;
+            Airconditioner_Url.path += airconditioner.control.power;
+        }
+        console.log('Airconditioner Power');
+        console.log(Airconditioner.control.power);
+        Airconditioner_Url.path += Airconditioner.control.coldtemp26;
+        http.request(Airconditioner_Url).end();
+        Airconditioner_Url.path = '?';
+        res.json(JSON.stringify({}));
+    }
+    else if(Temp >=26 && Temp <= 28) {
+
+        if(Airconditioner.power == 0){
+            Airconditioner.power = 1;
+            Airconditioner_Url.path += airconditioner.control.power;
+        }
+        console.log('Airconditioner Power');
+        console.log(Airconditioner.control.power);
+        Airconditioner_Url.path += Airconditioner.control.coldtemp27;
+        http.request(Airconditioner_Url).end();
+        Airconditioner_Url.path = '?';
+        res.json(JSON.stringify({}));
+    }
 });
 
 module.exports = router;
