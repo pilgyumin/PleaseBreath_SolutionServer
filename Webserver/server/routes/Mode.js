@@ -20,7 +20,40 @@ router.get('/',(req,res,next)=>{
 });
 //영유아 모드
 router.get('/Infants',(req,res,next)=>{
+    console.log('Infants Mode Start');
 
+    let Humid = Status_Inner.humid_Inner;
+	if(Humid<50 && humidifier.power==0 ){
+		humidifier.power=1;
+		humidifier.speed=1;
+		console.log('Humid_PowerOn');
+		Humid_Control_Url.path += humidifier.control.power;
+		console.log(humidifier.control.power);
+		http.request(Humid_Control_Url).end();
+		Humid_Control_Url.path = '?';
+		res.json(JSON.stringify({}));
+	}
+
+    let Temp = Status_Inner.temp_Inner;
+	if(Temp>22){
+		if(Airconditioner.power==0)
+		{
+		    airconditioner.power=1;
+		    console.log('Airconditioner Power');
+		    airconditioner_Url.path += airconditioner.control.power;
+		    console.log(airconditioner.control.power);
+		    http.request(airconditioner_Url).end();
+		    airconditioner_Url.path = '?';
+		    res.json(JSON.stringify({}));
+		}
+	    console.log('Airconditioner coldtemp to 22');
+	    airconditioner_Url.path += airconditioner.control.coldtemp22;
+	    console.log(airconditioner.control.coldtemp22);
+	    http.request(airconditioner_Url).end();
+	    airconditioner_Url.path = '?';
+	    res.json(JSON.stringify({}));
+		
+	}
 })
 
 //노인 모드

@@ -3,7 +3,8 @@ const airconditioner = {
     temp : 0,
     control : {
         power : 'power',
-        speed : 'speed',
+	change_mode : 'changemode',
+        speed : 'strength',
         coldtemp18 : 'coldtemp18',
         coldtemp19 : 'coldtemp19',
         coldtemp20 : 'coldtemp20',
@@ -18,7 +19,19 @@ const airconditioner = {
         coldtemp29 : 'coldtemp29',
         coldtemp30 : 'coldtemp30',
         coldtemp31 : 'coldtemp31',
-        coldtemp32 : 'coldtemp32'
+        coldtemp32 : 'coldtemp32',
+
+        warmtemp13 : 'warmtemp13',
+        warmtemp14 : 'warmtemp14',
+        warmtemp15 : 'warmtemp15',
+        warmtemp16 : 'warmtemp16',
+        warmtemp17 : 'warmtemp17',
+        warmtemp18 : 'warmtemp18',
+        warmtemp19 : 'warmtemp19',
+        warmtemp20 : 'warmtemp20',
+        warmtemp21 : 'warmtemp21',
+        warmtemp22 : 'warmtemp22',
+        warmtemp23 : 'warmtemp23'
     }
 }
 
