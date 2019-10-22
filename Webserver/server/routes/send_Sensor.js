@@ -2,9 +2,7 @@ const express = require('express');
 const http = require('http');
 const router = express.Router();
 
-
 const aiSolution = require('../model/aiSolution');
-
 
 const status_Inner = require('../model/status_Inner');
 const status_Outer = require('../model/status_Outer');
