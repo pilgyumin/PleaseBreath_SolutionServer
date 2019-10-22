@@ -10,6 +10,7 @@ const Aircleaner = require('../model/aircleaner');
 
 const Humidifier = require('../model/humidifier.js');
 const Humid_Control_Url = require('../url_Model/humidifier_Url');
+const Humidifier_Controler = require('../machine_control/humidifier_control');
 
 let Status_Inner = require('../model/status_Inner');
 
@@ -65,22 +66,15 @@ router.get('/Senior', (req, res, next) => {
     if(Humid < 40){
         //가습기가 꺼져 있다면 킨다.
         if(Humidifier.power == 0){
-            Humidifier.power = 1;
-            Humid_Control_Url.path += Humidifier.power;
-            console.log(Humidifier.control.power);
-            Humidifier.speed = 3;
-            Humid_Control_Url.path += Humidifier.speed;
-            http.request(Humid_Control_Url).end();
-            Humid_Control_Url.path = '?';
+            Humidifier_Controler.Humidifier_Power();
+            Humidifier_Controler.Humidifier_Speed(3);
         }
         else{
             //켜져있고 습도가 낮으므로 강도를 임의 값으로 올린다.(추후 변경)
-            Humidifier.speed = 3;
-            Humid_Control_Url.path += Humidifier.speed;
-	        http.request(Humid_Control_Url).end();
-	        Humid_Control_Url.path = '?';
+            Humidifier_Controler.Humidifier_Speed(3);
         }
     }
+    
     //실내 습기가 50% 이상이면 가습기를 끈다. -> 알아서 하므로 else 로 하면 될 듯
     else if(Humid > 50){
         /*if(Humidifier.power == 1){
