@@ -22,7 +22,55 @@ const temp24Humid = 40;
 *  시작 세기 : 1
 * */
 
-function ctrlHumidifier(temp){
+module.exports.Humidifier_Power = function Humidifier_Power(){
+    humidifier.power = 1 - humidifier.power;
+    humidifierUrl.path += humidifier.control.power + '&';
+    if(humidifierUrl.path != '?'){
+        http.request(humidifierUrl).end();
+        humidifierUrl.path = '?';
+    }
+}
+
+module.exports.Humidifier_Speed_up = function Humidifier_Speed_up(){
+    if(humidifier.speed < 8){
+        humidifier.speed += 1;
+        humidifierUrl.path += humidifier.control.speed_up + '&';
+        if(humidifierUrl.path != '?'){
+            http.request(humidifierUrl).end();
+            humidifierUrl.path = '?';
+        }
+    }
+}
+
+module.exports.Humidifier_Speed_down = function Humidifier_Speed_down(){    
+    if(humidifier.speed > 1){
+        humidifier.speed -= 1;
+        humidifierUrl.path += humidifier.control.speed_down + '&';
+        if(humidifierUrl.path != '?'){
+            http.request(humidifierUrl).end();
+            humidifierUrl.path = '?';
+        }
+    }
+}
+
+module.exports.Humidifier_Speed = function Humidifier_Speed(argv){
+    if(humidifier.speed > argv){
+        let i = humidifier.speed
+        for(i; i > argv; i--)
+            Humidifier_Speed_down();    
+    }
+
+    else if(humidifier.speed < argv){
+        let i = humidifier.speed
+        for(i; i < argv; i++)
+            Humidifier_Speed_up();    
+    }
+
+    humidifier.speed = argv;
+}
+
+
+module.exports.ctrlHumidifier = function ctrlHumidifier(temp){
     console.log('humidifier');
 
     if(humidifier.humid <= 70){
@@ -81,7 +129,7 @@ function ctrlHumidifier(temp){
                 speed = (speed + 1) % 3 ;
             }
         }
-
+        
         else {
             while(speed != 0){
                 humidifierUrl.path += humidifier.control.speed + '&';
@@ -102,5 +150,3 @@ function ctrlHumidifier(temp){
     }
 
 }
-
-module.exports = ctrlHumidifier;
