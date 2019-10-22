@@ -2,15 +2,14 @@ const express = require('express');
 const http = require('http');
 const router = express.Router();
 
-const aiSolution = require('../model/aiSolution');
+
+
 
 const status_Inner = require('../model/status_Inner');
 const status_Outer = require('../model/status_Outer');
+const solution_status = require('../model/solution_status');
 
-
-let aircleaner_control = require('../machine_control/aircleaner_control');
-let airconditioner_control = require('../machine_control/airconditioner_control');
-let humidifier_control = require('../machine_control/humidifier_control');
+let mode_control = require('../machine_control/mode_control');
 
 
 //Time Setting
@@ -124,7 +123,7 @@ router.get('', (req, res, next) => {
         status_Inner.co2_Inner = cIn[0];
     }
 
-   
+
     if(isOuter){
         webserver_Url.path += status_Outer.getUrl();
         console.log(webserver_Url.path);
@@ -134,20 +133,10 @@ router.get('', (req, res, next) => {
         webserver_Url.path += status_Inner.getUrl();
         console.log(webserver_Url.path);
     }
-    aiSolution.power = 1;
-    if(aiSolution.power === 1){
 
-        if(status_Inner.pm10_Inner && status_Inner.pm25_Inner){
-            aircleaner_control(status_Inner.pm10_Inner,status_Inner.pm25_Inner,status_Inner.voc_Inner,status_Inner.voc_Inner);
-        }
-
-        if(status_Inner.temp_Inner){
-            humidifier_control(status_Inner.temp_Inner);
-        }
-        /*
-        if(status_Outer.temp_Outer){
-                 airconditioner_control(status_Outer.temp_Outer);
-        }*/
+    if(solution_status.mode!=0)
+    {
+      mode_control();
     }
 
     year = moment().year();
