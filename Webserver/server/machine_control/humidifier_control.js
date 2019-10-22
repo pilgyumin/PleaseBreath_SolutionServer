@@ -70,6 +70,8 @@ module.exports.Humidifier_Speed = function Humidifier_Speed(argv){
 }
 
 
+
+
 module.exports.ctrlHumidifier = function ctrlHumidifier(temp){
     console.log('humidifier');
 

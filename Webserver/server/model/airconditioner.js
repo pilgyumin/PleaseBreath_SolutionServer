@@ -20,7 +20,6 @@ const airconditioner = {
         coldtemp30 : 'coldtemp30',
         coldtemp31 : 'coldtemp31',
         coldtemp32 : 'coldtemp32',
-
         warmtemp13 : 'warmtemp13',
         warmtemp14 : 'warmtemp14',
         warmtemp15 : 'warmtemp15',

@@ -1,6 +1,8 @@
 const http = require('http');
 const aircleaner = require('../model/aircleaner');
 
+const aircleanerUrl = require('../url_Model/aircleaner_Url');
+
 const aircleaner_hostname = '192.168.0.12';
 const aircleaner_port = '3000';
 const aircleaner_path = '?';
@@ -37,7 +39,57 @@ const aircleaner_path = '?';
 *                                 Co2 : 0 ~ 400
 * */
 
-function control_aircleaner(pm10,pm25,voc,co2) {
+module.exports.Aircleaner_Power = function Aircleaner_Power(){
+    aircleaner.power = 1 - aircleaner.power;
+    aircleanerUrl.path += humidifier.control.power + '&';
+    
+    if(aircleanerUrl.path != '?'){
+        http.request(aircleanerUrl).end();
+        aircleanerUrl.path = '?';
+    }
+}
+
+module.exports.Aircleaner_Speed_up = function Aircleaner_Speed_up(){
+    if(aircleaner.speed < 4){
+        aircleaner.speed += 1;
+        aircleanerUrl.path += aircleaner.control.speed_up + '&';
+        if(aircleanerUrl.path != '?'){
+            http.request(aircleanerUrl).end();
+            aircleanerUrl.path = '?';
+        }
+    }
+}
+
+module.exports.Aircleaner_Speed_down = function Aircleaner_Speed_down(){    
+    if(aircleaner.speed > 1){
+        aircleaner.speed -= 1;
+        aircleanerUrl.path += aircleaner.control.speed_down + '&';
+        if(aircleanerUrl.path != '?'){
+            http.request(aircleanerUrl).end();
+            aircleanerUrl.path = '?';
+        }
+    }
+}
+
+module.exports.Aircleaner_Speed = function Aircleaner_Speed(argv){
+    if(aircleaner.speed > argv){
+        let i = aircleaner.speed
+        for(i; i > argv; i--)
+            Aircleaner_Speed_down();    
+    }
+
+    else if(aircleaner.speed < argv){
+        let i = aircleaner.speed
+        for(i; i < argv; i++)
+            Aircleaner_Speed_up();    
+    }
+
+    aircleaner.speed = argv;
+}
+
+
+
+module.exports.control_aircleaner = function control_aircleaner(pm10,pm25,voc,co2) {
     let pm10_pm25_stage_max = 0;
     let voc_co2_stage_max = 0;
 
@@ -142,4 +194,3 @@ function control_aircleaner(pm10,pm25,voc,co2) {
 
 }
 
-module.exports = control_aircleaner;
