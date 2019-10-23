@@ -1,6 +1,7 @@
 const airconditioner = {
     power : 0,
     temp : 0,
+    speed : 1,
     control : {
         power : 'power',
 	change_mode : 'changemode',

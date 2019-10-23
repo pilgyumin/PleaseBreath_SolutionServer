@@ -42,12 +42,54 @@ function mode_control() {
     //미세먼지
     if(status_Inner.pm10_Inner < 30 && status_Inner.pm25_Inner < 15){
       //최상의 상태
-      if(aircleaner_status.power == 0){
-        aircleaner_controler.
+      if(aircleaner_status.power == 1){
+        aircleaner_controler.Aircleaner_Power();
+        aircleaner_status.power = 0;
       }
+      console.log("Current Pm Best.. Power Off");
 
 
     }
+    //최악의 상태
+    else if(status_Inner.pm10_Inner >= 81 || status_Inner.pm25_Inner >= 36){
+      if(aircleaner_status.power == 0){
+        aircleaner_status.power = 1;
+        aircleaner_controler.Aircleaner_Power();
+      }
+      console.log("Current Pm worst.. Power On");
+      aircleaner_controler.Aircleaner_Speed(4);
+      
+    }
+    //적정 상태
+    else if(status_Inner.pm10_Inner <= 80 || status_Inner.pm25_Inner <= 35){
+      if(aircleaner_status.power == 0){
+        aircleaner_status.power = 1;
+        aircleaner_controler.Aircleaner_Power();
+      }
+      console.log("Current Pm Normal.. Power On");
+      aircleaner_controler.Aircleaner_Speed(2);
+    }
+
+
+    //온도
+    if(status_Inner.temp_Inner >= 26 && status_Inner.temp_Inner <= 28){
+      //적정 상태
+      if(Airconditioner.power == 0){
+        aircleaner_controler.Aircleaner_Power();
+      }
+      console.log("Current Temp Normal.. ");
+      aircleaner_controler.Aircleaner_Speed(coldtemp27);
+    }
+    else if(status_Inner.temp_Inner < 25){
+      //낮은 기온
+      aircleaner_controler.Aircleaner_Speed(coldtemp27);
+    }
+    else if(status_Inner.temp_Inner > 29){
+      //높은 기온
+      aircleaner_controler.Aircleaner_Speed(coldtemp27);
+    }
+
+
 
   }
 }

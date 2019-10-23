@@ -23,8 +23,8 @@ module.exports.Airconditioner_Power = function Airconditioner_Power(){
 
 module.exports.Airconditioner_Temp = function Airconditioner_Temp(argv){
 
-    airconditioner_Url.path += argv + '&';
-    airconditioner.temp = temp;
+    airconditioner_Url.path += airconditioner.control.argv + '&';
+    airconditioner.temp = argv;
 
     if(airconditioner_Url.path != '?'){
         http.request(airconditioner_Url).end();
@@ -33,9 +33,19 @@ module.exports.Airconditioner_Temp = function Airconditioner_Temp(argv){
 }
 
 
-module.exports.control_airconditioner = function control_airconditioner(temp_Outer){
+module.exports.Airconditioner_Speed = function Airconditioner_Speed(){
 
-function control_airconditioner(temp_Outer){
+    airconditioner_Url.path += airconditioner.control.speed + '&';
+    airconditioner.temp = airconditioner.temp % 4 + 1;
+
+    if(airconditioner_Url.path != '?'){
+        http.request(airconditioner_Url).end();
+        airconditioner_Url.path = '?';
+    }
+}
+
+
+module.exports = control_airconditioner =function control_airconditioner(temp_Outer){
     console.log('airconditioner');
         if(airconditioner.power == 0){
             airconditioner_Url.path += airconditioner.control.power + '&';
@@ -58,6 +68,3 @@ function control_airconditioner(temp_Outer){
             airconditioner_Url.path = '?';
         }
       }
-}
-
-module.exports = control_airconditioner;

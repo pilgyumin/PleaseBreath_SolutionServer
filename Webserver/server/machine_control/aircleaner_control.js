@@ -39,6 +39,10 @@ const aircleaner_path = '?';
 *                                 Co2 : 0 ~ 400
 * */
 
+//공기청정기 최대 속도 4, 최소 속도 1
+//최대에서 up을 눌러도 변경x 최소도 마찬가지
+//어떤 함수를 쓰던 상태값이 저장됩니다.
+
 module.exports.Aircleaner_Power = function Aircleaner_Power(){
     aircleaner.power = 1 - aircleaner.power;
     aircleanerUrl.path += humidifier.control.power + '&';
@@ -89,9 +93,9 @@ module.exports.Aircleaner_Speed = function Aircleaner_Speed(argv){
 
 
 
-module.exports.control_aircleaner = function control_aircleaner(pm10,pm25,voc,co2) {
 
-function control_aircleaner(pm10,pm25,voc,co2) {
+
+module.exports.control_aircleaner = function control_aircleaner(pm10,pm25,voc,co2) {
     let pm10_pm25_stage_max = 0;
     let voc_co2_stage_max = 0;
 
@@ -194,7 +198,3 @@ function control_aircleaner(pm10,pm25,voc,co2) {
         }).end();
     }
   }
-
-}
-
-module.exports = control_aircleaner;
