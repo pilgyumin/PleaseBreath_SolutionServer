@@ -36,13 +36,25 @@ module.exports.Airconditioner_Temp = function Airconditioner_Temp(argv){
 module.exports.Airconditioner_Speed = function Airconditioner_Speed(){
 
     airconditioner_Url.path += airconditioner.control.speed + '&';
-    airconditioner.temp = airconditioner.temp % 4 + 1;
+    airconditioner.temp = airconditioner.temp % 3 + 1;
 
     /*if(airconditioner_Url.path != '?'){
         http.request(airconditioner_Url).end();
         airconditioner_Url.path = '?';
     }*/
 }
+
+module.exports.Airconditioner_Mode_Change = function Airconditioner_Mode_Change(argv){
+
+    airconditioner_Url.path += airconditioner.control.argv + '&';
+    airconditioner.mode = argv;
+
+    /*if(airconditioner_Url.path != '?'){
+        http.request(airconditioner_Url).end();
+        airconditioner_Url.path = '?';
+    }*/
+}
+
 
 
 module.exports.Airconditioner_Send_command = function Airconditioner_Send_command(){

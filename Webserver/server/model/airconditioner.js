@@ -2,9 +2,14 @@ const airconditioner = {
     power : 0,
     temp : 0,
     speed : 1,
+    mode : '',  //wart, cold, dehumidify, wind
     control : {
         power : 'power',
-	change_mode : 'changemode',
+        change_mode : 'changemode',
+        cold : 'cold',
+        warm : 'warm',
+        dehumidify : 'dehumidify', // 제습
+        wind : 'wind', // 송풍
         speed : 'strength',
         coldtemp18 : 'coldtemp18',
         coldtemp19 : 'coldtemp19',
@@ -22,17 +27,17 @@ const airconditioner = {
         coldtemp31 : 'coldtemp31',
         coldtemp32 : 'coldtemp32',
 
-        warmtemp13 : 'warmtemp13',
-        warmtemp14 : 'warmtemp14',
-        warmtemp15 : 'warmtemp15',
-        warmtemp16 : 'warmtemp16',
-        warmtemp17 : 'warmtemp17',
-        warmtemp18 : 'warmtemp18',
-        warmtemp19 : 'warmtemp19',
-        warmtemp20 : 'warmtemp20',
-        warmtemp21 : 'warmtemp21',
-        warmtemp22 : 'warmtemp22',
-        warmtemp23 : 'warmtemp23'
+        warttemp13 : 'warttemp13',
+        warttemp14 : 'warttemp14',
+        warttemp15 : 'warttemp15',
+        warttemp16 : 'warttemp16',
+        warttemp17 : 'warttemp17',
+        warttemp18 : 'warttemp18',
+        warttemp19 : 'warttemp19',
+        warttemp20 : 'warttemp20',
+        warttemp21 : 'warttemp21',
+        warttemp22 : 'warttemp22',
+        warttemp23 : 'warttemp23'
     }
 }
 
