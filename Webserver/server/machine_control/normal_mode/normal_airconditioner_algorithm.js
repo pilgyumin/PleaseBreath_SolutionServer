@@ -1,16 +1,17 @@
 // 민필규
-const airconditioner = require('../model/airconditioner');
-const http = require('http');
-const airconditioner_Url = require('../url_Model/airconditioner_Url');
-const airconditioner_status = require('../model/airconditioner');
 
 module.exports.normal_airconditioner_algorithm = function normal_airconditioner_algorithm(temp_Outer, humid_Inner){
+
+    const airconditioner = require('../model/airconditioner');
+    const http = require('http');
+    const airconditioner_Url = require('../url_Model/airconditioner_Url');
+    const airconditioner_status = require('../model/airconditioner');
+
     //에어컨 제어
     console.log('[normal mode] airconditioner control');
 
     let goal_temp_Inner = 0;
     let airconditioner_add_url = '';
-
 
     // AI모드 일 때
     if(airconditioner_status.detail_mode == 1){

@@ -14,10 +14,11 @@ const airconditioner_controler = require('../machine_control/airconditioner_cont
 const airconditioner_status = require('../model/airconditioner');
 
 const normal_airconditioner_algorithm = require('../machine_control/normal_mode/normal_airconditioner_algorithm');
+const normal_aircleaner_algorithm = require('../machine_control/normal_mode/normal_aircleaner_algorithm');
 function mode_control(temp_Outer,humid_Inner,pm10Inner,pm25Inner,vocInner,co2Inner) {
   if(solution_status.mode==1){ // 일반 모드
     normal_airconditioner_algorithm(temp_Outer,humid_Inner);
-
+    normal_aircleaner_algorithm(pm10Inner,pm25Inner,vocInner,co2Inner);
   }
   else if(solution_status.mode==2){ //영유아모드
 
