@@ -1,16 +1,27 @@
 const airconditioner = {
     power : 0,
-    temp : 0,
-    speed : 1,
     mode : '',  //wart, cold, dehumidify, wind
+    warm : {
+        speed : 1,
+        temp : 13
+    },
+    wind : {
+        speed : 1
+    },
+    cold : {
+        speed : 1,
+        temp : 18
+    },
+    
     control : {
         power : 'power',
-        change_mode : 'changemode',
-        cold : 'cold',
-        warm : 'warm',
-        dehumidify : 'dehumidify', // 제습
-        wind : 'wind', // 송풍
-        speed : 'strength',
+        //change_mode : 'changemode',
+        //mode : '',
+        //warm : 'warm',
+        //cold : 'cold',
+        //dehumidify : 'dehumidify', // 제습
+        //wind : 'wind', // 송풍
+        //speed : 'strength',
         coldtemp18 : 'coldtemp18',
         coldtemp19 : 'coldtemp19',
         coldtemp20 : 'coldtemp20',

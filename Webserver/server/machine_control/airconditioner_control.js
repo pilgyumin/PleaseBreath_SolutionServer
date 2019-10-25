@@ -14,40 +14,117 @@ const airconditioner_Url = require('../url_Model/airconditioner_Url');
 module.exports.Airconditioner_Power = function Airconditioner_Power(){
     airconditioner.power = 1 - airconditioner.power;
     airconditioner_Url.path += airconditioner.control.power + '&';
-
-    /*if(airconditioner_Url.path != '?'){
-        http.request(airconditioner_Url).end();
-        airconditioner_Url.path = '?';
-    }*/
 }
 
-module.exports.Airconditioner_Temp = function Airconditioner_Temp(argv){
+module.exports.Airconditioner_Temp = function Airconditioner_Temp(argv,button){
+    //argv - 희망온도
+    //button - 0 임의설정
+    //button 0일 경우 사용자가 냉방, 난방을 선택하고 온도를 선택한다.
+    
+    //button - 1 버튼 위로
+    //button - 2 버튼 아래로
+    //button 1일 경우 현재의 모드의 온도 + _Up의 요청을 보낸다.
+    
 
-    airconditioner_Url.path += airconditioner.control.argv + '&';
-    airconditioner.temp = argv;
 
-    /*if(airconditioner_Url.path != '?'){
-        http.request(airconditioner_Url).end();
-        airconditioner_Url.path = '?';
-    }*/
+    if(button == 0){
+        
+        //cold15 , cold18 ...온도 지정
+        let Mode = argv.substring(0,4);
+        if(Mode == 'cold')
+            airconditioner.cold.temp = Number(argv.substring(4,6));
+        else if(Mode == 'warm')
+            airconditioner.warm.temp = Number(argv.substring(4,6));
+        airconditioner_Url.path += argv + '&';
+
+        /*if(airconditioner.mode == 'cold'){
+            airconditioner.cold.temp = argv;
+            airconditioner_Url.path += argv + '&';
+        }
+        else if(airconditioner.mode == 'warm'){
+            airconditioner.warm.temp = argv;
+            airconditioner_Url.path += argv + '&';
+        }*/
+
+    }
+    else if(button == 1){
+        //온도 조절 위로 
+        if(airconditioner.mode == 'cold'){
+            let current_Temp = airconditioner.cold.temp;
+
+            if(current_Temp != 32){
+                airconditioner_Url.path += argv + '_Up' + '&';
+                airconditioner.cold.temp++;
+            }
+        }
+
+        else if(airconditioner.mode == 'warm'){
+            let current_Temp = airconditioner.warm.temp;
+
+            if(current_Temp != 23){
+                airconditioner_Url.path += argv + '_Up' + '&';
+                airconditioner.warm.temp++;
+            }
+        }
+
+    }
+
+    else if(button == 2){
+        //온도 조절 아래로
+        if(airconditioner.mode == 'cold'){
+            let current_Temp = airconditioner.cold.temp;
+
+            if(current_Temp != 18){
+                airconditioner_Url.path += argv + '_Down' + '&';
+                airconditioner.cold.temp--;
+            }
+        }
+
+        else if(airconditioner.mode == 'warm'){
+            let current_Temp = airconditioner.warm.temp;
+
+            if(current_Temp != 13){
+                airconditioner_Url.path += argv + '_Down' + '&';
+                airconditioner.warm.temp--;
+            }
+        }
+    }
 }
+
 
 
 module.exports.Airconditioner_Speed = function Airconditioner_Speed(){
 
-    airconditioner_Url.path += airconditioner.control.speed + '&';
-    airconditioner.temp = airconditioner.temp % 3 + 1;
-
+    if(airconditioner.mode != 'dehumidify'){
+        airconditioner_Url.path += airconditioner.control.speed + '&';
+        let Mode = airconditioner.mode;
+        if(Mode == 'warm') airconditioner.warm.speed %= 3 + 1;
+        else if(Mode == 'cold') airconditioner.cold.speed %= 3 + 1;
+        else if(Mode == 'wind') airconditioner.wind.speed %= 3 + 1;
+        
+    }
     /*if(airconditioner_Url.path != '?'){
         http.request(airconditioner_Url).end();
         airconditioner_Url.path = '?';
     }*/
 }
 
+
+
 module.exports.Airconditioner_Mode_Change = function Airconditioner_Mode_Change(argv){
 
-    airconditioner_Url.path += airconditioner.control.argv + '&';
     airconditioner.mode = argv;
+    airconditioner_Url.path += argv + '&';
+/*
+    let Mode = argv;
+    let input_Mode;
+    if(Mode == 'warm') input_Mode = argv;
+    else if(Mode == 'cold') input_Mode = airconditioner.control.cold;
+    else if(Mode == 'wind') input_Mode = airconditioner.control.wind;
+    else if(Mode == 'dehumidify') input_Mode = airconditioner.control.dehumidify;
+*/
+    
+    
 
     /*if(airconditioner_Url.path != '?'){
         http.request(airconditioner_Url).end();
@@ -64,6 +141,10 @@ module.exports.Airconditioner_Send_command = function Airconditioner_Send_comman
         airconditioner_Url.path = '?';
     }
 }
+
+
+
+
 
 
 module.exports = control_airconditioner =function control_airconditioner(temp_Outer){
