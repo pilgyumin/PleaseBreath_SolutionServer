@@ -28,6 +28,7 @@ module.exports.Airconditioner_Temp = function Airconditioner_Temp(argv,button){
     if(button == 0){
         
         //cold15 , cold18 ...온도 지정
+        //cold = 0 ,warm = 1,  dehumidify = 2, wind = 3
         let Mode = argv.substring(0,4);
         if(Mode == 'cold')
             airconditioner.cold.temp = Number(argv.substring(4,6));
@@ -47,21 +48,23 @@ module.exports.Airconditioner_Temp = function Airconditioner_Temp(argv,button){
     }
     else if(button == 1){
         //온도 조절 위로 
-        if(airconditioner.mode == 'cold'){
+        //cold = 0 ,warm = 1,  dehumidify = 2, wind = 3
+        if(airconditioner.mode == 0){
             let current_Temp = airconditioner.cold.temp;
 
             if(current_Temp != 32){
-                airconditioner_Url.path += argv + '_Up' + '&';
                 airconditioner.cold.temp++;
+                airconditioner_Url.path += 'cold'+ airconditioner.cold.temp + '&';
+                
             }
         }
 
-        else if(airconditioner.mode == 'warm'){
+        else if(airconditioner.mode == 1){
             let current_Temp = airconditioner.warm.temp;
 
             if(current_Temp != 23){
-                airconditioner_Url.path += argv + '_Up' + '&';
                 airconditioner.warm.temp++;
+                airconditioner_Url.path += 'warm' + airconditioner.warm.temp + '&';
             }
         }
 
@@ -69,21 +72,23 @@ module.exports.Airconditioner_Temp = function Airconditioner_Temp(argv,button){
 
     else if(button == 2){
         //온도 조절 아래로
-        if(airconditioner.mode == 'cold'){
+         //cold = 0 ,warm = 1,  dehumidify = 2, wind = 3
+        if(airconditioner.mode == 0){
             let current_Temp = airconditioner.cold.temp;
 
             if(current_Temp != 18){
-                airconditioner_Url.path += argv + '_Down' + '&';
                 airconditioner.cold.temp--;
+                airconditioner_Url.path += airconditioner.cold.temp-- + '&';
+               
             }
         }
 
-        else if(airconditioner.mode == 'warm'){
+        else if(airconditioner.mode == 1){
             let current_Temp = airconditioner.warm.temp;
 
             if(current_Temp != 13){
-                airconditioner_Url.path += argv + '_Down' + '&';
                 airconditioner.warm.temp--;
+                airconditioner_Url.path += airconditioner.warm.temp-- + '&';
             }
         }
     }
@@ -92,13 +97,13 @@ module.exports.Airconditioner_Temp = function Airconditioner_Temp(argv,button){
 
 
 module.exports.Airconditioner_Speed = function Airconditioner_Speed(){
-
-    if(airconditioner.mode != 'dehumidify'){
+ //cold = 0 ,warm = 1,  dehumidify = 2, wind = 3
+    if(airconditioner.mode != 2){
         airconditioner_Url.path += airconditioner.control.speed + '&';
         let Mode = airconditioner.mode;
-        if(Mode == 'warm') airconditioner.warm.speed %= 3 + 1;
-        else if(Mode == 'cold') airconditioner.cold.speed %= 3 + 1;
-        else if(Mode == 'wind') airconditioner.wind.speed %= 3 + 1;
+        if(Mode == 1) airconditioner.warm.speed %= 3 + 1;
+        else if(Mode == 0) airconditioner.cold.speed %= 3 + 1;
+        else if(Mode == 3) airconditioner.wind.speed %= 3 + 1;
         
     }
     /*if(airconditioner_Url.path != '?'){
@@ -122,7 +127,7 @@ module.exports.Airconditioner_Mode_Change = function Airconditioner_Mode_Change(
     else if(argv == 3)
         Mode = 'wind';
         
-    airconditioner.mode = argv;
+    airconditioner.mode = Number(argv);
     airconditioner_Url.path += Mode + '&';
 /*
     let Mode = argv;
