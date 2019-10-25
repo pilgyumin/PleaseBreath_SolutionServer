@@ -1,22 +1,37 @@
 const airconditioner = {
     power : 0,
-    detail_mode : 0,  //User == 0 , AI == 1
-    mode : 0,   //cold = 0 ,warm = 1,  dehumidify = 2, wind = 3
-    
-    warm : {
-        speed : 1,
-        temp : 13
-    },
-    wind : {
-        speed : 1
-    },
-    cold : {
-        speed : 1,
-        temp : 18
-    },
-    
+    temp : 0,
     control : {
-        power : 'power'
+        power : 'power',
+	change_mode : 'changemode',
+        speed : 'strength',
+        coldtemp18 : 'coldtemp18',
+        coldtemp19 : 'coldtemp19',
+        coldtemp20 : 'coldtemp20',
+        coldtemp21 : 'coldtemp21',
+        coldtemp22 : 'coldtemp22',
+        coldtemp23 : 'coldtemp23',
+        coldtemp24 : 'coldtemp24',
+        coldtemp25 : 'coldtemp25',
+        coldtemp26 : 'coldtemp26',
+        coldtemp27 : 'coldtemp27',
+        coldtemp28 : 'coldtemp28',
+        coldtemp29 : 'coldtemp29',
+        coldtemp30 : 'coldtemp30',
+        coldtemp31 : 'coldtemp31',
+        coldtemp32 : 'coldtemp32',
+
+        warmtemp13 : 'warmtemp13',
+        warmtemp14 : 'warmtemp14',
+        warmtemp15 : 'warmtemp15',
+        warmtemp16 : 'warmtemp16',
+        warmtemp17 : 'warmtemp17',
+        warmtemp18 : 'warmtemp18',
+        warmtemp19 : 'warmtemp19',
+        warmtemp20 : 'warmtemp20',
+        warmtemp21 : 'warmtemp21',
+        warmtemp22 : 'warmtemp22',
+        warmtemp23 : 'warmtemp23'
     }
 }
 
