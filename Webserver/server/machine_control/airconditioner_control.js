@@ -35,29 +35,6 @@ module.exports.Airconditioner_Temp = function Airconditioner_Temp(argv){
 
 module.exports.control_airconditioner = function control_airconditioner(temp_Outer){
 
-function control_airconditioner(temp_Outer){
-    console.log('airconditioner');
-        if(airconditioner.power == 0){
-            airconditioner_Url.path += airconditioner.control.power + '&';
-            airconditioner.power = 1;
-        }
-
-
-        //if (temp_Outer-5 < 18) {
-		//code for airconditioner.temp to 18
-        //}
-	//else {
-		//code for airconditioner.temp to temp_Outer-5
-	//}
-
-        console.log(airconditioner_Url.path);
-        console.log(JSON.stringify(airconditioner));
-
-        if(airconditioner_Url.path != '?'){
-            http.request(airconditioner_Url).end();
-            airconditioner_Url.path = '?';
-        }
-      }
 }
 
 module.exports = control_airconditioner;

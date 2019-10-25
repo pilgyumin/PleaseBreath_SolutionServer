@@ -12,9 +12,10 @@ const aircleaner_status = require('../model/aircleaner');
 
 const airconditioner_controler = require('../machine_control/airconditioner_control');
 const airconditioner_status = require('../model/airconditioner');
-
+const normal_airconditioner_algorithm = require('../machine_control/normal_mode/normal_airconditioner_algorithm');
 function mode_control() {
-  if(solution_status.mode==1){ // 일반 모드
+  if(solution_status.mode == 1){ // 일반 모드
+    normal_airconditioner_algorithm(temp_Outer,humid_Inner);
 
   }
   if(solution_status.mode==2){ //영유아모드
@@ -43,7 +44,7 @@ function mode_control() {
     if(status_Inner.pm10_Inner < 30 && status_Inner.pm25_Inner < 15){
       //최상의 상태
       if(aircleaner_status.power == 0){
-        aircleaner_controler.
+
       }
 
 
