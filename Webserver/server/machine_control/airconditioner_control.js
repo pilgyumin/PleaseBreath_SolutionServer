@@ -25,8 +25,6 @@ module.exports.Airconditioner_Temp = function Airconditioner_Temp(argv,button){
     //button - 2 버튼 아래로
     //button 1일 경우 현재의 모드의 온도 + _Up의 요청을 보낸다.
     
-
-
     if(button == 0){
         
         //cold15 , cold18 ...온도 지정
@@ -112,9 +110,20 @@ module.exports.Airconditioner_Speed = function Airconditioner_Speed(){
 
 
 module.exports.Airconditioner_Mode_Change = function Airconditioner_Mode_Change(argv){
-
+    //argv 0 1 2 3 
+    let Mode;
+    //cold = 0 ,warm = 1,  dehumidify = 2, wind = 3
+    if(argv == 0)
+        Mode = 'cold';
+    else if(argv == 1)
+        Mode = 'warm';
+    else if(argv == 2)
+        Mode = 'dehumidify';
+    else if(argv == 3)
+        Mode = 'wind';
+        
     airconditioner.mode = argv;
-    airconditioner_Url.path += argv + '&';
+    airconditioner_Url.path += Mode + '&';
 /*
     let Mode = argv;
     let input_Mode;
