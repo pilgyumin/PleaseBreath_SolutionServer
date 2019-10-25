@@ -39,6 +39,8 @@ function mode_control() {
       humidifier_controler.Humidifier_Speed(1);
     }
     
+    humidifier_controler.Humidifier_Send_command();
+
     //미세먼지
     if(status_Inner.pm10_Inner < 30 && status_Inner.pm25_Inner < 15){
       //최상의 상태
@@ -70,6 +72,7 @@ function mode_control() {
       aircleaner_controler.Aircleaner_Speed(2);
     }
 
+    aircleaner_controler.Aircleaner_Send_command();
 
     //온도
     if(status_Inner.temp_Inner >= 26 && status_Inner.temp_Inner <= 28){
@@ -89,7 +92,7 @@ function mode_control() {
       aircleaner_controler.Aircleaner_Speed(coldtemp27);
     }
 
-
+    aircleaner_controler.Aircleaner_Send_command();
 
   }
 }

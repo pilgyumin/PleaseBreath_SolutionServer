@@ -47,20 +47,20 @@ module.exports.Aircleaner_Power = function Aircleaner_Power(){
     aircleaner.power = 1 - aircleaner.power;
     aircleanerUrl.path += humidifier.control.power + '&';
 
-    if(aircleanerUrl.path != '?'){
+    /*if(aircleanerUrl.path != '?'){
         http.request(aircleanerUrl).end();
         aircleanerUrl.path = '?';
-    }
+    }*/
 }
 
 module.exports.Aircleaner_Speed_up = function Aircleaner_Speed_up(){
     if(aircleaner.speed < 4){
         aircleaner.speed += 1;
         aircleanerUrl.path += aircleaner.control.speed_up + '&';
-        if(aircleanerUrl.path != '?'){
+        /*if(aircleanerUrl.path != '?'){
             http.request(aircleanerUrl).end();
             aircleanerUrl.path = '?';
-        }
+        }*/
     }
 }
 
@@ -68,10 +68,10 @@ module.exports.Aircleaner_Speed_down = function Aircleaner_Speed_down(){
     if(aircleaner.speed > 1){
         aircleaner.speed -= 1;
         aircleanerUrl.path += aircleaner.control.speed_down + '&';
-        if(aircleanerUrl.path != '?'){
+        /*if(aircleanerUrl.path != '?'){
             http.request(aircleanerUrl).end();
             aircleanerUrl.path = '?';
-        }
+        }*/
     }
 }
 
@@ -88,10 +88,16 @@ module.exports.Aircleaner_Speed = function Aircleaner_Speed(argv){
             Aircleaner_Speed_up();
     }
 
-    aircleaner.speed = argv;
 }
 
 
+module.exports.Aircleaner_Send_command = function Aircleaner_Send_command(){
+
+    if(aircleanerUrl.path != '?'){
+        http.request(aircleanerUrl).end();
+        aircleanerUrl.path = '?';
+    }
+}
 
 
 
