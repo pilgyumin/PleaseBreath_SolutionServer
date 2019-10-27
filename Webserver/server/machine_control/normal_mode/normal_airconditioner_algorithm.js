@@ -1,8 +1,7 @@
 // 민필규
-const airconditioner = require('../model/airconditioner');
 const http = require('http');
-const airconditioner_Url = require('../url_Model/airconditioner_Url');
-const airconditioner_status = require('../model/airconditioner');
+const airconditioner_Url = require('/url_Model/airconditioner_Url');
+const airconditioner_status = require('/model/airconditioner');
 
 module.exports.normal_airconditioner_algorithm = function normal_airconditioner_algorithm(temp_Outer, humid_Inner){
     //에어컨 제어
