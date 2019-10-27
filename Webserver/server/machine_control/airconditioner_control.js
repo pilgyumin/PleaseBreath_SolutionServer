@@ -1,7 +1,7 @@
-const airconditioner = require('../model/airconditioner');
+const airconditioner = require('/model/airconditioner');
 const http = require('http');
 
-const airconditioner_Url = require('../url_Model/airconditioner_Url');
+const airconditioner_Url = require('/url_Model/airconditioner_Url');
 
 
 /*
@@ -59,5 +59,3 @@ function control_airconditioner(temp_Outer){
         }
       }
 }
-
-module.exports = control_airconditioner;
