@@ -34,6 +34,7 @@
 //공기청정기 최대 속도 4, 최소 속도 1
 //최대에서 up을 눌러도 변경x 최소도 마찬가지
 //어떤 함수를 쓰던 상태값이 저장됩니다.
+let ar_len = 0;
 
 module.exports.control_aircleaner = function control_aircleaner(pm10,pm25,voc,co2) {
     const http = require('http');
@@ -42,6 +43,17 @@ module.exports.control_aircleaner = function control_aircleaner(pm10,pm25,voc,co
     const aircleaner_hostname = '192.168.0.12';
     const aircleaner_port = '3000';
     const aircleaner_path = '?';
+
+    const pm10_max = 180;
+    const pm25_max = 180;
+    const voc_max = 2.0;
+    const co2_max = 2000;
+
+    const pm10_min = 0;
+    const pm25_min = 0;
+    const voc_min = 0;
+    const co2_min = 400;
+
 
     let pm10_pm25_stage_max = 0;
     let voc_co2_stage_max = 0;
