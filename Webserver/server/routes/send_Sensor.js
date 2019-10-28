@@ -136,7 +136,8 @@ router.get('', (req, res, next) => {
 
     if(solution_status.mode!=0)
     {
-      mode_control();
+      mode_control(req.query.tempOuter,req.query.tempInner,req.query.humidInner,req.query.pm10Inner,req.query.pm25Inner
+      ,req.query.vocInner,req.query.co2Inner);
     }
 
     year = moment().year();
