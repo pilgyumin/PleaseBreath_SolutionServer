@@ -13,17 +13,19 @@ router.get('/power', (req, res, next) => {
 });
 
 
-router.get('/speedup', (req, res, next) => {
+router.get('/speed', (req, res, next) => {
     Airconditioner_Control.Airconditioner_Speed();
     Airconditioner_Control.Airconditioner_Send_command();
 });
 
-router.get('/tempup', (req, res, next) => {
+router.get('/tempUp', (req, res, next) => {
     Airconditioner_Control.Airconditioner_Temp(0,2);
+    Airconditioner_Control.Airconditioner_Send_command();
 });
 
-router.get('/tempdown', (req, res, next) => {
+router.get('/tempDown', (req, res, next) => {
     Airconditioner_Control.Airconditioner_Temp(0,1);
+    Airconditioner_Control.Airconditioner_Send_command();
 });
 
 
