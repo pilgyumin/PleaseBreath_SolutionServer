@@ -27,24 +27,27 @@ function mode_control(temp_Outer,humid_Inner,pm10Inner,pm25Inner,vocInner,co2Inn
       if(airconditioner_status.temp!=22)
       {
         if(status_Outer.temp_Outer<10){//난방 22도
+            airconditioner_controler.Airconditioner_Mode_Change(1);
             airconditioner_controler.Airconditioner_Temp(22);
         }
         else {//냉방 22도
+            airconditioner_controler.Airconditioner_Mode_Change(0);
             airconditioner_controler.Airconditioner_Temp(22);
         }
       }
     //실내 습도 50% 고정
     if(status_Inner.humid_Inner < 50){ // 습도 50이하일 경우
-      if(humidifier_status.power == 0){//가습기키기
+      if(humidifier_status.power == 0){//가습기 켜기
           humidifier_controler.Humidifier_Power();
-      }
-      //+에어컨 제습기 켜져있으면 제습기 끄기.
+      } //제습기는 알이서 꺼져있을 것 : 왜냐면 앞에 온도조절에서 에어컨 모드를 바꿨으니깐
     }
     if(status_Inner.humid_Inner > 55){ // 습도 55이상일 경우
-      if(humidifier_status.power == 1){
+      if(humidifier_status.power == 1){//가습기 끄기
           humidifier_controler.Humidifier_Power();
       }
-      //+에어컨 제습기 꺼져있으면 제습기 켜기
+      if(airconditioner_status.mode!=2){//제습기 켜기
+        airconditioner_controler.Airconditioner_Mode_Change(3);
+      }
     }
   }
   else if(solution_status.mode==3){ //노인모드
@@ -65,7 +68,7 @@ function mode_control(temp_Outer,humid_Inner,pm10Inner,pm25Inner,vocInner,co2Inn
     else{
       humidifier_controler.Humidifier_Speed(1);
     }
-    
+
     humidifier_controler.Humidifier_Send_command();
 
     //미세먼지
@@ -87,7 +90,7 @@ function mode_control(temp_Outer,humid_Inner,pm10Inner,pm25Inner,vocInner,co2Inn
       }
       console.log("Current Pm worst.. Power On");
       aircleaner_controler.Aircleaner_Speed(4);
-      
+
     }
     //적정 상태
     else if(status_Inner.pm10_Inner <= 80 || status_Inner.pm25_Inner <= 35){
