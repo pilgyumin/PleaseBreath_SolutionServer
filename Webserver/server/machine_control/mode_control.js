@@ -1,4 +1,3 @@
-
 const solution_status = require('../model/solution_status');
 
 const status_Inner = require('../model/status_Inner');
@@ -32,11 +31,11 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
     {
       if(status_Outer.temp_Outer<10){//난방 22도
           airconditioner_controler.Airconditioner_Mode_Change(1);
-          airconditioner_controler.Airconditioner_Temp(22,0);
+          airconditioner_controler.Airconditioner_Temp(warm22,0);
       }
       else {//냉방 22도
           airconditioner_controler.Airconditioner_Mode_Change(0);
-          airconditioner_controler.Airconditioner_Temp(22,0);
+          airconditioner_controler.Airconditioner_Temp(cold22,0);
       }
     }
 
