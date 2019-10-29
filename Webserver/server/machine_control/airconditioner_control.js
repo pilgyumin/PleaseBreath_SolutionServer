@@ -12,8 +12,14 @@ const airconditioner_Url = require('../url_Model/airconditioner_Url');
 *
 * */
 module.exports.Airconditioner_Power = function Airconditioner_Power(){
-    airconditioner.power = 1 - airconditioner.power;
-    airconditioner_Url.path += airconditioner.control.power + '&';
+    if(button == 0){
+        airconditioner.power = 0;
+        airconditioner_Url.path += "poweroff" + '&';    
+    }
+    else if(button == 1){
+        airconditioner.power = 1;
+        airconditioner_Url.path += airconditioner.control.power + '&';
+    }
 }
 
 module.exports.Airconditioner_Temp = function Airconditioner_Temp(argv,button){
