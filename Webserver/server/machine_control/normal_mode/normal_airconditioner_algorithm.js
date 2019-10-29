@@ -187,8 +187,17 @@ module.exports.normal_airconditioner_algorithm = function normal_airconditioner_
 
             if(airconditioner_status.mode != 2){
                 airconditioner_status.mode = 2;
-
+                airconditioner_add_url += 'dehumidify&';
             }
+        }
+
+        else if(humid_Inner < goalHumid){
+
+            if(airconditioner.power == 1){
+                airconditioner_add_url += airconditioner_status.control.power + '&';
+                airconditioner_status.power = 0;
+            }
+
         }
     }
 }

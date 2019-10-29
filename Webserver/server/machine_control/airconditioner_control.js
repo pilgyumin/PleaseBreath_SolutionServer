@@ -90,6 +90,7 @@ module.exports.Airconditioner_Temp = function Airconditioner_Temp(argv,button){
                     airconditioner.warm.temp--;
                     airconditioner_Url.path += 'warm' + airconditioner.warm.temp-- + '&';
                 }
+
             }
         }
     }
@@ -99,6 +100,7 @@ module.exports.Airconditioner_Temp = function Airconditioner_Temp(argv,button){
 
 module.exports.Airconditioner_Speed = function Airconditioner_Speed(){
     //cold = 0 ,warm = 1,  dehumidify = 2, wind = 3
+
     if(airconditioner.power == 1){
         if(airconditioner.mode != 2){
             airconditioner_Url.path += airconditioner.control.speed + '&';
@@ -108,6 +110,7 @@ module.exports.Airconditioner_Speed = function Airconditioner_Speed(){
             else if(Mode == 3) airconditioner.wind.speed %= 3 + 1;
 
         }
+
     }
     /*if(airconditioner_Url.path != '?'){
         http.request(airconditioner_Url).end();
@@ -119,6 +122,7 @@ module.exports.Airconditioner_Speed = function Airconditioner_Speed(){
 
 module.exports.Airconditioner_Mode_Change = function Airconditioner_Mode_Change(argv){
     //argv 0 1 2 3
+
     if(airconditioner.power == 1){
         let Mode;
         //cold = 0 ,warm = 1,  dehumidify = 2, wind = 3
@@ -134,6 +138,7 @@ module.exports.Airconditioner_Mode_Change = function Airconditioner_Mode_Change(
         airconditioner.mode = Number(argv);
         airconditioner_Url.path += Mode + '&';
     }
+
     /*
         let Mode = argv;
         let input_Mode;
