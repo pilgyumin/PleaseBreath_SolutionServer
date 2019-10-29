@@ -28,15 +28,18 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
     if (airconditioner_status.power == 0) {
       airconditioner_controler.Airconditioner_Power();
     }
-    if (airconditioner_status.temp != 22) {
-      if (status_Outer.temp_Outer < 10) {//난방 22도
-        airconditioner_controler.Airconditioner_Mode_Change(1);
-        airconditioner_controler.Airconditioner_Temp(22);
-      } else {//냉방 22도
-        airconditioner_controler.Airconditioner_Mode_Change(0);
-        airconditioner_controler.Airconditioner_Temp(22);
+    if(airconditioner_status.warm.temp!=22 && airconditioer.status.cold.temp!=22)
+    {
+      if(status_Outer.temp_Outer<10){//난방 22도
+          airconditioner_controler.Airconditioner_Mode_Change(1);
+          airconditioner_controler.Airconditioner_Temp(22,0);
+      }
+      else {//냉방 22도
+          airconditioner_controler.Airconditioner_Mode_Change(0);
+          airconditioner_controler.Airconditioner_Temp(22,0);
       }
     }
+
     //실내 습도 50% 고정
     if (status_Inner.humid_Inner < 50) { // 습도 50이하일 경우
       if (humidifier_status.power == 0) {//가습기 켜기
