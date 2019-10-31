@@ -10,6 +10,7 @@ const send_Sensor_Router = require('./routes/send_Sensor');
 const Humid_Router = require('./routes/Humid_Control');
 const aiSolution_Control_Router = require('./routes/aiSolution_Control');
 const Mode_Router = require('./routes/Mode');
+const TEST_Router = require('./routes/TEST_DATA');
 var app = express();
 
 app.set('port', process.env.PORT|| 3000);
@@ -25,6 +26,7 @@ app.use('/AircleanerControl',Aircleaner_Router);
 app.use('/AirconditionerControl',Airconditioner_Router);
 app.use('/aiSolutionControl',aiSolution_Control_Router);
 app.use('/Mode',Mode_Router);
+app.use('/Test',TEST_Router);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

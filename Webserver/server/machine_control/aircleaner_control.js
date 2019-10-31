@@ -43,7 +43,7 @@ const aircleaner_path = '?';
 //최대에서 up을 눌러도 변경x 최소도 마찬가지
 //어떤 함수를 쓰던 상태값이 저장됩니다.
 
-module.exports.Aircleaner_Power = function Aircleaner_Power(){
+function Aircleaner_Power(){
     aircleaner.power = 1 - aircleaner.power;
     aircleanerUrl.path += humidifier.control.power + '&';
 
@@ -53,7 +53,7 @@ module.exports.Aircleaner_Power = function Aircleaner_Power(){
     }*/
 }
 
-module.exports.Aircleaner_Speed_up = function Aircleaner_Speed_up(){
+function Aircleaner_Speed_up(){
     if(aircleaner.speed < 4){
         aircleaner.speed += 1;
         aircleanerUrl.path += aircleaner.control.speed_up + '&';
@@ -64,7 +64,7 @@ module.exports.Aircleaner_Speed_up = function Aircleaner_Speed_up(){
     }
 }
 
-module.exports.Aircleaner_Speed_down = function Aircleaner_Speed_down(){
+function Aircleaner_Speed_down(){
     if(aircleaner.speed > 1){
         aircleaner.speed -= 1;
         aircleanerUrl.path += aircleaner.control.speed_down + '&';
@@ -74,8 +74,7 @@ module.exports.Aircleaner_Speed_down = function Aircleaner_Speed_down(){
         }*/
     }
 }
-
-module.exports.Aircleaner_Speed = function Aircleaner_Speed(argv){
+function Aircleaner_Speed(argv){
     if(aircleaner.speed > argv){
         let i = aircleaner.speed
         for(i; i > argv; i--)
@@ -90,8 +89,7 @@ module.exports.Aircleaner_Speed = function Aircleaner_Speed(argv){
 
 }
 
-
-module.exports.Aircleaner_Send_command = function Aircleaner_Send_command(){
+function Aircleaner_Send_command(){
 
     if(aircleanerUrl.path != '?'){
         http.request(aircleanerUrl).end();
@@ -100,8 +98,7 @@ module.exports.Aircleaner_Send_command = function Aircleaner_Send_command(){
 }
 
 
-
-module.exports.control_aircleaner = function control_aircleaner(pm10,pm25,voc,co2) {
+function control_aircleaner(pm10,pm25,voc,co2) {
     let pm10_pm25_stage_max = 0;
     let voc_co2_stage_max = 0;
 
@@ -204,3 +201,13 @@ module.exports.control_aircleaner = function control_aircleaner(pm10,pm25,voc,co
         }).end();
     }
   }
+
+module.exports.Aircleaner_Power = Aircleaner_Power;
+module.exports.Aircleaner_Speed_up = Aircleaner_Speed_up;
+module.exports.Aircleaner_Speed_down = Aircleaner_Speed_down;
+  
+module.exports.Aircleaner_Speed = Aircleaner_Speed;
+
+module.exports.Aircleaner_Send_command = Aircleaner_Send_command;
+
+module.exports.control_aircleaner = control_aircleaner;
