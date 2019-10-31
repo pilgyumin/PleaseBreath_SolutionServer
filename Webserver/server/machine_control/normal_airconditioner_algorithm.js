@@ -1,20 +1,22 @@
 // 민필규
+const http = require('http');
+const airconditioner_Url = require('../url_Model/airconditioner_Url');
+const airconditioner_status = require('../model/airconditioner');
 
 module.exports.normal_airconditioner_algorithm = function normal_airconditioner_algorithm(temp_Outer, humid_Inner){
 
-    const airconditioner = require('../model/airconditioner');
-    const http = require('http');
-    const airconditioner_Url = require('../url_Model/airconditioner_Url');
-    const airconditioner_status = require('../model/airconditioner');
 
     //에어컨 제어
+
+
+
     console.log('[normal mode] airconditioner control');
 
     let goal_temp_Inner = 0;
     let airconditioner_add_url = '';
 
     // AI모드 일 때
-    if(airconditioner_status.detail_mode == 1){
+    if(airconditioner_status.detail_mode === 1){
         // 목표 온도 설정
         if (temp_Outer-5 < 18) {
             //code for airconditioner.temp to 18
@@ -25,34 +27,33 @@ module.exports.normal_airconditioner_algorithm = function normal_airconditioner_
             //code for airconditioner.temp to temp_Outer-5
             goal_temp_Inner = temp_Outer - 5;
         }
-
-        if(goal_temp_Inner != airconditioner_status.temp){
-
-            if(airconditioner.power == 0){
-                airconditioner_add_url += 'power&';
-                airconditioner_status.power = 1;
+        console.log(goal_temp_Inner);
+        // 목표 모드 설정(냉방 / 난방)
+        if(temp_Outer < 10){
+            // 난방 모드로 변경
+            if(airconditioner_status.mode != 1){
+                airconditioner_status.mode = 1;
+                airconditioner_add_url += 'warm&';
             }
 
-            // 목표 모드 설정(냉방 / 난방)
-            if(temp_Outer < 10){
-                // 난방 모드로 변경
-                if(airconditioner_status.mode != 1){
-                    airconditioner_status.mode = 1;
-                    airconditioner_add_url += 'warm&';
+        }
+        else{
+            // 냉방 모드로 변경
+            if(airconditioner_status.mode != 0) {
+                airconditioner_status.mode = 0;
+                airconditioner_add_url += 'cold&';
+            }
+        }
+
+        if(airconditioner_status.mode === 0){
+            if(goal_temp_Inner != airconditioner_status.cold.temp){
+
+                if(airconditioner_status.power == 0){
+                    airconditioner_add_url += 'power&';
+                    airconditioner_status.power = 1;
                 }
 
-            }
-            else{
-                // 냉방 모드로 변경
-                if(airconditioner_status.mode != 0) {
-                    airconditioner_status.mode = 0;
-                    airconditioner_add_url += 'cold&';
-                }
-            }
-
-            airconditioner_status.temp = goal_temp_Inner;
-
-            if(airconditioner_status.mode == 0){
+                airconditioner_status.cold.temp = goal_temp_Inner;
                 switch(goal_temp_Inner){
                     case 18:
                         airconditioner_add_url += 'cold18&';
@@ -101,7 +102,20 @@ module.exports.normal_airconditioner_algorithm = function normal_airconditioner_
                         break;
                 }
             }
-            else if(airconditioner_status.mode == 1){
+            else{
+                control_humid();
+            }
+        }
+        else{
+            if(goal_temp_Inner != airconditioner_status.warm.temp){
+
+                if(airconditioner_status.power == 0){
+                    airconditioner_add_url += 'power&';
+                    airconditioner_status.power = 1;
+                }
+
+                airconditioner_status.warm.temp = goal_temp_Inner;
+
                 switch(goal_temp_Inner){
                     case 13:
                         airconditioner_add_url += 'warm13&';
@@ -138,10 +152,11 @@ module.exports.normal_airconditioner_algorithm = function normal_airconditioner_
                         break;
                 }
             }
+            else{
+                control_humid();
+            }
         }
-        else{
-            control_humid();
-        }
+
     }
 
     else{
@@ -180,7 +195,7 @@ module.exports.normal_airconditioner_algorithm = function normal_airconditioner_
 
         if(humid_Inner > goalHumid){
 
-            if(airconditioner.power == 0){
+            if(airconditioner_status.power == 0){
                 airconditioner_add_url += airconditioner_status.control.power + '&';
                 airconditioner_status.power = 1;
             }
@@ -193,11 +208,12 @@ module.exports.normal_airconditioner_algorithm = function normal_airconditioner_
 
         else if(humid_Inner < goalHumid){
 
-            if(airconditioner.power == 1){
-                airconditioner_add_url += airconditioner_status.control.power + '&';
+            if(airconditioner_status.power == 1){
+                airconditioner_add_url += 'poweroff&';
                 airconditioner_status.power = 0;
             }
 
         }
     }
+    console.log('aircon end');
 }

@@ -13,16 +13,22 @@ const aircleaner_status = require('../model/aircleaner');
 const airconditioner_controler = require('../machine_control/airconditioner_control');
 const airconditioner_status = require('../model/airconditioner');
 
-const normal_airconditioner_algorithm = require('../machine_control/normal_mode/normal_airconditioner_algorithm');
-const aircleaner_algorithm = require('./aircleaner_algorithm');
+const normal_airconditioner_algorithm = require('./normal_airconditioner_algorithm');
+const aircleaner_algorithm = require('../machine_control/aircleaner_algorithm');
 
 function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocInner,co2Inner) {
+  console.log('aircleaner_control');
   //모드에 상관없이 공기청정기 알고리즘 가동
-  aircleaner_algorithm(pm10Inner, pm25Inner, vocInner, co2Inner);
+  aircleaner_algorithm.aircleaner_algorithm(pm10Inner, pm25Inner, vocInner, co2Inner);
+  console.log('mode_control');
 
   if (solution_status.mode == 1) { // 일반 모드
-    normal_airconditioner_algorithm(temp_Outer, humid_Inner);
+    console.log('normal');
+
+    normal_airconditioner_algorithm.normal_airconditioner_algorithm(temp_Outer,humid_Inner);
     humidifier_controler.ctrlHumidifier(temp_Inner);
+
+
   } else if (solution_status.mode == 2) { //영유아모드
     //실내 온도 22도 고정
     if (airconditioner_status.power == 0) {
@@ -109,7 +115,7 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
     //온도
     if (status_Inner.temp_Inner >= 26 && status_Inner.temp_Inner <= 28) {
       //적정 상태
-      if (Airconditioner.power == 0) {
+      if (airconditioner_status.power == 0) {
         aircleaner_controler.Aircleaner_Power();
       }
       console.log("Current Temp Normal.. ");

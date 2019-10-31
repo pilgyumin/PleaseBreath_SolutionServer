@@ -1,5 +1,5 @@
 const solution_status = {
-	mode : 0
+	mode : 1
 }
 
 module.exports = solution_status;

@@ -1,6 +1,5 @@
 const http = require('http');
 const aircleaner = require('../model/aircleaner');
-
 const aircleanerUrl = require('../url_Model/aircleaner_Url');
 
 const aircleaner_hostname = '192.168.0.12';

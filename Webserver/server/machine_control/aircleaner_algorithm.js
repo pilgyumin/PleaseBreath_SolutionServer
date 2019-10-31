@@ -61,15 +61,17 @@ let co2_ar = new Array();
 
 let ar_len = 0;
 
-const aircleaner_control = require('./aircleaner_control');
-
 module.exports.aircleaner_algorithm = function aircleaner_algorithm(pm10,pm25,voc,co2) {
-    const http = require('http');
-    const aircleaner_status = require('../model/aircleaner');
 
-    const motor_hostname = '192.168.0.12';
+    const http = require('http');
+
+    const aircleaner_status = require('../model/aircleaner');
+    const aircleaner_control = require('../machine_control/aircleaner_control');
+    const motor_hostname = '192.168.1.9';
     const motor_port = '3000';
     const motor_path = '?';
+
+    console.log('aircleaner_algorithm');
 
     pm10_ar[ar_len] = pm10;
     pm25_ar[ar_len] = pm25;
@@ -112,7 +114,7 @@ module.exports.aircleaner_algorithm = function aircleaner_algorithm(pm10,pm25,vo
             }
             pm25_average /= 9;
             pm10_average /= 9;
-            aircleaner_control(pm10_average,pm25_average,0,0);
+            aircleaner_control.control_aircleaner(pm10_average,pm25_average,0,0);
         }
         else{
             if(aircleaner_status.mode != 1){
@@ -131,7 +133,7 @@ module.exports.aircleaner_algorithm = function aircleaner_algorithm(pm10,pm25,vo
             }
             voc_average /= 9;
             co2_average /= 9;
-            aircleaner_control(0,0,voc_average,co2_average);
+            aircleaner_control.control_aircleaner(0,0,voc_average,co2_average);
         }
         inner_count = outer_count = ar_len = 0;
     }
