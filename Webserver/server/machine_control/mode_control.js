@@ -87,14 +87,14 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
     console.log('Temp Control');
 
     //온도
+    if (Airconditioner.power == 0) {
+      airconditioner_controler.Airconditioner_Power(1);
+    }
     if (status_Inner.temp_Inner >= 26 && status_Inner.temp_Inner <= 28) {
       //적정 상태
-      if (Airconditioner.power == 0) {
-        airconditioner_controler.Airconditioner_Power();
-      }
       console.log("Current Temp Normal.. ");
       airconditioner_controler.Airconditioner_Speed(1);
-      } 
+    } 
     else if (status_Inner.temp_Inner < 25) {
       //낮은 기온
       airconditioner_controler.Airconditioner_Mode_Change(2);
