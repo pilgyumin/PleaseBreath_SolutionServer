@@ -15,9 +15,12 @@ const airconditioner_status = require('../model/airconditioner');
 const normal_airconditioner_algorithm = require('./normal_airconditioner_algorithm');
 const aircleaner_algorithm = require('../machine_control/aircleaner_algorithm');
 
+humidifier_controler.Humidifier_Speed_up();
+const Show_Status = require('./TEST/Show_Status');
 function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocInner,co2Inner) {
   console.log('aircleaner_control');
   //모드에 상관없이 공기청정기 알고리즘 가동
+
   aircleaner_algorithm.aircleaner_algorithm(pm10Inner, pm25Inner, vocInner, co2Inner);
   console.log('mode_control');
 
@@ -61,23 +64,65 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
         airconditioner_controler.Airconditioner_Mode_Change(3);
       }
     }
-  } else if (solution_status.mode == 3) { //노인모드
+  } 
+  
+  else if (solution_status.mode == 3) { //노인모드
     //실내 습기 40% 이하
+    console.log('Senior Mode');
+    console.log('Current Status');
+    Show_Status.Show_Status();
+    console.log('Humid Control');
     if (status_Inner.humid_Inner < 40) {
       if (humidifier_status.power == 0) {
         humidifier_controler.Humidifier_Power();
       }
       humidifier_controler.Humidifier_Speed(3);
-    } else if (status_Inner.humid_Inner > 50) {
+    } 
+    
+    else if (status_Inner.humid_Inner > 50) {
       if (humidifier_status.power == 1) {
         humidifier_controler.Humidifier_Power();
       }
-    } else {
+    } 
+    
+    else {
       humidifier_controler.Humidifier_Speed(1);
     }
+    
+    //humidifier_controler.Humidifier_Send_command();
+    console.log('Temp Control');
 
-    humidifier_controler.Humidifier_Send_command();
+    //온도
+    if (Airconditioner.power == 0) {
+      airconditioner_controler.Airconditioner_Power(1);
+    }
+    if (status_Inner.temp_Inner >= 26 && status_Inner.temp_Inner <= 28) {
+      //적정 상태
+      console.log("Current Temp Normal.. ");
+      airconditioner_controler.Airconditioner_Speed(1);
+    } 
+    else if (status_Inner.temp_Inner < 25) {
+      //낮은 기온
+      airconditioner_controler.Airconditioner_Mode_Change(2);
+      airconditioner_controler.Airconditioner_Speed(2);
+    } 
+    else if (status_Inner.temp_Inner > 29) {
+      //높은 기온
+      airconditioner_controler.Airconditioner_Mode_Change(1);
+      airconditioner_controler.Airconditioner_Speed(2);
+      //aircleaner_controler.Aircleaner_Send_command();
+    }
+    Show_Status.Show_Status();
 
+
+
+
+
+
+
+
+
+/*
     //미세먼지
     if (status_Inner.pm10_Inner < 30 && status_Inner.pm25_Inner < 15) {
       //최상의 상태
@@ -109,7 +154,8 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
       aircleaner_controler.Aircleaner_Speed(2);
     }
 
-    aircleaner_controler.Aircleaner_Send_command();
+    //aircleaner_controler.Aircleaner_Send_command();
+
 
     //온도
     if (status_Inner.temp_Inner >= 26 && status_Inner.temp_Inner <= 28) {
@@ -128,8 +174,11 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
 
       aircleaner_controler.Aircleaner_Send_command();
 
-      aircleaner_controler.Aircleaner_Send_command();
-    }
+    
+    console.log('Return');
+    Show_Status.Show_Status();*/
+
+
   }
 }
 

@@ -16,7 +16,8 @@ const airconditioner = {
     },
 
     control : {
-        power : 'power'
+        power : 'power',
+        poweroff : 'poweroff'
     }
 }
 

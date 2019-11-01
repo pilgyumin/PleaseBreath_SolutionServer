@@ -7,9 +7,12 @@ const airconditioner = require('../model/airconditioner');
 const Airconditioner_Control = require('../machine_control/airconditioner_control');
 
 router.get('/power', (req, res, next) => {
+    console.log('Airconditioner Power On');
+    
     Airconditioner_Control.Airconditioner_Power();
-    console.log('Airconditioner Power');
+    
     Airconditioner_Control.Airconditioner_Send_command();
+    console.log('Airconditioner Start');
 });
 
 

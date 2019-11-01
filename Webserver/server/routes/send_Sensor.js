@@ -34,7 +34,7 @@ let webserver_Url = {
 let isOuter = true;
 
 router.get('', (req, res, next) => {
-
+    console.log(solution_status.mode);
     //temp
     if(req.query.tempOuter){
         isOuter = true;
@@ -136,8 +136,9 @@ router.get('', (req, res, next) => {
 
     if(solution_status.mode!=0)
     {
-      mode_control(req.query.tempOuter,req.query.tempInner,req.query.humidInner,req.query.pm10Inner,req.query.pm25Inner
-      ,req.query.vocInner,req.query.co2Inner);
+        console.log('enter');
+      mode_control(status_Outer.tempOuter,status_Inner.tempInner,status_Inner.humidInner,status_Inner.pm10Inner,status_Inner.pm25Inner
+      ,status_Inner.vocInner,status_Inner.co2Inner);
     }
 
     year = moment().year();
