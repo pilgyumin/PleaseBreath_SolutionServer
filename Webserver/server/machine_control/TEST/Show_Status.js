@@ -3,7 +3,7 @@ const status_Outer = require('../../model/status_Outer');
 const humidfier = require('../../model/humidifier')
 const airconditioner = require('../../model/airconditioner')
 const aircleaner = require('../../model/aircleaner')
-
+const mode = require('../mode_control');
 const aircleanerUrl = require('../../url_Model/aircleaner_Url');
 const airconditionerUrl = require('../../url_Model/airconditioner_Url');
 const humidifierUrl = require('../../url_Model/humidifier_Url');
@@ -53,5 +53,9 @@ function Show_Command(){
     console.log('humidifier ULR : ' + humidifierUrl.path);
 }
 
+function Show_DATA(){
+    mode();
+}
+module.exports.Show_DATA = Show_DATA;
 module.exports.Show_Status = Show_Status;
 module.exports.Show_Command = Show_Command;

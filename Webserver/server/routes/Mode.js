@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const router = express.Router();
-
+const TEST = require('../machine_control/TEST/Show_Status');
 const solution_status = require('../model/solution_status');
 
 
@@ -28,7 +28,7 @@ router.get('/Infants',(req,res,next)=>{
 router.get('/Senior', (req, res, next) => {
     solution_status.mode=3;
     console.log('Senior Mode Start');
-
+    TEST.Show_DATA();
     res.json(JSON.stringify({}));
 });
 
