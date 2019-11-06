@@ -11,6 +11,7 @@ const TEST = require('../machine_control/TEST/Show_Status');
 router.get('/power', (req, res, next) => {
 	
 	Humidify_Controler.Humidifier_Power();
+	Humidify_Controler.Humidifier_Speed_up();
 	Humidify_Controler.Humidifier_Send_command();
 
 	/*humidifier.power=1-humidifier.power;
