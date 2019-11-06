@@ -45,6 +45,8 @@ const aircleaner_path = '?';
 function Aircleaner_Power(){
     
     aircleaner.power = 1 - aircleaner.power;
+    if(aircleaner.power == 0)
+        aircleaner.speed = 1;
     aircleanerUrl.path += aircleaner.control.power + '&';
     
     /*if(aircleanerUrl.path != '?'){

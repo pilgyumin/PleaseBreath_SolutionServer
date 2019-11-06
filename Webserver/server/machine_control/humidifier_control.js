@@ -26,6 +26,9 @@ function test(){
 }
 function Humidifier_Power(){
     humidifier.power = 1 - humidifier.power;
+    if(humidifier.power == 0)
+        humidifier.speed = 1;
+    
     humidifierUrl.path += humidifier.control.power + '&';
     /*if(humidifierUrl.path != '?'){
         http.request(humidifierUrl).end();
