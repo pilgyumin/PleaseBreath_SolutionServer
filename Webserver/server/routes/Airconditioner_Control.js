@@ -53,8 +53,10 @@ router.get('/speeddown', (req, res, next) => {
         console.log("CurrentMode = " + Current_Mode + "Control fail");
     
     Airconditioner_Control.Airconditioner_Send_command();
+
     console.log(TEST.Show_Command());
     console.log(TEST.Show_Status());
+
 
     res.json(JSON.stringify({}));
 });
@@ -70,8 +72,11 @@ router.get('/speedup', (req, res, next) => {
         console.log("CurrentMode = " + Current_Mode + "Control fail");
     
     Airconditioner_Control.Airconditioner_Send_command();
+
     console.log(TEST.Show_Command());
     console.log(TEST.Show_Status());
+
+
     res.json(JSON.stringify({}));
 });
 
@@ -79,8 +84,10 @@ router.get('/speedup', (req, res, next) => {
 router.get('/tempUp', (req, res, next) => {
     Airconditioner_Control.Airconditioner_Temp(0,1);
     Airconditioner_Control.Airconditioner_Send_command();
+
     console.log(TEST.Show_Command());
     console.log(TEST.Show_Status());
+
     res.json(JSON.stringify({}));
 });
 
@@ -89,6 +96,7 @@ router.get('/tempDown', (req, res, next) => {
     Airconditioner_Control.Airconditioner_Send_command();
     console.log(TEST.Show_Command());
     console.log(TEST.Show_Status());
+
     res.json(JSON.stringify({}));
 });
 

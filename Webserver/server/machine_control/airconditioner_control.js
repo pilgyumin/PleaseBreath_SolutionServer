@@ -15,10 +15,12 @@ function Airconditioner_Power(){
     //argv == 0 power off 
     //argv == 1 power on
     //전원키고 끄는 IR신호가 다르기 때문에 나누어서 신호 전달
+
     if(airconditioner.power == 0){
         airconditioner.power = 1;
         airconditioner_Url.path += airconditioner.control.power + '&';
     }
+
     else if(airconditioner.power == 1){
         airconditioner.power = 0;
         airconditioner_Url.path += airconditioner.control.poweroff + '&';

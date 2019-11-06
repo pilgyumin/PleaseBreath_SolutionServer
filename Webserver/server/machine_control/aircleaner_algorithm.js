@@ -1,4 +1,3 @@
-
 /* 민필규
 * 매우 나쁨 =   내부모드 가동 기준 pm10 : 71 ~        세기 4
 *                               pm2.5 : 36 ~
@@ -67,7 +66,7 @@ module.exports.aircleaner_algorithm = function aircleaner_algorithm(pm10,pm25,vo
 
     const aircleaner_status = require('../model/aircleaner');
     const aircleaner_control = require('../machine_control/aircleaner_control');
-    const motor_hostname = '192.168.1.9';
+    const motor_hostname = '192.168.1.6';
     const motor_port = '3000';
     const motor_path = '?';
 
