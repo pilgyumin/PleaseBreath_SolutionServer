@@ -12,7 +12,7 @@ router.get('/power', (req, res, next) => {
 		humidifier.speed=1;
 	}
 	console.log('Humid_PowerOn');
-	Humid_Control_Url.path += humidifier.control.power;
+	Humid_Control_Url.path += 'power';
 	console.log(humidifier.control.power);
 
 	http.request(Humid_Control_Url).end();

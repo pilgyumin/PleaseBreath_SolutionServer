@@ -13,22 +13,26 @@ router.get('/power', (req, res, next) => {
     
     Airconditioner_Control.Airconditioner_Send_command();
     console.log('Airconditioner Start');
+    res.json(JSON.stringify({}));
 });
 
 
 router.get('/speed', (req, res, next) => {
     Airconditioner_Control.Airconditioner_Speed();
     Airconditioner_Control.Airconditioner_Send_command();
+    res.json(JSON.stringify({}));
 });
 
 router.get('/tempUp', (req, res, next) => {
     Airconditioner_Control.Airconditioner_Temp(0,2);
     Airconditioner_Control.Airconditioner_Send_command();
+    res.json(JSON.stringify({}));
 });
 
 router.get('/tempDown', (req, res, next) => {
     Airconditioner_Control.Airconditioner_Temp(0,1);
     Airconditioner_Control.Airconditioner_Send_command();
+    res.json(JSON.stringify({}));
 });
 
 
