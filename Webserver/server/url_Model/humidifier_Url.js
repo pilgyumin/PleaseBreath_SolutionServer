@@ -1,5 +1,5 @@
 const humidifier_Url = {
-    hostname: '192.168.0.8',
+    hostname: '192.168.1.4',
     port: '3000',
     path : '?'
 };
