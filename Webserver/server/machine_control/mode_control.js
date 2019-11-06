@@ -15,7 +15,6 @@ const airconditioner_status = require('../model/airconditioner');
 const normal_airconditioner_algorithm = require('./normal_airconditioner_algorithm');
 const aircleaner_algorithm = require('../machine_control/aircleaner_algorithm');
 
-humidifier_controler.Humidifier_Speed_up();
 const Show_Status = require('./TEST/Show_Status');
 function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocInner,co2Inner) {
   console.log('aircleaner_control');
@@ -90,11 +89,13 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
     }
     
     //humidifier_controler.Humidifier_Send_command();
+    Show_Status.Show_Status();
     console.log('Temp Control');
-
+    
     //온도
-    if (Airconditioner.power == 0) {
-      airconditioner_controler.Airconditioner_Power(1);
+    if (airconditioner_status.power == 0) {
+      airconditioner_controler.Airconditioner_Power();
+      console.log('Airconditioner Power on');
     }
     if (status_Inner.temp_Inner >= 26 && status_Inner.temp_Inner <= 28) {
       //적정 상태
@@ -103,16 +104,22 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
     } 
     else if (status_Inner.temp_Inner < 25) {
       //낮은 기온
-      airconditioner_controler.Airconditioner_Mode_Change(2);
-      airconditioner_controler.Airconditioner_Speed(2);
+      console.log('Current Temp cold');
+      airconditioner_controler.Airconditioner_Mode_Change(1);
+      console.log('Mode Change');
+      airconditioner_controler.Airconditioner_Temp("warm22",0);
+      console.log('Temp Change');
     } 
     else if (status_Inner.temp_Inner > 29) {
       //높은 기온
-      airconditioner_controler.Airconditioner_Mode_Change(1);
-      airconditioner_controler.Airconditioner_Speed(2);
+      airconditioner_controler.Airconditioner_Mode_Change(0);
+      
+      airconditioner_controler.Airconditioner_Temp("cold22",0);
+
       //aircleaner_controler.Aircleaner_Send_command();
     }
     Show_Status.Show_Status();
+    Show_Status.Show_Command();
 
 
 

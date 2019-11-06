@@ -4,10 +4,16 @@ const router = express.Router();
 
 let humidifier = require('../model/humidifier.js');
 
+const Humidify_Controler = require('../machine_control/humidifier_control');
 const Humid_Control_Url = require('../url_Model/humidifier_Url');
+const TEST = require('../machine_control/TEST/Show_Status');
 
 router.get('/power', (req, res, next) => {
-	humidifier.power=1-humidifier.power;
+	
+	Humidify_Controler.Humidifier_Power();
+	Humidify_Controler.Humidifier_Send_command();
+
+	/*humidifier.power=1-humidifier.power;
 	if(humidifier.power==1){
 		humidifier.speed=1;
 	}
@@ -16,31 +22,45 @@ router.get('/power', (req, res, next) => {
 	console.log(humidifier.control.power);
 
 	http.request(Humid_Control_Url).end();
-	Humid_Control_Url.path = '?';
+	Humid_Control_Url.path = '?';*/
+	console.log(TEST.Show_Command());
+    console.log(TEST.Show_Status());
 	res.json(JSON.stringify({}));
 });
 
 
-router.get('/speed_up', (req, res, next) => {
-	if(humidifier.speed != 8){
+router.get('/speedup', (req, res, next) => {
+	Humidify_Controler.Humidifier_Speed_up();
+	Humidify_Controler.Humidifier_Send_command();
+
+	/*if(humidifier.speed != 8){
 		humidifier.speed += 1;
 	console.log('Humid_speed_up');
 	Humid_Control_Url.path += humidifier.control.speed_up;
 	http.request(Humid_Control_Url).end();
 	Humid_Control_Url.path = '?';
 	res.json(JSON.stringify({}));
-	}
+	}*/
+	console.log(TEST.Show_Command());
+	console.log(TEST.Show_Status());
+	res.json(JSON.stringify({}));
 });
 
-router.get('/speed_down', (req, res, next) => {
-	if(humidifier.speed != 1){
+router.get('/speeddown', (req, res, next) => {
+	Humidify_Controler.Humidifier_Speed_down();
+	Humidify_Controler.Humidifier_Send_command();
+	
+	/*if(humidifier.speed != 1){
 		humidifier.speed -= 1;
 	console.log('Humid_speed_down');
 	Humid_Control_Url.path += humidifier.control.speed_down;
 	http.request(Humid_Control_Url).end();
 	Humid_Control_Url.path = '?';
 	res.json(JSON.stringify({}));
-	}
+	}*/
+	console.log(TEST.Show_Command());
+	console.log(TEST.Show_Status());
+	res.json(JSON.stringify({}));
 });
 
 

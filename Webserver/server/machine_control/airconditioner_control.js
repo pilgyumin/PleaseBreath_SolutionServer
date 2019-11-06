@@ -11,15 +11,15 @@ const airconditioner_Url = require('../url_Model/airconditioner_Url');
 *  if it is lower than 18C, set it to 18C
 *
 * */
-function Airconditioner_Power(argv){
+function Airconditioner_Power(){
     //argv == 0 power off 
     //argv == 1 power on
     //전원키고 끄는 IR신호가 다르기 때문에 나누어서 신호 전달
-    if(argv == 1){
+    if(airconditioner.power == 0){
         airconditioner.power = 1;
         airconditioner_Url.path += airconditioner.control.power + '&';
     }
-    else if(argv == 0){
+    else if(airconditioner.power == 1){
         airconditioner.power = 0;
         airconditioner_Url.path += airconditioner.control.poweroff + '&';
     }
@@ -33,15 +33,18 @@ function Airconditioner_Temp(argv,button){
     //button - 1 버튼 위로
     //button - 2 버튼 아래로
     //button 1일 경우 현재의 모드의 온도 + _Up의 요청을 보낸다.
+    console.log(airconditioner.power);
     if(airconditioner.power == 1){
         if(button == 0){
 
             //cold15 , cold18 ...온도 지정
             //cold = 0 ,warm = 1,  dehumidify = 2, wind = 3
             let Mode = argv.substring(0,4);
-            if(Mode == 'cold')
+            console.log(Mode);
+            console.log(argv.substring(4,6));
+            if(Mode == 'cold' && airconditioner.mode == 0)
                 airconditioner.cold.temp = Number(argv.substring(4,6));
-            else if(Mode == 'warm')
+            else if(Mode == 'warm' && airconditioner.mode == 1)
                 airconditioner.warm.temp = Number(argv.substring(4,6));
             airconditioner_Url.path += argv + '&';
 
@@ -87,7 +90,7 @@ function Airconditioner_Temp(argv,button){
 
                 if(current_Temp != 18){
                     airconditioner.cold.temp--;
-                    airconditioner_Url.path += 'cold'+ airconditioner.cold.temp-- + '&';
+                    airconditioner_Url.path += 'cold'+ airconditioner.cold.temp + '&';
 
                 }
             }
@@ -97,7 +100,7 @@ function Airconditioner_Temp(argv,button){
 
                 if(current_Temp != 13){
                     airconditioner.warm.temp--;
-                    airconditioner_Url.path += 'warm' + airconditioner.warm.temp-- + '&';
+                    airconditioner_Url.path += 'warm' + airconditioner.warm.temp + '&';
                 }
 
             }

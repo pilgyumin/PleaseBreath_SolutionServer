@@ -55,13 +55,13 @@ function Humidifier_Speed_down(){
 function Humidifier_Speed(argv){
     if(humidifier.speed > argv){
         let i = humidifier.speed
-        for(i; i >= argv; i--)
+        for(i; i > argv; i--)
             this.Humidifier_Speed_down();    
     }
 
     else if(humidifier.speed < argv){
         let i = humidifier.speed
-        for(i; i <= argv; i++){
+        for(i; i < argv; i++){
             this.Humidifier_Speed_up();    
         }
     }

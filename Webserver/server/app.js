@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', send_Sensor_Router);
-app.use('/Humid_Control',Humid_Router);
+app.use('/HumidControl',Humid_Router);
 app.use('/AircleanerControl',Aircleaner_Router);
 app.use('/AirconditionerControl',Airconditioner_Router);
 app.use('/aiSolutionControl',aiSolution_Control_Router);

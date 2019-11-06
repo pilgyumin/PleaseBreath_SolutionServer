@@ -43,9 +43,10 @@ const aircleaner_path = '?';
 //어떤 함수를 쓰던 상태값이 저장됩니다.
 
 function Aircleaner_Power(){
+    
     aircleaner.power = 1 - aircleaner.power;
-    aircleanerUrl.path += humidifier.control.power + '&';
-
+    aircleanerUrl.path += aircleaner.control.power + '&';
+    
     /*if(aircleanerUrl.path != '?'){
         http.request(aircleanerUrl).end();
         aircleanerUrl.path = '?';

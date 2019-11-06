@@ -3,7 +3,11 @@ const status_Outer = require('../../model/status_Outer');
 const humidfier = require('../../model/humidifier')
 const airconditioner = require('../../model/airconditioner')
 const aircleaner = require('../../model/aircleaner')
-module.exports.Show_Status = function Show_Status(){
+
+const aircleanerUrl = require('../../url_Model/aircleaner_Url');
+const airconditionerUrl = require('../../url_Model/airconditioner_Url');
+const humidifierUrl = require('../../url_Model/humidifier_Url');
+function Show_Status(){
 
     console.log("Status_Inner");
     console.log(status_Inner);
@@ -42,3 +46,12 @@ module.exports.Show_Status = function Show_Status(){
     console.log("speed : " + aircleaner.speed);
 
 }
+
+function Show_Command(){
+    console.log('aircleaner ULR : ' + aircleanerUrl.path);
+    console.log('airconditioner ULR : ' + airconditionerUrl.path);
+    console.log('humidifier ULR : ' + humidifierUrl.path);
+}
+
+module.exports.Show_Status = Show_Status;
+module.exports.Show_Command = Show_Command;
