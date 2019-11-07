@@ -3,26 +3,30 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const bodyparser = require('body-parser');
 
 const Aircleaner_Router = require('./routes/Aircleaner_Control');
 const Airconditioner_Router = require('./routes/Airconditioner_Control');
 const send_Sensor_Router = require('./routes/send_Sensor');
 const Humid_Router = require('./routes/Humid_Control');
 const Mode_Router = require('./routes/Mode');
+const Reservation_Router = require('./routes/Reservation_Control');
 const TEST_Router = require('./routes/TEST_DATA');
-var app = express();
+const app = express();
 
 app.set('port', process.env.PORT|| 3000);
-
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use('/', send_Sensor_Router);
 app.use('/HumidControl',Humid_Router);
 app.use('/AircleanerControl',Aircleaner_Router);
 app.use('/AirconditionerControl',Airconditioner_Router);
+app.use('/ReservationControl',Reservation_Router);
 app.use('/Mode',Mode_Router);
 app.use('/Test',TEST_Router);
 // catch 404 and forward to error handler
