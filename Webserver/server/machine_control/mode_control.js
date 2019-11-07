@@ -35,25 +35,25 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
     if (airconditioner_status.power == 0) {
       airconditioner_controler.Airconditioner_Power();
     }
-    if(airconditioner_status.warm.temp!=22 && airconditioer.status.cold.temp!=22)
+    if(airconditioner_status.warm.temp!=22 && airconditioner_status.cold.temp!=22)
     {
       if(status_Outer.temp_Outer<10){//난방 22도
           airconditioner_controler.Airconditioner_Mode_Change(1);
-          airconditioner_controler.Airconditioner_Temp(warm22,0);
+          airconditioner_controler.Airconditioner_Temp("warm22",0);
       }
       else {//냉방 22도
           airconditioner_controler.Airconditioner_Mode_Change(0);
-          airconditioner_controler.Airconditioner_Temp(cold22,0);
+          airconditioner_controler.Airconditioner_Temp("cold22",0);
       }
     }
 
     //실내 습도 50% 고정
-    if (status_Inner.humid_Inner < 50) { // 습도 50이하일 경우
+    if (status_Inner.humid_Inner < 50) { // 습도 50미만일 경우
       if (humidifier_status.power == 0) {//가습기 켜기
         humidifier_controler.Humidifier_Power();
       } //제습기는 알이서 꺼져있을 것 : 왜냐면 앞에 온도조절에서 에어컨 모드를 바꿨으니깐
     }
-    if (status_Inner.humid_Inner > 55) { // 습도 55이상일 경우
+    if (status_Inner.humid_Inner > 55) { // 습도 55초과일 경우
       if (humidifier_status.power == 1) {//가습기 끄기
 
         humidifier_controler.Humidifier_Power();
@@ -63,8 +63,8 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
         airconditioner_controler.Airconditioner_Mode_Change(3);
       }
     }
-  } 
-  
+  }
+
   else if (solution_status.mode == 3) { //노인모드
     //실내 습기 40% 이하
     console.log('Senior Mode');
@@ -76,22 +76,22 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
         humidifier_controler.Humidifier_Power();
       }
       humidifier_controler.Humidifier_Speed(3);
-    } 
-    
+    }
+
     else if (status_Inner.humid_Inner > 50) {
       if (humidifier_status.power == 1) {
         humidifier_controler.Humidifier_Power();
       }
-    } 
-    
+    }
+
     else {
       humidifier_controler.Humidifier_Speed(1);
     }
-    
+
     //humidifier_controler.Humidifier_Send_command();
     Show_Status.Show_Status();
     console.log('Temp Control');
-    
+
     //온도
     if (airconditioner_status.power == 0) {
       airconditioner_controler.Airconditioner_Power();
@@ -101,7 +101,7 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
       //적정 상태
       console.log("Current Temp Normal.. ");
       airconditioner_controler.Airconditioner_Speed(1);
-    } 
+    }
     else if (status_Inner.temp_Inner < 25) {
       //낮은 기온
       console.log('Current Temp cold');
@@ -109,11 +109,11 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
       console.log('Mode Change');
       airconditioner_controler.Airconditioner_Temp("warm22",0);
       console.log('Temp Change');
-    } 
+    }
     else if (status_Inner.temp_Inner > 29) {
       //높은 기온
       airconditioner_controler.Airconditioner_Mode_Change(0);
-      
+
       airconditioner_controler.Airconditioner_Temp("cold22",0);
 
       //aircleaner_controler.Aircleaner_Send_command();
@@ -181,7 +181,7 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
 
       aircleaner_controler.Aircleaner_Send_command();
 
-    
+
     console.log('Return');
     Show_Status.Show_Status();*/
 
