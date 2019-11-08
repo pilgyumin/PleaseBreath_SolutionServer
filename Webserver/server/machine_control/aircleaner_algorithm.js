@@ -45,10 +45,10 @@ const pm25_min = 0;
 const voc_min = 0;
 const co2_min = 400;
 
-const pm10_influence_weight = 0.25;
-const pm25_influence_weight = 0.25;
-const voc_influence_weight = 0.25;
-const co2_influence_weight = 0.25;
+const pm10_influence_weight = parseFloat(0.25);
+const pm25_influence_weight = parseFloat(0.25);
+const voc_influence_weight = parseFloat(0.25);
+const co2_influence_weight = parseFloat(0.25);
 
 let inner_count = 0;
 let outer_count = 0;
@@ -58,7 +58,9 @@ let pm25_ar = new Array();
 let voc_ar = new Array();
 let co2_ar = new Array();
 
-let ar_len = 0;
+let ar_len = parseInt(0);
+
+const aircleaner_motor_url = require('../url_Model/aircleaner_motor_Url');
 
 module.exports.aircleaner_algorithm = function aircleaner_algorithm(pm10,pm25,voc,co2) {
 
@@ -66,25 +68,24 @@ module.exports.aircleaner_algorithm = function aircleaner_algorithm(pm10,pm25,vo
 
     const aircleaner_status = require('../model/aircleaner');
     const aircleaner_control = require('../machine_control/aircleaner_control');
-    const motor_hostname = '192.168.1.6';
-    const motor_port = '3000';
-    const motor_path = '?';
 
     console.log('aircleaner_algorithm');
 
-    pm10_ar[ar_len] = pm10;
-    pm25_ar[ar_len] = pm25;
-    voc_ar[ar_len] = voc;
-    co2_ar[ar_len] = co2;
+    pm10_ar.push(parseInt(pm10));
+    pm25_ar.push(parseInt(pm25));
+    voc_ar.push(parseInt(voc));
+    co2_ar.push(parseInt(co2));
+    console.log(pm10_ar);
     ar_len++;
 
     let pm10_scale = (pm10 - pm10_min) / (pm10_max - pm10_min);
     let pm25_scale = (pm25 - pm25_min) / (pm25_max - pm25_min);
     let voc_scale = (voc - voc_min) / (voc_max - voc_min);
     let co2_scale = (co2 - co2_min) / (co2_max - co2_min);
-
+    console.log('voc_s : ' + voc_scale + ' co2_s : ' + co2_scale);
     let inner_scale = (pm10_influence_weight * pm10_scale) + (pm25_influence_weight * pm25_scale);
     let outer_scale = (voc_influence_weight * voc_scale) + (co2_influence_weight * co2_scale);
+
 
     if(inner_scale > outer_scale){
         inner_count++;
@@ -100,9 +101,9 @@ module.exports.aircleaner_algorithm = function aircleaner_algorithm(pm10,pm25,vo
             if(aircleaner_status.mode != 0){
                 aircleaner_status.mode = 0;
                 http.request({
-                    hostname : motor_hostname,
-                    port : motor_port,
-                    path: motor_path + 'inner'
+                    hostname : aircleaner_motor_url.hostname,
+                    port : aircleaner_motor_url.port,
+                    path: aircleaner_motor_url.path + 'inner'
                 }).end();
             }
             let pm25_average = 0;
@@ -113,15 +114,16 @@ module.exports.aircleaner_algorithm = function aircleaner_algorithm(pm10,pm25,vo
             }
             pm25_average /= 9;
             pm10_average /= 9;
+            console.log('25avg : ' + pm25_average + ' 10avg : ' + pm10_average);
             aircleaner_control.control_aircleaner(pm10_average,pm25_average,0,0);
         }
         else{
             if(aircleaner_status.mode != 1){
                 aircleaner_status.mode = 1;
                 http.request({
-                    hostname : motor_hostname,
-                    port : motor_port,
-                    path: motor_path + 'outer'
+                    hostname : aircleaner_motor_url.hostname,
+                    port : aircleaner_motor_url.port,
+                    path: aircleaner_motor_url.path + 'outer'
                 }).end();
             }
             let voc_average = 0;
@@ -134,6 +136,12 @@ module.exports.aircleaner_algorithm = function aircleaner_algorithm(pm10,pm25,vo
             co2_average /= 9;
             aircleaner_control.control_aircleaner(0,0,voc_average,co2_average);
         }
+
+        console.log('in_c :' + inner_count + ' ou_c :' + outer_count + ' arl :' + ar_len);
         inner_count = outer_count = ar_len = 0;
+        pm10_ar = new Array();
+        pm25_ar = new Array();
+        voc_ar = new Array();
+        co2_ar = new Array();
     }
 }
