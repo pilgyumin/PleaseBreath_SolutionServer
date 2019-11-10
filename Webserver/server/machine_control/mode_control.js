@@ -20,7 +20,7 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
   console.log('aircleaner_control');
   //모드에 상관없이 공기청정기 알고리즘 가동
   console.log(pm10Inner);
-  //aircleaner_algorithm.aircleaner_algorithm(pm10Inner, pm25Inner, vocInner, co2Inner);
+  aircleaner_algorithm.aircleaner_algorithm(pm10Inner, pm25Inner, vocInner, co2Inner);
   console.log('mode_control');
 
   if (solution_status.mode == 1) { // 일반 모드
