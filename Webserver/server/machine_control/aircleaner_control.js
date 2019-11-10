@@ -102,6 +102,37 @@ function Aircleaner_Send_command(){
     }
 }
 
+/* 공기청정기 세기 별 전력량 / 실내 정화시간 / 실외 정화시간
+세기 1 : 7.5W / 90분 /
+세기 2 : 8.5W / 75분 /
+세기 3 : 10W /  60분 /
+세기 4 : 22W /  45분 /
+*/
+
+const pm10_min = 0;
+const pm25_min = 0;
+const voc_min = 0;
+const co2_min = 400;
+
+const pm10_max = 200;
+const pm25_max = 255;
+const voc_max = 2.0;
+const co2_max = 2000;
+
+const speed1_energy = 7.5;
+const speed2_energy = 8.5;
+const speed3_energy = 10;
+const speed4_energy = 22;
+
+const speed1_inner_time = 90;
+const speed2_inner_time = 75;
+const speed3_inner_time = 60;
+const speed4_inner_time = 45;
+
+const speed1_outer_time = 90;
+const speed2_outer_time = 75;
+const speed3_outer_time = 60;
+const speed4_outer_time = 45;
 
 function control_aircleaner(pm10,pm25,voc,co2) {
     let pm10_pm25_stage_max = 0;
@@ -120,38 +151,77 @@ function control_aircleaner(pm10,pm25,voc,co2) {
         let speed = aircleaner.speed;
 
         // 민필규 - 미세먼지 단계 여부 파악
-        if(pm25 > 35 || pm10 > 70){
-            pm10_pm25_stage_max = 4;
-        }
-        else if(pm25 > 25 || pm10 > 50){
-            pm10_pm25_stage_max = 3;
-        }
-        else if(pm25 > 15 || pm10 > 30){
-            pm10_pm25_stage_max = 2;
-        }
-        else if(pm25 > 5 || pm10 > 10){
-            pm10_pm25_stage_max = 1;
+        if(pm10 > 0){
+            let pm10_scale = (pm10 - pm10_min) / (pm10_max - pm10_min);
+            let pm25_scale = (pm25 - pm25_min) / (pm25_max - pm25_min);
+
+            let inner_group_max_scale = pm10_scale > pm25_scale ? pm10_scale : pm25_scale;
+
+            let inner_speed1_spend_time_energy = speed1_inner_time * inner_group_max_scale * speed1_energy;
+            let inner_speed2_spend_time_energy = speed2_inner_time * inner_group_max_scale * speed2_energy;
+            let inner_speed3_spend_time_energy = speed3_inner_time * inner_group_max_scale * speed3_energy;
+            let inner_speed4_spend_time_energy = speed4_inner_time * inner_group_max_scale * speed4_energy;
+
+            let inner_ar = new Array();
+
+            inner_ar.push(inner_speed1_spend_time_energy);
+            inner_ar.push(inner_speed2_spend_time_energy);
+            inner_ar.push(inner_speed3_spend_time_energy);
+            inner_ar.push(inner_speed4_spend_time_energy);
+
+            inner_ar.sort(function (a,b) {
+                return b-a;
+            });
+
+            if(inner_ar[0] == inner_speed1_spend_time_energy){
+                pm10_pm25_stage_max = 1;
+            }
+            else if(inner_ar[0] == inner_speed2_spend_time_energy){
+                pm10_pm25_stage_max = 2;
+            }
+            else if(inner_ar[0] == inner_speed3_spend_time_energy){
+                pm10_pm25_stage_max = 3;
+            }
+            else if(inner_ar[0] == inner_speed4_spend_time_energy){
+                pm10_pm25_stage_max = 4;
+            }
         }
         else{
-            pm10_pm25_stage_max = 0;
+            let voc_scale = (voc - voc_min) / (voc_max - voc_min);
+            let co2_scale = (co2 - co2_min) / (co2_max - co2_min);
+
+            let outer_group_max_scale = voc_scale > co2_scale ? voc_scale : co2_scale;
+
+            let outer_speed1_spend_time_energy = speed1_outer_time * outer_group_max_scale * speed1_energy;
+            let outer_speed2_spend_time_energy = speed2_outer_time * outer_group_max_scale * speed2_energy;
+            let outer_speed3_spend_time_energy = speed3_outer_time * outer_group_max_scale * speed3_energy;
+            let outer_speed4_spend_time_energy = speed4_outer_time * outer_group_max_scale * speed4_energy;
+
+            let outer_ar = new Array();
+
+            outer_ar.push(outer_speed1_spend_time_energy);
+            outer_ar.push(outer_speed2_spend_time_energy);
+            outer_ar.push(outer_speed3_spend_time_energy);
+            outer_ar.push(outer_speed4_spend_time_energy);
+
+            outer_ar.sort(function (a,b) {
+                return b-a;
+            });
+
+            if(outer_ar[0] == outer_speed1_spend_time_energy){
+                voc_co2_stage_max = 1;
+            }
+            else if(outer_ar[0] == outer_speed2_spend_time_energy){
+                voc_co2_stage_max = 2;
+            }
+            else if(outer_ar[0] == outer_speed3_spend_time_energy){
+                voc_co2_stage_max = 3;
+            }
+            else if(outer_ar[0] == outer_speed4_spend_time_energy){
+                voc_co2_stage_max = 4;
+            }
         }
 
-        // 민필규 - voc,co2 단계 여부 파악
-        if(voc > 2.200 || co2 > 2000){
-            voc_co2_stage_max = 4;
-        }
-        else if(voc > 0.660 || co2 > 1000){
-            voc_co2_stage_max = 3;
-        }
-        else if(voc > 0.220 || co2 > 700){
-            voc_co2_stage_max = 2;
-        }
-        else if(voc > 0.111 || co2 > 400){
-            voc_co2_stage_max = 1;
-        }
-        else{
-            voc_co2_stage_max = 0;
-        }
 
         //민필규 - mode가 0일 때는 실내 공기 흡입모드, mode가 1일 때는 실외 공기 흡입모드 defalut = 0;
         let aircleaner_control_mode = 0;
