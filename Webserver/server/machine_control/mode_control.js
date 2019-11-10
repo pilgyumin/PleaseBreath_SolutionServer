@@ -20,14 +20,14 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
   console.log('aircleaner_control');
   //모드에 상관없이 공기청정기 알고리즘 가동
   console.log(pm10Inner);
-  aircleaner_algorithm.aircleaner_algorithm(pm10Inner, pm25Inner, vocInner, co2Inner);
+  //aircleaner_algorithm.aircleaner_algorithm(pm10Inner, pm25Inner, vocInner, co2Inner);
   console.log('mode_control');
 
   if (solution_status.mode == 1) { // 일반 모드
     console.log('normal');
 
-    //normal_airconditioner_algorithm.normal_airconditioner_algorithm(temp_Outer,humid_Inner);
-    //humidifier_controler.ctrlHumidifier(temp_Inner);
+    normal_airconditioner_algorithm.normal_airconditioner_algorithm(temp_Outer,temp_Inner,humid_Inner);
+    humidifier_controler.ctrlHumidifier(temp_Inner,humid_Inner);
 
 
   } else if (solution_status.mode == 2) { //영유아모드
