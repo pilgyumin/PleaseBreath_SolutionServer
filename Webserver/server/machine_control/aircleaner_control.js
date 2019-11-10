@@ -6,6 +6,9 @@ const aircleaner_hostname = '192.168.1.74';
 const aircleaner_port = '3000';
 const aircleaner_path = '?';
 
+const solution_status = require('../model/solution_status');
+
+var moment = require('moment');
 /* 민필규
 * 매우 나쁨 =   내부모드 가동 기준 pm10 : 71 ~        세기 4
 *                               pm2.5 : 36 ~
@@ -163,7 +166,12 @@ function control_aircleaner(pm10,pm25,voc,co2) {
         }
 
         let max = (pm10_pm25_stage_max > voc_co2_stage_max) ? pm10_pm25_stage_max : voc_co2_stage_max;
-
+        
+        //안유진 : 수면 모드
+        if(solution_status.mode==4 && moment().format('HH')<='07' && max == 4){
+            max = 3;
+        }
+        
         console.log(pm10_pm25_stage_max + " " + voc_co2_stage_max);
 
         if(max > speed){

@@ -31,6 +31,8 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
 
 
   } else if (solution_status.mode == 2) { //영유아모드
+    console.log('infants');
+
     //실내 온도 22도 고정
     if (airconditioner_status.power == 0) {
       airconditioner_controler.Airconditioner_Power();
@@ -185,6 +187,12 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
     console.log('Return');
     Show_Status.Show_Status();*/
 
+
+  } else if (solution_status.mode == 4) { // 수면 모드
+    console.log('sleep');
+    //밤에 공청기 세기 낮추는것 이외의 기능은 일반모드와 동일할 예정
+    //normal_airconditioner_algorithm.normal_airconditioner_algorithm(temp_Outer,humid_Inner);
+    //humidifier_controler.ctrlHumidifier(temp_Inner);
 
   }
 }

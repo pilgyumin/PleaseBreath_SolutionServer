@@ -16,6 +16,7 @@ router.get('/Normal',(req,res,next)=>{
 
       res.json(JSON.stringify({}));
 });
+
 //영유아 모드
 router.get('/Infants',(req,res,next)=>{
   solution_status.mode=2;
@@ -32,4 +33,11 @@ router.get('/Senior', (req, res, next) => {
     res.json(JSON.stringify({}));
 });
 
+//수면 모드
+router.get('/Sleep',(req,res,next)=>{
+  solution_status.mode=4;
+    console.log('Sleep Mode Start');
+
+    res.json(JSON.stringify({}));
+});
 module.exports = router;
