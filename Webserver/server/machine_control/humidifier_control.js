@@ -79,85 +79,79 @@ function Humidifier_Send_command(){
     }
 }
 
-function ctrlHumidifier(temp){
+function ctrlHumidifier(temp,humid_Inner){
     console.log('humidifier');
 
-    if(humidifier.humid <= 70){
+    let goal_Humid = 0;
+
+    if (temp >= 24) {
+        goal_Humid = temp24Humid;
+    }
+
+    else if (temp >= 21) {
+        goal_Humid = temp2123Humid;
+    }
+
+    else if (temp >= 18) {
+        goal_Humid = temp1820Humid;
+    }
+
+    else {
+        goal_Humid = temp1517Humid;
+    }
+    console.log('goal humid : ' + goal_Humid + ', humid inner : ' + humid_Inner);
+    if(goal_Humid > humid_Inner){
 
         if(humidifier.power == 0){
-            humidifierUrl.path += humidifier.control.power + '&' + humidifier.control.humid + '&';
+            this.Humidifier_Power();
             humidifier.power = 1;
         }
 
-        let goalHumid = 0;
-
-        if (temp >= 24) {
-            goalHumid = temp24Humid;
+        let different_goal_humid_inner_humid = goal_Humid - humid_Inner;
+        if(different_goal_humid_inner_humid >= 70){
+            this.Humidifier_Speed(8);
+            humidifier.speed = 8;
         }
-
-        else if (temp >= 21) {
-            goalHumid = temp2123Humid;
+        else if(different_goal_humid_inner_humid >= 60){
+            this.Humidifier_Speed(7);
+            humidifier.speed = 7;
         }
-
-        else if (temp >= 18) {
-            goalHumid = temp1820Humid;
+        else if(different_goal_humid_inner_humid >= 50){
+            this.Humidifier_Speed(6);
+            humidifier.speed = 6;
         }
-
-        else {
-            goalHumid = temp1517Humid;
+        else if(different_goal_humid_inner_humid >= 40){
+            this.Humidifier_Speed(5);
+            humidifier.speed = 5;
         }
-
-        if(goalHumid >= humidifier.humid){
-            console.log(goalHumid - humidifier.humid);
-            for(let i = 0; i < goalHumid - humidifier.humid; i += 5){
-
-                humidifierUrl.path += humidifier.control.humid + '&';
-            }
+        else if(different_goal_humid_inner_humid >= 30){
+            this.Humidifier_Speed(4);
+            humidifier.speed = 4;
         }
-
+        else if(different_goal_humid_inner_humid >= 20){
+            this.Humidifier_Speed(3);
+            humidifier.speed = 3;
+        }
+        else if(different_goal_humid_inner_humid >= 10){
+            this.Humidifier_Speed(2);
+            humidifier.speed = 2;
+        }
         else{
-            console.log(90 - humidifier.humid + (goalHumid - 30));
-            for(let i = 0; i < 90 - humidifier.humid + (goalHumid - 30); i += 5){
-                humidifierUrl.path += humidifier.control.humid + '&';
-            }
+            this.Humidifier_Speed(1);
+            humidifier.speed = 1;
         }
 
-        let speed = humidifier.speed;
-
-
-        if(goalHumid - humidifier.humid >= 30){
-            while(speed != 2){
-                humidifierUrl.path += humidifier.control.speed + '&';
-                speed = (speed + 1) % 3 ;
-            }
-        }
-
-        else if(goalHumid - humidifier.humid >= 20){
-            while(speed != 1){
-                humidifierUrl.path += humidifier.control.speed + '&';
-                speed = (speed + 1) % 3 ;
-            }
-        }
-        
-        else {
-            while(speed != 0){
-                humidifierUrl.path += humidifier.control.speed + '&';
-                speed = (speed + 1) % 3 ;
-            }
-        }
-
-        humidifier.speed = speed;
-        humidifier.humid = goalHumid;
-
-        console.log(humidifierUrl.path);
-        console.log(JSON.stringify(humidifier));
-
-        if(humidifierUrl.path != '?'){
-            http.request(humidifierUrl).end();
-            humidifierUrl.path = '?';
-        }
+        this.Humidifier_Send_command();
     }
-
+    else{
+        if(humidifier.power == 1){
+            this.Humidifier_Power();
+            humidifier.power = 0;
+        }
+        this.Humidifier_Send_command();
+    }
+    console.log(JSON.stringify(humidifier));
+    console.log('humidifier end');
 }
 
 module.exports.Humidifier_Power = Humidifier_Power;
