@@ -188,7 +188,7 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
     Show_Status.Show_Status();*/
 
 
-  }  if (solution_status.mode == 4) { // 수면 모드
+  } else if (solution_status.mode == 4) { // 수면 모드
     console.log('sleep');
     //밤에 공청기 세기 낮추는것 이외의 기능은 일반모드와 동일할 예정
     //normal_airconditioner_algorithm.normal_airconditioner_algorithm(temp_Outer,humid_Inner);
