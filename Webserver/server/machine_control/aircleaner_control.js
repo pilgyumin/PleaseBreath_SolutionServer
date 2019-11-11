@@ -135,6 +135,7 @@ const speed3_outer_time = 60;
 const speed4_outer_time = 45;
 
 function control_aircleaner(pm10,pm25,voc,co2) {
+
     let pm10_pm25_stage_max = 0;
     let voc_co2_stage_max = 0;
 
@@ -170,7 +171,7 @@ function control_aircleaner(pm10,pm25,voc,co2) {
             inner_ar.push(inner_speed4_spend_time_energy);
 
             inner_ar.sort(function (a,b) {
-                return b-a;
+                return a-b;
             });
 
             if(inner_ar[0] == inner_speed1_spend_time_energy){
@@ -205,7 +206,7 @@ function control_aircleaner(pm10,pm25,voc,co2) {
             outer_ar.push(outer_speed4_spend_time_energy);
 
             outer_ar.sort(function (a,b) {
-                return b-a;
+                return a-b;
             });
 
             if(outer_ar[0] == outer_speed1_spend_time_energy){
@@ -222,6 +223,7 @@ function control_aircleaner(pm10,pm25,voc,co2) {
             }
         }
 
+        console.log('inner max : ' + pm10_pm25_stage_max + ', outer max : ' + voc_co2_stage_max);
 
         //민필규 - mode가 0일 때는 실내 공기 흡입모드, mode가 1일 때는 실외 공기 흡입모드 defalut = 0;
         let aircleaner_control_mode = 0;

@@ -69,8 +69,6 @@ module.exports.aircleaner_algorithm = function aircleaner_algorithm(pm10,pm25,vo
     const aircleaner_status = require('../model/aircleaner');
     const aircleaner_control = require('../machine_control/aircleaner_control');
 
-    console.log('aircleaner_algorithm');
-
     pm10_ar.push(parseInt(pm10));
     pm25_ar.push(parseInt(pm25));
     voc_ar.push(parseInt(voc));
@@ -82,7 +80,7 @@ module.exports.aircleaner_algorithm = function aircleaner_algorithm(pm10,pm25,vo
     let pm25_scale = (pm25 - pm25_min) / (pm25_max - pm25_min);
     let voc_scale = (voc - voc_min) / (voc_max - voc_min);
     let co2_scale = (co2 - co2_min) / (co2_max - co2_min);
-    console.log('voc_s : ' + voc_scale + ' co2_s : ' + co2_scale);
+
     let inner_scale = (pm10_influence_weight * pm10_scale) + (pm25_influence_weight * pm25_scale);
     let outer_scale = (voc_influence_weight * voc_scale) + (co2_influence_weight * co2_scale);
 
@@ -114,7 +112,7 @@ module.exports.aircleaner_algorithm = function aircleaner_algorithm(pm10,pm25,vo
             }
             pm25_average /= 9;
             pm10_average /= 9;
-            console.log('25avg : ' + pm25_average + ' 10avg : ' + pm10_average);
+
             aircleaner_control.control_aircleaner(pm10_average,pm25_average,0,0);
         }
         else{
@@ -137,7 +135,6 @@ module.exports.aircleaner_algorithm = function aircleaner_algorithm(pm10,pm25,vo
             aircleaner_control.control_aircleaner(0,0,voc_average,co2_average);
         }
 
-        console.log('in_c :' + inner_count + ' ou_c :' + outer_count + ' arl :' + ar_len);
         inner_count = outer_count = ar_len = 0;
         pm10_ar = new Array();
         pm25_ar = new Array();
