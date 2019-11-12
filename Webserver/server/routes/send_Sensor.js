@@ -137,22 +137,14 @@ router.get('', (req, res, next) => {
         webserver_Url.path += status_Inner.getUrl();
         console.log(webserver_Url.path);
     }
-
-<<<<<<< HEAD
+    
     if(solution_status.mode!=0)
     {
         console.log('enter');
       mode_control(status_Outer.temp_Outer,status_Inner.temp_Inner,status_Inner.humid_Inner,status_Inner.pm10_Inner,status_Inner.pm25_Inner
       ,status_Inner.voc_Inner,status_Inner.co2_Inner);
     }
-=======
-    // if(solution_status.mode!=0)
-    // {
-    //     console.log('enter');
-    //   mode_control(status_Outer.tempOuter,status_Inner.tempInner,status_Inner.humidInner,status_Inner.pm10Inner,status_Inner.pm25Inner
-    //   ,status_Inner.vocInner,status_Inner.co2Inner);
-    // }
->>>>>>> reservation_dev
+
 
     year = moment().year();
     month = moment().month() + 1;
