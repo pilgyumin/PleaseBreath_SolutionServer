@@ -129,10 +129,10 @@ const speed2_inner_time = 75;
 const speed3_inner_time = 60;
 const speed4_inner_time = 45;
 
-const speed1_outer_time = 90;
-const speed2_outer_time = 75;
-const speed3_outer_time = 60;
-const speed4_outer_time = 45;
+const speed1_outer_time = 84;
+const speed2_outer_time = 43;
+const speed3_outer_time = 35;
+const speed4_outer_time = 25;
 
 function control_aircleaner(pm10,pm25,voc,co2) {
 
