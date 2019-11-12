@@ -3,7 +3,7 @@ const http = require('http');
 const router = express.Router();
 
 
-
+const aircleaner_status = require('../model/aircleaner');
 
 const status_Inner = require('../model/status_Inner');
 const status_Outer = require('../model/status_Outer');
@@ -24,12 +24,16 @@ let hours;
 let minute;
 let second;
 
-
 let webserver_Url = {
-    hostname: '192.168.1.172',
-    port: '3000',
+    hostname: 'localhost',
+    port: '80',
     path : '/insertdb?'
 };
+// let webserver_Url = {
+//     hostname: '192.168.1.172',
+//     port: '3000',
+//     path : '/insertdb?'
+// };
 
 let isOuter = true;
 
@@ -134,12 +138,21 @@ router.get('', (req, res, next) => {
         console.log(webserver_Url.path);
     }
 
+<<<<<<< HEAD
     if(solution_status.mode!=0)
     {
         console.log('enter');
       mode_control(status_Outer.temp_Outer,status_Inner.temp_Inner,status_Inner.humid_Inner,status_Inner.pm10_Inner,status_Inner.pm25_Inner
       ,status_Inner.voc_Inner,status_Inner.co2_Inner);
     }
+=======
+    // if(solution_status.mode!=0)
+    // {
+    //     console.log('enter');
+    //   mode_control(status_Outer.tempOuter,status_Inner.tempInner,status_Inner.humidInner,status_Inner.pm10Inner,status_Inner.pm25Inner
+    //   ,status_Inner.vocInner,status_Inner.co2Inner);
+    // }
+>>>>>>> reservation_dev
 
     year = moment().year();
     month = moment().month() + 1;
@@ -148,8 +161,10 @@ router.get('', (req, res, next) => {
     minute = moment().minute();
     second = moment().seconds();
 
-    webserver_Url.path +='&year='+year+'&month='+month+'&date='+date+'&hours='+hours+'&minute='+minute+'&second='+second;
-    //http.request(webserver_Url).end();
+    //민필규 - aircleaenermode, aircleanerspeed 추가
+    webserver_Url.path +='&year='+year+'&month='+month+'&date='+date+'&hours='+hours+'&minute='+minute+'&second='+second
+        +'&aircleanermode='+aircleaner_status.mode+'&aircleanerspeed='+aircleaner_status.speed;
+    http.request(webserver_Url).end();
     webserver_Url.path = '/insertdb?';
 
     res.json(JSON.stringify(webserver_Url));
