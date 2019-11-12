@@ -137,7 +137,7 @@ router.get('', (req, res, next) => {
         webserver_Url.path += status_Inner.getUrl();
         console.log(webserver_Url.path);
     }
-    
+
     if(solution_status.mode!=0)
     {
         console.log('enter');
