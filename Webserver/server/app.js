@@ -34,6 +34,15 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
+app.get('/', (req, res) => {
+  if(!req.session.num) {
+    req.session.num = 1;
+  } else {
+    req.session.num += 1;
+  }
+  res.send('Hello ' + req.session.num);
+});
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
