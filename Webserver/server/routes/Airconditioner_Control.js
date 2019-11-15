@@ -81,7 +81,7 @@ router.get('/speedup', (req, res, next) => {
 });
 
 //온도조절
-router.get('/tempUp', (req, res, next) => {
+router.get('/tempup', (req, res, next) => {
     Airconditioner_Control.Airconditioner_Temp(0,1);
     Airconditioner_Control.Airconditioner_Send_command();
 
@@ -91,7 +91,7 @@ router.get('/tempUp', (req, res, next) => {
     res.json(JSON.stringify({}));
 });
 
-router.get('/tempDown', (req, res, next) => {
+router.get('/tempdown', (req, res, next) => {
     Airconditioner_Control.Airconditioner_Temp(0,2);
     Airconditioner_Control.Airconditioner_Send_command();
     console.log(TEST.Show_Command());
