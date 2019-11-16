@@ -3,7 +3,16 @@
 const express = require('express');
 const router = express.Router();
 const schedule = require('node-schedule');
+const fetch = require('node-fetch');
 const solution_status = require('../model/solution_status');
+
+const aircleaner = require('../model/aircleaner');
+const airconditioner = require('../model/airconditioner');
+const humidifier = require('../model/humidifier');
+
+const aircleaner_url = require('../url_Model/aircleaner_Url');
+const airconditioner_url = require('../url_Model/airconditioner_Url');
+const humidifier_url = require('../url_Model/humidifier_Url');
 
 let turn_on_solution_job;
 let turn_off_solution_job;
@@ -22,12 +31,12 @@ router.post('/:mode/:power', (req, res, next) => {
             console.log('turn on solution reservation on');
             turn_on_solution_job = schedule.scheduleJob(date, function(){
                 console.log('turn on solution!!!!!!!!!');
-                solution_status.power = 1;
+                solution_status.mode = 1;
                 turn_on_solution_job.cancel();
             });
         }
         else{
-            solution_status.power = 0;
+            solution_status.mode = 0;
             console.log('turn on solution reservation off');
             turn_on_solution_job.cancel();
         }
@@ -38,12 +47,36 @@ router.post('/:mode/:power', (req, res, next) => {
             console.log('turn off solution reservation on');
             turn_off_solution_job = schedule.scheduleJob(date, function(){
                 console.log('turn off solution!!!!!!!!!');
-                solution_status.power = 0;
+                solution_status.mode = 0;
+                if(aircleaner.power == 1){
+                    fetch("http://" + aircleaner_url.hostname + ":" + aircleaner_url.port +
+                        aircleaner_url.path + aircleaner.control.power, {
+                        method: 'get',
+                    })
+                        .then(res => res.json())
+                        .catch(res => res.json());
+                }
+                if(airconditioner.power == 1){
+                    fetch("http://" + airconditioner_url.hostname + ":" + airconditioner_url.port +
+                        airconditioner_url.path  + airconditioner.control.poweroff, {
+                        method: 'get',
+                    })
+                        .then(res => res.json())
+                        .catch(res => res.json());
+                }
+                if(humidifier.power == 1){
+                    fetch("http://" + humidifier_url.hostname + ":" + humidifier_url.port +
+                        humidifier_url.path + humidifier.control.power, {
+                        method: 'get',
+                    })
+                        .then(res => res.json())
+                        .catch(res => res.json());
+                }
                 turn_off_solution_job.cancel();
             });
         }
         else{
-            solution_status.power = 1;
+            solution_status.mode = 1;
             console.log('turn off solution reservation off');
             turn_off_solution_job.cancel();
         }
