@@ -1,7 +1,6 @@
 // 전체 개발 (민필규)
 
 const express = require('express');
-const http = require('http');
 const router = express.Router();
 const schedule = require('node-schedule');
 const solution_status = require('../model/solution_status');
@@ -24,6 +23,7 @@ router.post('/:mode/:power', (req, res, next) => {
             turn_on_solution_job = schedule.scheduleJob(date, function(){
                 console.log('turn on solution!!!!!!!!!');
                 solution_status.power = 1;
+                turn_on_solution_job.cancel();
             });
         }
         else{
@@ -39,6 +39,7 @@ router.post('/:mode/:power', (req, res, next) => {
             turn_off_solution_job = schedule.scheduleJob(date, function(){
                 console.log('turn off solution!!!!!!!!!');
                 solution_status.power = 0;
+                turn_off_solution_job.cancel();
             });
         }
         else{
