@@ -17,7 +17,8 @@ const humidifier_url = require('../url_Model/humidifier_Url');
 let turn_on_solution_job;
 let turn_off_solution_job;
 
-
+let is_reservation_on = 0;
+let is_reservation_off = 0;
 router.post('/:mode/:power', (req, res, next) => {
     // 솔루션 가동 예약 명령
    let reservation_data = req.body.data * 1000;
@@ -28,22 +29,28 @@ router.post('/:mode/:power', (req, res, next) => {
 
     if(req.params.mode === 'turnOnSolution'){
         if(req.params.power === 'on'){
+            is_reservation_on = 1;
             console.log('turn on solution reservation on');
             turn_on_solution_job = schedule.scheduleJob(date, function(){
                 console.log('turn on solution!!!!!!!!!');
-                solution_status.mode = 1;
+                solution_status.mode = req.body.mode;
+                console.log('mode : ' + req.body.mode);
                 turn_on_solution_job.cancel();
             });
         }
         else{
-            solution_status.mode = 0;
-            console.log('turn on solution reservation off');
-            turn_on_solution_job.cancel();
+            if(is_reservation_on == 1) {
+                solution_status.mode = 0;
+                console.log('turn on solution reservation off');
+                turn_on_solution_job.cancel();
+                is_reservation_on = 0;
+            }
         }
     }
     // 솔루션 꺼짐 예약 명령
     else{
         if(req.params.power === 'on'){
+            is_reservation_off = 1;
             console.log('turn off solution reservation on');
             turn_off_solution_job = schedule.scheduleJob(date, function(){
                 console.log('turn off solution!!!!!!!!!');
@@ -76,11 +83,15 @@ router.post('/:mode/:power', (req, res, next) => {
             });
         }
         else{
-            solution_status.mode = 1;
-            console.log('turn off solution reservation off');
-            turn_off_solution_job.cancel();
+            if(is_reservation_off == 1) {
+                solution_status.mode = 1;
+                console.log('turn off solution reservation off');
+                turn_off_solution_job.cancel();
+                is_reservation_off = 0;
+            }
         }
     }
+
     res.json(JSON.stringify({}));
 });
 
