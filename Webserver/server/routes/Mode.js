@@ -22,6 +22,10 @@ router.get('/:mode',(req,res,next)=>{
         solution_status.mode=4;
         console.log('Sleep Mode Start');
     }
+    else if(req.params.momde === 'off'){
+        solution_status.mode=0;
+        console.log('Mode off');
+    }
     res.json({});
 });
 
