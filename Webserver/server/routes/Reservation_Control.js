@@ -55,29 +55,35 @@ router.post('/:mode/:power', (req, res, next) => {
             turn_off_solution_job = schedule.scheduleJob(date, function(){
                 console.log('turn off solution!!!!!!!!!');
                 solution_status.mode = 0;
-                if(aircleaner.power == 1){
+                if(aircleaner.power === 1){
                     fetch("http://" + aircleaner_url.hostname + ":" + aircleaner_url.port +
                         aircleaner_url.path + aircleaner.control.power, {
                         method: 'get',
                     })
-                        .then(res => res.json())
-                        .catch(res => res.json());
+                        .then(function (res) {
+                            return res.text();
+                        })
+                        .catch({});
                 }
-                if(airconditioner.power == 1){
+                if(airconditioner.power === 1){
                     fetch("http://" + airconditioner_url.hostname + ":" + airconditioner_url.port +
                         airconditioner_url.path  + airconditioner.control.poweroff, {
                         method: 'get',
                     })
-                        .then(res => res.json())
-                        .catch(res => res.json());
+                        .then(function (res) {
+                            return res.text();
+                        })
+                        .catch({});
                 }
-                if(humidifier.power == 1){
+                if(humidifier.power === 1){
                     fetch("http://" + humidifier_url.hostname + ":" + humidifier_url.port +
                         humidifier_url.path + humidifier.control.power, {
                         method: 'get',
                     })
-                        .then(res => res.json())
-                        .catch(res => res.json());
+                        .then(function (res) {
+                            return res.text();
+                        })
+                        .catch({});
                 }
                 turn_off_solution_job.cancel();
             });

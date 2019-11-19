@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="41d67af4-b494-4465-979b-b9a7fb38657e" name="raspi_database_save" url="http://192.168.1.84">
-        <fileTransfer host="192.168.1.84" port="22" rootFolder="/home/pi/server" accessType="SFTP">
+        <fileTransfer host="192.168.1.84" port="22" rootFolder="/home/pi/Webserver/server" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
