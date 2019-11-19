@@ -149,14 +149,14 @@ function Airconditioner_Mode_Change(argv){
             let Mode;
             //cold = 0 ,warm = 1,  dehumidify = 2, wind = 3
             if(argv == 0)
-                Mode = 'cold';
+                Mode = 'cold'+airconditioner.cold.temp;
             else if(argv == 1)
-                Mode = 'warm';
+                Mode = 'warm'+airconditioner.warm.temp;
             else if(argv == 2)
                 Mode = 'dehumidify';
             else if(argv == 3)
                 Mode = 'wind';
-
+            //Airconditioner_Temp(Mode ,0);
             airconditioner.mode = Number(argv);
             airconditioner_Url.path += Mode + '&';
         }
