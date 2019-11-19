@@ -14,7 +14,7 @@ const airconditioner = {
         speed : 1,
         temp : 16
     },
-
+    humid : 0,
     control : {
         power : 'power',
         poweroff : 'poweroff'

@@ -25,6 +25,7 @@ module.exports.normal_airconditioner_algorithm = function normal_airconditioner_
                 goal_temp_Inner = 18;
             }
         }
+
         else {
             goal_temp_Inner = 18;
         }
@@ -196,8 +197,178 @@ module.exports.normal_airconditioner_algorithm = function normal_airconditioner_
         }
 
     }
-
+    // User 모드
     else{
+
+        // 목표 모드 설정(냉방 / 난방)
+        if(temp_Outer < 18){
+            // 난방 모드로 변경
+            if(airconditioner_status.mode != 1){
+                airconditioner_status.mode = 1;
+                airconditioner_status.cold.temp = 0;
+            }
+
+            goal_temp_Inner = airconditioner_status.warm.temp;
+
+        }
+        else{
+            // 냉방 모드로 변경
+            if(airconditioner_status.mode != 0) {
+                airconditioner_status.mode = 0;
+                airconditioner_status.warm.temp = 0;
+            }
+
+            goal_temp_Inner = airconditioner_status.cold.temp;
+        }
+
+        if(airconditioner_status.mode === 0){
+            if(goal_temp_Inner < temp_Inner){
+                if(goal_temp_Inner != airconditioner_status.cold.temp){
+
+                    if(airconditioner_status.power == 0){
+                        airconditioner_add_url += 'power&';
+                        airconditioner_status.power = 1;
+                    }
+
+                    if(temp_Outer < 18){
+                        // 난방 모드로 변경
+                        if(airconditioner_status.mode != 1){
+                            airconditioner_add_url += 'warm&';
+                        }
+
+                    }
+                    else{
+                        // 냉방 모드로 변경
+                        if(airconditioner_status.mode != 0) {
+                            airconditioner_add_url += 'cold&';
+                        }
+                    }
+
+                    airconditioner_status.cold.temp = goal_temp_Inner;
+                    switch(goal_temp_Inner){
+                        case 18:
+                            airconditioner_add_url += 'cold18&';
+                            break;
+                        case 19:
+                            airconditioner_add_url += 'cold19&';
+                            break;
+                        case 20:
+                            airconditioner_add_url += 'cold20&';
+                            break;
+                        case 21:
+                            airconditioner_add_url += 'cold21&';
+                            break;
+                        case 22:
+                            airconditioner_add_url += 'cold22&';
+                            break;
+                        case 23:
+                            airconditioner_add_url += 'cold23&';
+                            break;
+                        case 24:
+                            airconditioner_add_url += 'cold24&';
+                            break;
+                        case 25:
+                            airconditioner_add_url += 'cold25&';
+                            break;
+                        case 26:
+                            airconditioner_add_url += 'cold26&';
+                            break;
+                        case 27:
+                            airconditioner_add_url += 'cold27&';
+                            break;
+                        case 28:
+                            airconditioner_add_url += 'cold28&';
+                            break;
+                        case 29:
+                            airconditioner_add_url += 'cold29&';
+                            break;
+                        case 30:
+                            airconditioner_add_url += 'cold30&';
+                            break;
+                        case 31:
+                            airconditioner_add_url += 'cold31&';
+                            break;
+                        case 32:
+                            airconditioner_add_url += 'cold32&';
+                            break;
+                    }
+                }
+            }
+
+            else{
+                control_humid();
+            }
+        }
+        else{
+            if(goal_temp_Inner > temp_Inner){
+                if(temp_Inner != airconditioner_status.warm.temp){
+
+                    if(airconditioner_status.power == 0){
+                        airconditioner_add_url += 'power&';
+                        airconditioner_status.power = 1;
+                    }
+
+                    if(temp_Outer < 18){
+                        // 난방 모드로 변경
+                        if(airconditioner_status.mode != 1){
+                            airconditioner_add_url += 'warm&';
+                        }
+
+                    }
+                    else{
+                        // 냉방 모드로 변경
+                        if(airconditioner_status.mode != 0) {
+                            airconditioner_add_url += 'cold&';
+                        }
+                    }
+
+                    if(airconditioner_status.warm.temp != goal_temp_Inner) {
+                        airconditioner_status.warm.temp = goal_temp_Inner;
+
+                        switch (goal_temp_Inner) {
+                            case 13:
+                                airconditioner_add_url += 'warm13&';
+                                break;
+                            case 14:
+                                airconditioner_add_url += 'warm14&';
+                                break;
+                            case 15:
+                                airconditioner_add_url += 'warm15&';
+                                break;
+                            case 16:
+                                airconditioner_add_url += 'warm16&';
+                                break;
+                            case 17:
+                                airconditioner_add_url += 'warm17&';
+                                break;
+                            case 18:
+                                airconditioner_add_url += 'warm18&';
+                                break;
+                            case 19:
+                                airconditioner_add_url += 'warm19&';
+                                break;
+                            case 20:
+                                airconditioner_add_url += 'warm20&';
+                                break;
+                            case 21:
+                                airconditioner_add_url += 'warm21&';
+                                break;
+                            case 22:
+                                airconditioner_add_url += 'warm22&';
+                                break;
+                            case 23:
+                                airconditioner_add_url += 'warm23&';
+                                break;
+                        }
+                    }
+                }
+            }
+
+            else{
+
+                control_humid();
+            }
+        }
         control_humid();
     }
 
@@ -215,22 +386,27 @@ module.exports.normal_airconditioner_algorithm = function normal_airconditioner_
         const temp24Humid = 40;
 
         let goalHumid = 0;
+        if(airconditioner_status.detail_mode === 1){
+            if (goal_temp_Inner >= 24) {
+                goalHumid = temp24Humid;
+            }
 
-        if (goal_temp_Inner >= 24) {
-            goalHumid = temp24Humid;
+            else if (goal_temp_Inner >= 21) {
+                goalHumid = temp2123Humid;
+            }
+
+            else if (goal_temp_Inner >= 18) {
+                goalHumid = temp1820Humid;
+            }
+
+            else {
+                goalHumid = temp1517Humid;
+            }
+        }
+        else{
+            goalHumid = airconditioner_status.humid;
         }
 
-        else if (goal_temp_Inner >= 21) {
-            goalHumid = temp2123Humid;
-        }
-
-        else if (goal_temp_Inner >= 18) {
-            goalHumid = temp1820Humid;
-        }
-
-        else {
-            goalHumid = temp1517Humid;
-        }
 
         if(humid_Inner > goalHumid){
 
