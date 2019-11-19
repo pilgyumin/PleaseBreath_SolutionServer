@@ -12,6 +12,8 @@ router.get('/power', (req, res, next) => {
 	
 	Humidify_Controler.Humidifier_Power();
 	Humidify_Controler.Humidifier_Speed_up();
+	humidifier.speed=1;
+
 	Humidify_Controler.Humidifier_Send_command();
 
 	/*humidifier.power=1-humidifier.power;

@@ -23,6 +23,9 @@ function Airconditioner_Power(){
 
     else if(airconditioner.power == 1){
         airconditioner.power = 0;
+	airconditioner.warm.temp = 13;
+	airconditioner.cold.temp = 18;
+	airconditioner.warm.temp = 13;
         airconditioner_Url.path += airconditioner.control.poweroff + '&';
     }
 }
@@ -112,28 +115,28 @@ function Airconditioner_Temp(argv,button){
 
 
 
-function Airconditioner_Speed(argv){
+function Airconditioner_Speed(argv,SPEED){
     //cold = 0 ,warm = 1,  dehumidify = 2, wind = 3
     //속도 1 ~ 3
-    
+    console.log('speed'+SPEED);
     if(airconditioner.power == 1){
         if(airconditioner.mode == 0){
-            if(airconditioner.cold.speed != argv){
-                airconditioner.cold.speed = argv;
-                airconditioner_Url.path += "cspeed" + argv + '&';
-            }
+
+           airconditioner.cold.speed = SPEED;
+           airconditioner_Url.path += "cspeed" + SPEED + '&';
+            
         }
         else if(airconditioner.mode == 1){
             if(airconditioner.warm.speed != argv){
                 airconditioner.warm.speed = argv;
-                airconditioner_Url.path += "wspeed" + argv + '&';
+                airconditioner_Url.path += "wspeed" + SPEED + '&';
             }
         }
         else if(airconditioner.mode == 3){
             if(airconditioner.wind.speed != argv){
                 airconditioner.wind.speed = argv;
                 //에어컨 송풍일때 바람 IR전송
-                airconditioner_Url.path += "sspeed" + argv + '&';
+                airconditioner_Url.path += "sspeed" + SPEED + '&';
             }
         }
     }
@@ -145,21 +148,28 @@ function Airconditioner_Mode_Change(argv){
     //argv 0 1 2 3
 
     if(airconditioner.power == 1){
-        if(airconditioner.mode != argv){
+  //      if(airconditioner.mode != argv){
             let Mode;
             //cold = 0 ,warm = 1,  dehumidify = 2, wind = 3
-            if(argv == 0)
+            if(argv == 0){
                 Mode = 'cold'+airconditioner.cold.temp;
-            else if(argv == 1)
+		airconditioner.mode = 0;
+	    }
+            else if(argv == 1){
                 Mode = 'warm'+airconditioner.warm.temp;
-            else if(argv == 2)
+		airconditioner.mode = 1;
+	    }
+            else if(argv == 2){
                 Mode = 'dehumidify';
+		airconditioner.mode = 2;
+}
             else if(argv == 3)
                 Mode = 'wind';
-            //Airconditioner_Temp(Mode ,0);
-            airconditioner.mode = Number(argv);
-            airconditioner_Url.path += Mode + '&';
-        }
+	    console.log(Mode);
+	    Airconditioner_Temp(Mode,0);
+    //        airconditioner.mode = Number(argv);
+      //      airconditioner_Url.path += Mode + '&';
+//        }
     }
 
 }
@@ -169,6 +179,7 @@ function Airconditioner_Mode_Change(argv){
 function Airconditioner_Send_command(){
 
     if(airconditioner_Url.path != '?'){
+	console.log(airconditioner_Url.path);
         http.request(airconditioner_Url).end();
         airconditioner_Url.path = '?';
     }
