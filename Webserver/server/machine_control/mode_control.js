@@ -62,7 +62,7 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
 
       }
       if (airconditioner_status.mode != 2) {//제습기 켜기
-        airconditioner_controler.Airconditioner_Mode_Change(3);
+        airconditioner_controler.Airconditioner_Mode_Change(2);
       }
     }
   }
