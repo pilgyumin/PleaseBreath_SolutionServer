@@ -152,10 +152,11 @@ router.get('', (req, res, next) => {
     hours = moment().hours();
     minute = moment().minute();
     second = moment().seconds();
-
+    let timestamp = new Date();
+    
     //민필규 - aircleaenermode, aircleanerspeed 추가
     webserver_Url.path +='&year='+year+'&month='+month+'&date='+date+'&hours='+hours+'&minute='+minute+'&second='+second
-        +'&aircleanermode='+aircleaner_status.mode+'&aircleanerspeed='+aircleaner_status.speed;
+        +'&aircleanermode='+aircleaner_status.mode+'&aircleanerspeed='+aircleaner_status.speed+'&timestamp='+timestamp.getTime();
     http.request(webserver_Url).end();
     webserver_Url.path = '/insertdb?';
 
