@@ -23,9 +23,8 @@ function Airconditioner_Power(){
 
     else if(airconditioner.power == 1){
         airconditioner.power = 0;
-	airconditioner.warm.temp = 13;
-	airconditioner.cold.temp = 18;
-	airconditioner.warm.temp = 13;
+        airconditioner.warm.temp = 13;
+        airconditioner.cold.temp = 18;
         airconditioner_Url.path += airconditioner.control.poweroff + '&';
     }
 }
@@ -166,7 +165,7 @@ function Airconditioner_Mode_Change(argv){
             else if(argv == 3)
                 Mode = 'wind';
 	    console.log(Mode);
-	    Airconditioner_Temp(Mode,0);
+	    //Airconditioner_Temp(Mode,0);
     //        airconditioner.mode = Number(argv);
       //      airconditioner_Url.path += Mode + '&';
 //        }
