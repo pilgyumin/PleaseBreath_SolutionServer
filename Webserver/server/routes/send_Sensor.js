@@ -25,7 +25,7 @@ let minute;
 let second;
 
 let webserver_Url = {
-    hostname: 'localhost',
+    hostname: '192.168.1.5',
     port: '80',
     path : '/insertdb?'
 };
