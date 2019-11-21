@@ -30,25 +30,39 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
     humidifier_controler.ctrlHumidifier(temp_Inner,humid_Inner);
 
 
-  } else if (solution_status.mode == 2) { //영유아모드
+  }  else if (solution_status.mode == 2) { //영유아모드
     console.log('infants');
 
     //실내 온도 22도 고정
     if (airconditioner_status.power == 0) {
       airconditioner_controler.Airconditioner_Power();
-    }
-    if(airconditioner_status.warm.temp!=22 && airconditioner_status.cold.temp!=22)
-    {
-      if(status_Outer.temp_Outer<10){//난방 22도
-          airconditioner_controler.Airconditioner_Mode_Change(1);
-          airconditioner_controler.Airconditioner_Temp("warm22",0);
+      if(airconditioner_status.warm.temp!=22 && airconditioner_status.cold.temp!=22)
+      {
+        if(status_Outer.temp_Outer<10){//난방 22도
+            airconditioner_controler.Airconditioner_Mode_Change(1);
+            airconditioner_controler.Airconditioner_Temp("warm22",0);
+        }
+        else {//냉방 22도
+            airconditioner_controler.Airconditioner_Mode_Change(0);
+            airconditioner_controler.Airconditioner_Temp("cold22",0);
+        }
       }
-      else {//냉방 22도
-          airconditioner_controler.Airconditioner_Mode_Change(0);
-          airconditioner_controler.Airconditioner_Temp("cold22",0);
+    }
+    else{
+      if(airconditioner_status.warm.temp!=22 && airconditioner_status.cold.temp!=22)
+      {
+        if(status_Outer.temp_Outer<10){//난방 22도
+            airconditioner_controler.Airconditioner_Mode_Change(1);
+            airconditioner_controler.Airconditioner_Temp("warm22",0);
+        }
+        else {//냉방 22도
+            airconditioner_controler.Airconditioner_Mode_Change(0);
+            airconditioner_controler.Airconditioner_Temp("cold22",0);
+        }
       }
     }
 
+    airconditioner_controler.Airconditioner_Send_command();
     //실내 습도 50% 고정
     if (status_Inner.humid_Inner < 50) { // 습도 50미만일 경우
       if (humidifier_status.power == 0) {//가습기 켜기
@@ -65,6 +79,7 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
         airconditioner_controler.Airconditioner_Mode_Change(2);
       }
     }
+    humidifier_controler.Humidifier_Send_command();
   }
 
   else if (solution_status.mode == 3) { //노인모드
