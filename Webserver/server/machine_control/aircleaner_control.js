@@ -240,7 +240,7 @@ function control_aircleaner(pm10,pm25,voc,co2) {
         let max = (pm10_pm25_stage_max > voc_co2_stage_max) ? pm10_pm25_stage_max : voc_co2_stage_max;
         
         //안유진 : 수면 모드
-        if(solution_status.mode==4 && moment().format('HH')<='07' && max == 4){
+        if(solution_status.mode==4 && moment().hours()<=7 && max == 4){
             max = 3;
         }
         
