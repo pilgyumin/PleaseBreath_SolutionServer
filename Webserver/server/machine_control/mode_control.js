@@ -87,29 +87,34 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
     console.log('Senior Mode');
     console.log('Current Status');
     Show_Status.Show_Status();
-    console.log('Humid Control');
+    console.log('Humid Control!!!!!!!!!!!!!!');
     if (status_Inner.humid_Inner < 40) {
       if (humidifier_status.power == 0) {
+	console.log('Humidifier power on');
         humidifier_controler.Humidifier_Power();
       }
-      if(humidifier_status.speed!=3)
-        humidifier_controler.Humidifier_Speed(3);
+      if(humidifier_status.speed != 3) {
+	console.log('Humidifier Speed 3');
+      	humidifier_controler.Humidifier_Speed(3);
+      }
     }
 
     else if (status_Inner.humid_Inner > 50) {
       if (humidifier_status.power == 1) {
+	console.log('Humidifier_power off');
         humidifier_controler.Humidifier_Power();
       }
     }
 
     else {
-      if(Humidifier_Speed != 1)
-        humidifier_controler.Humidifier_Speed(1);
+	console.log('Humidifier Speed 1');
+
+      	humidifier_controler.Humidifier_Speed(1);
     }
 
-    //humidifier_controler.Humidifier_Send_command();
+    humidifier_controler.Humidifier_Send_command();
     Show_Status.Show_Status();
-    console.log('Temp Control');
+    console.log('Temp Control!!!!!!!!!!!!!!!!!');
 
     //온도
     if (airconditioner_status.power == 0) {
@@ -119,29 +124,32 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
     if (status_Inner.temp_Inner >= 26 && status_Inner.temp_Inner <= 28) {
       //적정 상태
       console.log("Current Temp Normal.. ");
+      //airconditioner_controler.Airconditioner_Speed(1);
     }
     else if (status_Inner.temp_Inner < 25) {
       //낮은 기온
       console.log('Current Temp cold');
       if(airconditioner_status.mode != 1){
-        console.log('Mode Change');
-        airconditioner_controler.Airconditioner_Mode_Change(1);
+	      airconditioner_controler.Airconditioner_Mode_Change(1);
+	      console.log('Mode Change');
       }
-      if(airconditioner_status.warm.temp !=22)
-        airconditioner_controler.Airconditioner_Temp("warm22",0);
-      console.log('Temp Change');
+      if(airconditioner_status.warm.temp!=22){
+	      airconditioner_controler.Airconditioner_Temp("warm22",0);
+              console.log('Temp Change');
+      }
     }
     else if (status_Inner.temp_Inner > 29) {
       //높은 기온
-      if(airconditioner_status.mode != 0)
-        airconditioner_controler.Airconditioner_Mode_Change(0);
-      if(airconditioner_status.cold.temp != 22)
-        airconditioner_controler.Airconditioner_Temp("cold22",0);
+          if(airconditioner_status_mode != 0)
+      airconditioner_controler.Airconditioner_Mode_Change(0);
+      if(airconditioner_status.cold.temp!=22)
+      airconditioner_controler.Airconditioner_Temp("cold22",0);
 
-      //aircleaner_controler.Aircleaner_Send_command();
+      
     }
     Show_Status.Show_Status();
     Show_Status.Show_Command();
+    airconditioner_controler.Airconditioner_Send_command();
 
 
 
