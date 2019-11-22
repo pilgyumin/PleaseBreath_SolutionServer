@@ -46,9 +46,9 @@ router.get('/speeddown', (req, res, next) => {
 
     let Current_Mode = airconditioner.mode;
     if(Current_Mode == 0 && airconditioner.cold.speed != 1)
-        Airconditioner_Control.Airconditioner_Speed(--airconditioner.cold.speed);    
+        Airconditioner_Control.Airconditioner_Speed(0,--airconditioner.cold.speed);    
     else if(Current_Mode == 1 && airconditioner.warm.speed != 1)
-        Airconditioner_Control.Airconditioner_Speed(--airconditioner.warm.speed);    
+        Airconditioner_Control.Airconditioner_Speed(0,--airconditioner.warm.speed);    
     else
         console.log("CurrentMode = " + Current_Mode + "Control fail");
     
@@ -63,11 +63,13 @@ router.get('/speeddown', (req, res, next) => {
 
 router.get('/speedup', (req, res, next) => {
     let Current_Mode = airconditioner.mode;
-
+    console.log(Current_Mode);
+    console.log(airconditioner.cold.speed);
     if(Current_Mode == 0 && airconditioner.cold.speed != 3)
-        Airconditioner_Control.Airconditioner_Speed(++airconditioner.cold.speed);    
+        //Airconditioner_Control.Airconditioner_Speed(airconditioner.cold.speed);    
+	Airconditioner_Control.Airconditioner_Speed(0,++airconditioner.cold.speed);    
     else if(Current_Mode == 1 && airconditioner.warm.speed != 3)
-        Airconditioner_Control.Airconditioner_Speed(++airconditioner.warm.speed);    
+        Airconditioner_Control.Airconditioner_Speed(0,++airconditioner.warm.speed);    
     else
         console.log("CurrentMode = " + Current_Mode + "Control fail");
     

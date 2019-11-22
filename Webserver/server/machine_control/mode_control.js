@@ -30,7 +30,7 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
     humidifier_controler.ctrlHumidifier(temp_Inner,humid_Inner);
 
 
-  }  else if (solution_status.mode == 2) { //영유아모드
+  } else if (solution_status.mode == 2) { //영유아모드
     console.log('infants');
 
     //실내 온도 22도 고정
@@ -82,6 +82,7 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
     humidifier_controler.Humidifier_Send_command();
   }
 
+    
   else if (solution_status.mode == 3) { //노인모드
     //실내 습기 40% 이하
     console.log('Senior Mode');
@@ -158,7 +159,6 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
 
 
 
-
 /*
     //미세먼지
     if (status_Inner.pm10_Inner < 30 && status_Inner.pm25_Inner < 15) {
@@ -209,7 +209,7 @@ function mode_control(temp_Outer,temp_Inner,humid_Inner,pm10Inner,pm25Inner,vocI
       //높은 기온
       aircleaner_controler.Aircleaner_Speed(0);
 
-      aircleaner_controler.Aircleaner_Send_command();
+      airconditioner_controler.Aircleaner_Send_command();
 
 
     console.log('Return');

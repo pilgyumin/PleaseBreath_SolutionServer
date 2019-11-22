@@ -9,7 +9,6 @@ const Aircleaner_Router = require('./routes/Aircleaner_Control');
 const Airconditioner_Router = require('./routes/Airconditioner_Control');
 const send_Sensor_Router = require('./routes/send_Sensor');
 const Humid_Router = require('./routes/Humid_Control');
-const get_Solution_Status_Router = require('./routes/get_solution_status');
 const Mode_Router = require('./routes/Mode');
 const Reservation_Router = require('./routes/Reservation_Control');
 const TEST_Router = require('./routes/TEST_DATA');
@@ -29,7 +28,6 @@ app.use('/AircleanerControl',Aircleaner_Router);
 app.use('/AirconditionerControl',Airconditioner_Router);
 app.use('/ReservationControl',Reservation_Router);
 app.use('/Mode',Mode_Router);
-app.use('/getSolutionStatus',get_Solution_Status_Router);
 app.use('/Test',TEST_Router);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

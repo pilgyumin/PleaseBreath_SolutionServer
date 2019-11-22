@@ -25,7 +25,7 @@ let minute;
 let second;
 
 let webserver_Url = {
-    hostname: '192.168.1.5',
+    hostname: '192.168.1.3',
     port: '80',
     path : '/insertdb?'
 };
@@ -138,6 +138,7 @@ router.get('', (req, res, next) => {
         console.log(webserver_Url.path);
     }
 
+	console.log('mode111 : ' + solution_status.mode);
     if(solution_status.mode!=0)
     {
         console.log('enter');
@@ -152,17 +153,18 @@ router.get('', (req, res, next) => {
     hours = moment().hours();
     minute = moment().minute();
     second = moment().seconds();
-    let timestamp = new Date();
+   let timestamp = new Date();
     
     //민필규 - aircleaenermode, aircleanerspeed 추가
     webserver_Url.path +='&year='+year+'&month='+month+'&date='+date+'&hours='+hours+'&minute='+minute+'&second='+second
         +'&aircleanermode='+aircleaner_status.mode+'&aircleanerspeed='+aircleaner_status.speed+'&timestamp='+timestamp.getTime();
     http.request(webserver_Url).end();
+    console.log('URL'+webserver_Url.path);
     webserver_Url.path = '/insertdb?';
-
+    console.log('URL'+webserver_Url.path);
     res.json(JSON.stringify(webserver_Url));
 
-    console.log(webserver_Url);
+
 });
 
 module.exports = router;

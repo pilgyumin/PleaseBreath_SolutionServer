@@ -1,7 +1,6 @@
 const http = require('http');
 const aircleaner = require('../model/aircleaner');
 const aircleanerUrl = require('../url_Model/aircleaner_Url');
-
 const aircleaner_hostname = '192.168.1.74';
 const aircleaner_port = '3000';
 const aircleaner_path = '?';
@@ -56,6 +55,8 @@ function Aircleaner_Power(){
         http.request(aircleanerUrl).end();
         aircleanerUrl.path = '?';
     }*/
+
+    console.log(aircleanerUrl.path); 
 }
 
 function Aircleaner_Speed_up(){
@@ -240,7 +241,7 @@ function control_aircleaner(pm10,pm25,voc,co2) {
         let max = (pm10_pm25_stage_max > voc_co2_stage_max) ? pm10_pm25_stage_max : voc_co2_stage_max;
         
         //안유진 : 수면 모드
-        if(solution_status.mode==4 && moment().hours()<=7 && max == 4){
+	if(solution_status.mode==4 && moment().hours()<=7 && max == 4){
             max = 3;
         }
         

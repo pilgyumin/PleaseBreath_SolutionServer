@@ -11,18 +11,11 @@ const TEST = require('../machine_control/TEST/Show_Status');
 router.get('/power', (req, res, next) => {
   console.log('Aircleaner start');
     Aircleaner_Controler.Aircleaner_Power();
-    Aircleaner_Controler.Aircleaner_Send_command();
-    /*aircleaner.power=1-aircleaner.power;
-    if(aircleaner.power==1){
-      aircleaner.speed=1;
-    }
-    console.log('Aircleaner Power');
-    aircleaner_Url.path += aircleaner.control.power;
-    console.log(aircleaner.control.power);
-    http.request(aircleaner_Url).end();
-    aircleaner_Url.path = '?';*/
-
+      aircleaner.speed = 1;
     console.log(TEST.Show_Command());
+    Aircleaner_Controler.Aircleaner_Send_command();
+    
+    
     res.json(JSON.stringify({}));
 });
 
